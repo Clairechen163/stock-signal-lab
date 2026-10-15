@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
+from matplotlib.ticker import FuncFormatter, LogLocator, NullFormatter  # noqa: E402
 
 # Fixed categorical order (never cycled), plus neutral inks and surfaces
 SERIES = ["#2a78d6", "#eb6834", "#1baf7a", "#eda100", "#e87ba4", "#008300", "#6250d6", "#e34948"]
@@ -49,6 +50,9 @@ def equity_curves(curves: dict[str, pd.DataFrame], path: str):
             lw = 2.4 if name == "Buy & Hold" else 1.3
             ax.plot(c.index, c[name], color=SERIES[i % len(SERIES)], lw=lw, label=name)
         ax.set_yscale("log")
+        ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1.0, 2.0, 5.0)))
+        ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"${v:g}"))
+        ax.yaxis.set_minor_formatter(NullFormatter())
         ax.set_title(f"{t}: growth of $1 by strategy (log scale)")
     axes[0, 0].legend(ncol=4, loc="upper left")
     fig.tight_layout()
@@ -56,7 +60,7 @@ def equity_curves(curves: dict[str, pd.DataFrame], path: str):
     plt.close(fig)
 
 
-def event_study(res: pd.DataFrame, path: str, horizon: str = "21d"):
+def event_study(res: pd.DataFrame, path: str, horizon: str = "63d"):
     """Forward-return gap after each sell rule vs random days; filled bars are significant (q < 0.10)."""
     d = res[(res["horizon"] == horizon) & (res["events"] >= 5)].sort_values("difference")
     fig, ax = plt.subplots(figsize=(9, 0.42 * len(d) + 1.4))

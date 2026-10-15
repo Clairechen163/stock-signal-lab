@@ -142,21 +142,21 @@ risk) rather than as a prediction, and it motivates the next step below.
 
 ```
 src/stocklab/
-  data.py           Yahoo Finance, CSV, or synthetic regime-switching prices
-  indicators.py     SMA/EMA, RSI, MACD, ATR, volatility, drawdown (no look-ahead)
-  stats.py          Block bootstrap, Benjamini-Hochberg, Diebold-Mariano, binomial and Monte Carlo tests
-  backtest.py       Strategy library and backtest engine with next-day execution
-  sell_signals.py   Rule library, holdings scorecard, event study
-  forecast.py       Feature engineering, walk-forward models, next-session forecast
-  screener.py       Filters, factor scoring, entry/stop/position-size plans
-  portfolio.py      Shrinkage covariance, risk parity, minimum variance, walk-forward
-  plots.py          Report charts
-  cli.py            Command-line interface and report generator
-tests/              24 unit tests, including look-ahead and leakage checks
+  data.py                  Yahoo Finance, CSV, or synthetic regime-switching prices
+  indicators.py            SMA/EMA, RSI, MACD, ATR, volatility, drawdown (no look-ahead)
+  stats.py                 Block bootstrap, Benjamini-Hochberg, Diebold-Mariano, binomial and Monte Carlo tests
+  backtest.py              Strategy library and backtest engine with next-day execution
+  sell_signals.py          Rule library, holdings scorecard, event study
+  forecast.py              Feature engineering, walk-forward models, next-session forecast
+  screener.py              Filters, factor scoring, entry/stop/position-size plans
+  portfolio.py             Shrinkage covariance, risk parity, minimum variance, walk-forward
+  plots.py                 Report charts
+  cli.py                   Command-line interface and report generator
+tests/                     24 unit tests, including look-ahead and leakage checks
 docs/
-  methodology.md          Statistical design and limitations
-  sell-signal-playbook.md How to use and test exit rules
-reports/            Generated REPORT.md and charts
+  methodology.md           Statistical design and limitations
+  sell-signal-playbook.md  How to use and test exit rules
+reports/                   Generated REPORT.md and charts
 ```
 
 ## Statistical design highlights
