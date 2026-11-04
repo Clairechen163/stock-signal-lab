@@ -22,6 +22,7 @@ import os
 import sys
 
 import pandas as pd
+from scipy import stats as st
 
 from . import backtest, board, config, data, forecast, indicators, plots, portfolio, readme, screener, sell_signals
 
@@ -440,8 +441,18 @@ def key_findings(res: dict) -> dict:
                 better += int((rows["_ci_low"] > 0).sum())
                 worse += int((rows["_ci_high"] < 0).sum())
                 total += len(rows)
+        # Each test's 95% interval misses zero on either side 2.5% of the time by chance alone, so with many
+        # tests a few "significant" results are expected even if no rule works. A binomial tail says whether the
+        # count of wins is more than chance would produce (tests on the same stock are correlated, so roughly).
+        chance = total * 0.025
+        p_more = float(st.binomtest(better, total, 0.025, alternative="greater").pvalue) if total else float("nan")
+        verdict = ("no more than chance alone would produce, so no rule has shown an edge"
+                   if p_more >= 0.05 else ("more than chance alone would produce (binomial p "
+                   + ("< 0.001)" if p_more < 0.001 else f"= {p_more:.3f})")))
         out["backtest"] = (f"Single-stock rule backtests: of {total} rule-by-stock tests on {len(tables)} stocks, "
-                           f"**{better}** had a significantly higher Sharpe ratio than buy & hold and {worse} a significantly lower one.")
+                           f"**{better}** had a significantly higher Sharpe ratio than buy & hold and {worse} a significantly "
+                           f"lower one. About {chance:.1f} of each would be expected by chance with {total} tests: "
+                           f"{verdict}.")
     fc = res.get("forecast") or {}
     if fc:
         t_best = max(fc, key=fc.get)

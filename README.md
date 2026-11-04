@@ -67,7 +67,7 @@ These tests use stocks chosen today, which flatters every long-only strategy (su
 ### Key numbers from the latest full report
 
 - Sell-signal event study: **0 of 33** rule-by-horizon tests show significantly weaker returns after the signal once the false discovery rate is controlled (q < 0.10).
-- Single-stock rule backtests: of 48 rule-by-stock tests on 8 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 2 a significantly lower one.
+- Single-stock rule backtests: of 48 rule-by-stock tests on 8 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 2 a significantly lower one. About 1.2 of each would be expected by chance with 48 tests: no more than chance alone would produce, so no rule has shown an edge.
 - Next-day forecasts: the median out-of-sample AUC across 8 stocks is **0.53** (0.50 is a coin flip; highest 0.55 for MRVL, and the highest of 8 values sits above 0.50 by chance alone): no reliable edge.
 - Risk concentration: in an equal-weight portfolio of 14 assets (8 watchlist stocks plus 6 diversifiers), the watchlist stocks make up 57% of the money and **95% of the risk**; the largest risk contributors are ALAB, MRVL, AMD. Not yet included for lack of history: SKHY, SPCX.
 
@@ -152,7 +152,7 @@ python -m stocklab screen    --capital 100000 --risk 0.01
 python -m stocklab portfolio
 
 # No internet? Every command runs offline on simulated prices
-python -m stocklab update --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md
+python -m stocklab update --source synthetic --out reports/synthetic --readme none
 ```
 
 On Windows, `python` works the same way; on macOS/Linux you may need `python3`. A run
