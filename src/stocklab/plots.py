@@ -143,3 +143,62 @@ def forecast_importance(coef: pd.Series, path: str, ticker: str):
     fig.tight_layout()
     fig.savefig(path, dpi=130)
     plt.close(fig)
+
+
+# Board labels are states, so they use the reserved status colours plus neutrals
+ACTION_COLORS = {
+    "BUY": "#0ca30c",
+    "HOLD": "#86b6ef",
+    "WATCH": "#fab219",
+    "AVOID": "#c3c2b7",
+    "REDUCE": "#ec835a",
+    "SELL": "#d03b3b",
+    "NO SIGNAL": "#f0efec",
+}
+
+
+def board_equity(eq: pd.DataFrame, path: str):
+    """Board strategy vs equal-weight watchlist vs benchmark (log scale)."""
+    fig, ax = plt.subplots(figsize=(10, 3.8))
+    for i, name in enumerate(eq.columns):
+        ax.plot(eq.index, eq[name], color=SERIES[i], lw=2.2 if i == 0 else 1.4, label=name)
+    ax.set_yscale("log")
+    ax.yaxis.set_major_locator(LogLocator(base=10, subs=(1.0, 2.0, 5.0)))
+    ax.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"${v:g}"))
+    ax.yaxis.set_minor_formatter(NullFormatter())
+    ax.set_title("Trading the board's labels: growth of $1 (log scale)")
+    ax.legend(ncol=3, loc="upper left")
+    fig.tight_layout()
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+
+
+def board_history(action: pd.DataFrame, path: str, weeks: int = 52):
+    """Weekly label for each stock over the last year, one row per stock."""
+    weekly = action.iloc[::-5][::-1].iloc[-weeks:]  # every 5th trading day, ending today
+    tickers = list(action.columns)
+    order = list(ACTION_COLORS)
+    codes = weekly.apply(lambda col: col.map({a: i for i, a in enumerate(order)}))
+    from matplotlib.colors import ListedColormap
+
+    cmap = ListedColormap([ACTION_COLORS[a] for a in order])
+    fig, ax = plt.subplots(figsize=(10, 0.36 * len(tickers) + 1.5))
+    grid = np.ma.masked_invalid(codes.T.to_numpy(dtype=float))
+    ax.imshow(grid, aspect="auto", cmap=cmap, vmin=-0.5, vmax=len(order) - 0.5, interpolation="nearest")
+    ax.set_yticks(range(len(tickers)), tickers)
+    step = max(1, len(weekly) // 6)
+    ax.set_xticks(range(0, len(weekly), step), [d.strftime("%Y-%m") for d in weekly.index[::step]])
+    ax.grid(False)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    # gaps between rows and columns, in the surface colour, so cells read as separate marks
+    ax.set_xticks(np.arange(-0.5, len(weekly), 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, len(tickers), 1), minor=True)
+    ax.grid(which="minor", color=SURFACE, linewidth=1.5)
+    ax.tick_params(which="minor", length=0)
+    handles = [plt.Rectangle((0, 0), 1, 1, color=ACTION_COLORS[a]) for a in order]
+    ax.legend(handles, order, ncol=len(order), loc="upper left", bbox_to_anchor=(0, -0.12), fontsize=8)
+    ax.set_title("Board label each week, last 12 months")
+    fig.tight_layout()
+    fig.savefig(path, dpi=130)
+    plt.close(fig)

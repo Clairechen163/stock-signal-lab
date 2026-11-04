@@ -1,0 +1,13 @@
+# Stocks the daily refresh evaluates, one per row.
+# Optional: add the price you paid in entry_price to switch on your personal stop-loss check.
+ticker,entry_price
+ALAB,
+AMD,
+NVDA,
+MRVL,
+GOOG,
+FSLR,
+SKHY,
+ETN,
+TSLA,
+SPCX,

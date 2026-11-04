@@ -121,14 +121,18 @@ def backtest_ticker(df_ind: pd.DataFrame, cost_bps=5, n_boot=1000, seed=0):
             row["Sharpe vs B&H"] = test["diff"]
             row["95% CI"] = f"[{test['ci_low']:+.2f}, {test['ci_high']:+.2f}]"
             row["p-value"] = test["p_value"]
+            row["_ci_low"], row["_ci_high"] = test["ci_low"], test["ci_high"]
         rows[name] = row
         curves[name] = (1 + strat).cumprod()
     table = pd.DataFrame(rows).T
     return table, pd.DataFrame(curves)
 
 
+MIN_BACKTEST_DAYS = 252 + 200  # one year of trading after the 200-day average exists
+
+
 def format_table(table: pd.DataFrame) -> pd.DataFrame:
-    out = table.copy()
+    out = table[[c for c in table.columns if not str(c).startswith("_")]].copy()
     pct = ["Total return", "CAGR", "Max drawdown", "Volatility"]
     for c in pct:
         out[c] = out[c].map(lambda v: f"{v:+.1%}")

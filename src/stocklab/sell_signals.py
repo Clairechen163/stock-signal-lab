@@ -31,6 +31,7 @@ class Rule:
     weight: int
     description: str
     fn: Callable[[pd.DataFrame], pd.Series]
+    min_days: int = 0  # trading days of history the rule needs to be meaningful
 
 
 def _distribution_days(df: pd.DataFrame) -> pd.Series:
@@ -49,19 +50,20 @@ def _rsi_bearish_divergence(df: pd.DataFrame) -> pd.Series:
 
 RULES: list[Rule] = [
     # Trend
-    Rule("below_sma50", "trend", 1, "Close below the 50-day moving average", lambda d: d["Close"] < d["SMA50"]),
-    Rule("below_sma200", "trend", 2, "Close below the 200-day moving average", lambda d: d["Close"] < d["SMA200"]),
-    Rule("death_cross", "trend", 2, "50-day average below the 200-day average", lambda d: d["SMA50"] < d["SMA200"]),
+    Rule("below_sma50", "trend", 1, "Close below the 50-day moving average", lambda d: d["Close"] < d["SMA50"], 50),
+    Rule("below_sma200", "trend", 2, "Close below the 200-day moving average", lambda d: d["Close"] < d["SMA200"], 200),
+    Rule("death_cross", "trend", 2, "50-day average below the 200-day average", lambda d: d["SMA50"] < d["SMA200"], 200),
     # Momentum
-    Rule("rsi_divergence", "momentum", 1, "New 20-day high without a new RSI high (bearish divergence)", _rsi_bearish_divergence),
+    Rule("rsi_divergence", "momentum", 1, "New 20-day high without a new RSI high (bearish divergence)", _rsi_bearish_divergence, 35),
     Rule(
         "rsi_rollover",
         "momentum",
         1,
         "RSI was overbought (>70) in the last 5 days and has dropped below 65",
         lambda d: (d["RSI"].rolling(5).max() > 70) & (d["RSI"] < 65),
+        20,
     ),
-    Rule("macd_bearish", "momentum", 1, "MACD line below its signal line", lambda d: d["MACD"] < d["MACDSignal"]),
+    Rule("macd_bearish", "momentum", 1, "MACD line below its signal line", lambda d: d["MACD"] < d["MACDSignal"], 35),
     # Volume
     Rule(
         "distribution_cluster",
@@ -69,6 +71,7 @@ RULES: list[Rule] = [
         1,
         "5+ distribution days in the last 25 sessions (institutional selling)",
         lambda d: _distribution_days(d).rolling(25).sum() >= 5,
+        26,
     ),
     Rule(
         "high_volume_breakdown",
@@ -76,15 +79,17 @@ RULES: list[Rule] = [
         2,
         "Down day closing below the 50-day average on 1.5x+ average volume",
         lambda d: (d["Close"] < d["SMA50"]) & (d["Volume"] >= 1.5 * d["VolAvg50"]) & (d["Close"].diff() < 0),
+        50,
     ),
     # Risk
-    Rule("drawdown_20", "risk", 1, "20%+ below the 52-week high", lambda d: d["DrawdownFrom52wHigh"] <= -0.20),
+    Rule("drawdown_20", "risk", 1, "20%+ below the 52-week high", lambda d: d["DrawdownFrom52wHigh"] <= -0.20, 60),
     Rule(
         "volatility_spike",
         "risk",
         1,
         "21-day volatility 1.5x+ its 1-year median",
         lambda d: d["Vol21"] > 1.5 * d["Vol252Median"],
+        147,
     ),
     Rule(
         "chandelier_stop",
@@ -92,11 +97,14 @@ RULES: list[Rule] = [
         2,
         "Close below the chandelier stop (22-day high minus 3x ATR)",
         lambda d: d["Close"] < d["HighestHigh22"] - 3 * d["ATR"],
+        22,
     ),
 ]
 RULES_BY_KEY = {r.key: r for r in RULES}
 
-STATUS_BANDS = [(0, "HOLD"), (3, "WATCH"), (6, "REDUCE"), (9, "EXIT")]
+# Bands as fifths of the maximum score: with all 15 points available that is 3 / 6 / 9.
+# Scaling keeps recent listings, which can't trigger the long-history rules yet, comparable.
+STATUS_BANDS = [(0, "HOLD"), (1, "WATCH"), (2, "REDUCE"), (3, "EXIT")]
 
 
 def rule_states(df_ind: pd.DataFrame) -> pd.DataFrame:
@@ -121,10 +129,10 @@ def onsets(states: pd.DataFrame, cooldown: int = 10) -> pd.DataFrame:
     return pd.DataFrame(out)
 
 
-def _status(score: int) -> str:
+def _status(score: int, max_score: int = 15) -> str:
     label = "HOLD"
-    for threshold, name in STATUS_BANDS:
-        if score >= threshold:
+    for fifths, name in STATUS_BANDS:
+        if 5 * score >= fifths * max_score:  # integer arithmetic: no rounding at the band edges
             label = name
     return label
 
@@ -133,32 +141,43 @@ def _status(score: int) -> str:
 def check_holding(df_ind: pd.DataFrame, entry_price: float | None = None, stop_pct: float = 0.15) -> dict:
     """Score the latest day for one holding.
 
-    The weighted rule score maps to HOLD (0-2), WATCH (3-5), REDUCE (6-8) or EXIT (9+).
+    The weighted rule score maps to HOLD (0-2), WATCH (3-5), REDUCE (6-8) or EXIT (9+) out of 15;
+    for a recent listing the bands scale with the points its available rules can reach.
     A hard stop-loss you set yourself (entry minus `stop_pct`) overrides to EXIT: the
     point of a pre-committed stop is that you don't renegotiate it in the moment.
     """
     last = df_ind.iloc[-1]
+    n_days = len(df_ind)
+    available = [r for r in RULES if n_days >= r.min_days]
+    unavailable = [r for r in RULES if n_days < r.min_days]
     states = rule_states(df_ind).iloc[-1]
-    triggered = [RULES_BY_KEY[k] for k, on in states.items() if on]
+    triggered = [r for r in available if states[r.key]]
     score = sum(r.weight for r in triggered)
-    status = _status(score)
+    status = _status(score, sum(r.weight for r in available))
     reasons = [f"[{r.category}] {r.description} (+{r.weight})" for r in triggered]
+    if n_days < 252:
+        reasons = [x.replace("52-week high", "high since listing") for x in reasons]
 
     close = float(last["Close"])
-    levels = {
-        "50-day SMA": float(last["SMA50"]),
-        "200-day SMA": float(last["SMA200"]),
-        "Chandelier stop": float(last["HighestHigh22"] - 3 * last["ATR"]),
+    candidates = {
+        "50-day SMA": last["SMA50"],
+        "200-day SMA": last["SMA200"],
+        "Chandelier stop": last["HighestHigh22"] - 3 * last["ATR"],
     }
+    levels = {k: float(v) for k, v in candidates.items() if pd.notna(v)}
     result = {
         "date": df_ind.index[-1].date().isoformat(),
         "close": close,
         "rsi": float(last["RSI"]),
         "off_52w_high": float(last["DrawdownFrom52wHigh"]),
+        "history_days": n_days,
+        "vs_sma50": close / float(last["SMA50"]) - 1 if pd.notna(last["SMA50"]) else float("nan"),
+        "vs_sma200": close / float(last["SMA200"]) - 1 if pd.notna(last["SMA200"]) else float("nan"),
         "score": score,
-        "max_score": sum(r.weight for r in RULES),
+        "max_score": sum(r.weight for r in available),
         "status": status,
         "reasons": reasons,
+        "unavailable": [r.key for r in unavailable],
         "levels": levels,
     }
     if entry_price:
@@ -176,7 +195,10 @@ def format_check(ticker: str, r: dict) -> str:
     lines = [f"{ticker}  {r['status']}  (score {r['score']}/{r['max_score']}, close {r['close']:.2f} on {r['date']})"]
     if "entry" in r:
         lines.append(f"  Entry {r['entry']:.2f} -> P&L {r['pnl']:+.1%}")
-    lines.append(f"  RSI {r['rsi']:.0f} | {r['off_52w_high']:+.1%} from 52-week high")
+    high_label = "52-week high" if r.get("history_days", 999) >= 252 else "high since listing"
+    lines.append(f"  RSI {r['rsi']:.0f} | {r['off_52w_high']:+.1%} from {high_label}")
+    if r.get("unavailable"):
+        lines.append(f"  Only {r['history_days']} trading days of history; not scored yet: {', '.join(r['unavailable'])}")
     lines.append("  Triggered:" if r["reasons"] else "  Triggered: none")
     lines += [f"    - {x}" for x in r["reasons"]]
     lines.append("  Levels to watch:")

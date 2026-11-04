@@ -18,7 +18,7 @@ import pandas as pd
 
 DEFAULT_UNIVERSE = [
     # Technology and semiconductors
-    "AAPL", "MSFT", "NVDA", "AVGO", "KLAC", "ALAB", "GOOGL", "AMZN",
+    "AAPL", "MSFT", "NVDA", "AVGO", "KLAC", "GOOGL", "AMZN",
     # Industrials and infrastructure
     "VRT", "CAT", "GE",
     # Financials
@@ -30,6 +30,7 @@ DEFAULT_UNIVERSE = [
     # Energy, utilities, materials, real estate
     "XOM", "NEE", "LIN", "AMT",
 ]
+# The watchlist is added to this universe at run time (see cli.py).
 
 PRICE_FACTORS = {
     "momentum_12_1": 0.30,  # 12-month return excluding the latest month (avoids short-term reversal)

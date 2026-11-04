@@ -105,12 +105,60 @@ out-of-sample AUC near 0.50 is the expected, and informative, result.
 * Max-Sharpe optimisation is excluded on purpose: expected-return estimates are too noisy
   and produce unstable, concentrated portfolios.
 
-## 8. Limitations
+## 8. Daily decision board (`board`, `update`)
+
+**Labels.** For each watchlist stock and each date, `board.action_panel` computes:
+
+* the sell-warning score (section 4's 11 rules, weighted as in the playbook), counting only
+  rules the stock has enough history for, and expressed as a share of the maximum it could reach;
+* trend, liquidity and collapse filters (close above the 200-day average, or the 50-day
+  average for listings under 200 days; average daily dollar volume of $20M+; less than 50%
+  below the high);
+* the buy score: section 6's price factors (12-1 month momentum, 6-month momentum, trend
+  quality, low volatility, shallow drawdown), winsorised at the 5th/95th percentile and
+  z-scored **across the watchlist on that date**, combined with the screen's weights and
+  renormalised when a factor is missing.
+
+The first matching rule gives the label: NO SIGNAL (under 60 days), SELL (warnings ≥ 60%
+of the maximum, or the user's own stop-loss is hit), REDUCE (40-59%), AVOID (fails a
+filter), WATCH (20-39%), BUY (top half by buy score), otherwise HOLD. All inputs at date
+*t* use data up to *t*; a unit test shocks one stock's last 10 prices and checks that no
+earlier label changes.
+
+**Evaluation.** The same panel is traded: every 5 trading days, holdings labelled SELL,
+REDUCE, AVOID or NO SIGNAL are sold and stocks labelled BUY are bought; holdings are
+equally weighted, idle money earns nothing, decisions made at close *t* are executed at
+close *t + 1*, and turnover costs 5 bp per side. The comparison is an equal-weight
+portfolio of every eligible watchlist stock, rebalanced on the same days, plus SPY. The
+Sharpe-ratio difference gets a paired block-bootstrap interval (section 3).
+
+The **label study** asks whether labels sort winners from losers. Every 21 trading days
+(so forward windows don't overlap), each stock's next-21-day return is measured relative
+to the watchlist average on that date; for each label, the per-date mean of those excess
+returns is tested against zero with a one-sample t-test across dates.
+
+**Live record.** Each run appends the day's labels to `reports/board_log.csv`. Unlike the
+backtest, which applies the rule to history chosen in hindsight, the log records labels
+before the prices that judge them exist, so it becomes a genuine out-of-sample test as it
+grows.
+
+**Automation.** A scheduled GitHub Actions workflow runs `python -m stocklab update` after
+each US close. Prices for all tickers are requested in one batched Yahoo download (fewer
+rate-limit failures than one request per ticker), bars for a session that has not closed
+yet are dropped, and the README's live section is rewritten between two marker comments,
+leaving the rest of the README untouched. If fewer than half of the watchlist stocks load,
+the run stops without changing anything.
+
+## 9. Limitations
 
 * **Selection and survivorship bias.** Universes are chosen today, from companies that
   survived and grew. Backtests on them flatter buy & hold and momentum.
-* **Short histories.** Recent IPOs (e.g. ALAB, listed March 2024) give few independent
-  observations.
+* **Short histories.** Recent listings give few independent observations: ALAB listed in
+  March 2024, SpaceX (SPCX) in June 2026 and the SK Hynix ADR (SKHY) in July 2026. The
+  last two get provisional board labels and are left out of the event study, single-stock
+  backtests, forecasts and portfolio estimates until they have enough history.
+* **Label instability.** Labels near a threshold can flip from week to week; the board
+  backtest includes the trading costs of that turnover.
 * **Costs and execution.** A flat 5 bp per side ignores spreads in volatile moments,
   slippage, taxes and market impact.
 * **Regime dependence.** 2022-2026 was dominated by an AI-driven bull market; rules that

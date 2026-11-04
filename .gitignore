@@ -9,6 +9,8 @@ venv/
 build/
 dist/
 
-# Generated working files; REPORT.md and its charts are committed on purpose
+# Generated working files; REPORT.md, its charts, board.csv and the signal log are committed on purpose
 reports/*.csv
+!reports/board.csv
+!reports/board_log.csv
 reports/synthetic/

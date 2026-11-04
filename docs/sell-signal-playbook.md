@@ -48,7 +48,7 @@ status in `sell-check`.
 | `volatility_spike` | risk | 1 | 21-day volatility 1.5x+ its 1-year median |
 | `chandelier_stop` | risk | 2 | Close below the 22-day high minus 3x ATR |
 
-**Status bands:** 0-2 HOLD, 3-5 WATCH, 6-8 REDUCE, 9+ EXIT.
+**Status bands:** 0-2 HOLD, 3-5 WATCH, 6-8 REDUCE, 9+ EXIT (out of 15; for a recent listing the bands scale with the maximum its available rules can reach).
 **Override:** if you give an entry price and the close is below your hard stop, the status
 is EXIT regardless of the score. A pre-committed stop is not renegotiated in the moment.
 
@@ -58,6 +58,14 @@ What each status means in practice:
 - **WATCH**: no action yet; note the "levels to watch" in the output. A close beyond the next one moves the status.
 - **REDUCE**: trim, for example a third of the position, which lowers risk without betting everything on the signal being right.
 - **EXIT**: close the position, or the rest of it, as your plan says.
+
+## How the daily board uses these rules
+
+The [decision board](../README.md#how-the-board-labels-are-chosen) turns the same weighted
+score into a share of its maximum (so recent listings with fewer scoreable rules are
+judged fairly) and combines it with a trend filter and a buy-side ranking: 60%+ of the
+maximum is SELL, 40-59% REDUCE, 20-39% WATCH. For a full-history stock that is the same as
+the 9 / 6 / 3-point bands above. The board's own track record is re-tested on every run.
 
 ## Principle 3: test the rules, don't just trust them
 

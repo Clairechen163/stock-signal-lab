@@ -19,5 +19,5 @@ jobs:
         run: pip install -e ".[dev]"
       - name: Unit tests
         run: pytest -q
-      - name: Offline end-to-end report (synthetic prices, no network)
-        run: python -m stocklab report --source synthetic --out reports/synthetic --n-sims 300 --n-boot 200
+      - name: Offline end-to-end update (synthetic prices, no network, README untouched)
+        run: python -m stocklab update --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md --n-sims 300 --n-boot 200
