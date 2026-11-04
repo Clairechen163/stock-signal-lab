@@ -386,13 +386,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.507 | 0.527 | 0.837 | 0.489 | 0.25 | 1.13 | 1.139 |
 | Logistic regression | 0.478 | 0.527 | 0.991 | 0.484 | 0.256 | 0.496 | 1.139 |
-| Gradient boosting | 0.473 | 0.527 | 0.995 | 0.48 | 0.269 | 0.078 | 1.139 |
+| Gradient boosting | 0.475 | 0.527 | 0.994 | 0.481 | 0.269 | 0.113 | 1.139 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 390.4 | 0.0 |  |  |
 | Ridge regression | 394.7 | -0.0219 | 0.485 | 0.902 |
-| Gradient boosting | 399.9 | -0.0488 | 0.473 | 0.994 |
+| Gradient boosting | 399.7 | -0.0481 | 0.473 | 0.993 |
 
 Forecast for the next session:
 
@@ -418,7 +418,7 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.499 | 0.25 | 0.709 | 0.71 |
 | Logistic regression | 0.522 | 0.524 | 0.551 | 0.527 | 0.252 | 0.644 | 0.71 |
-| Gradient boosting | 0.516 | 0.524 | 0.65 | 0.494 | 0.266 | 0.528 | 0.71 |
+| Gradient boosting | 0.515 | 0.524 | 0.681 | 0.494 | 0.266 | 0.431 | 0.71 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
@@ -450,13 +450,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.536 | 0.536 | 0.517 | 0.485 | 0.249 | 0.908 | 0.908 |
 | Logistic regression | 0.542 | 0.536 | 0.416 | 0.551 | 0.251 | 1.275 | 0.908 |
-| Gradient boosting | 0.527 | 0.536 | 0.681 | 0.544 | 0.262 | 0.888 | 0.908 |
+| Gradient boosting | 0.524 | 0.536 | 0.74 | 0.542 | 0.262 | 0.78 | 0.908 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 473.0 | 0.0 |  |  |
 | Ridge regression | 474.3 | -0.0051 | 0.524 | 0.632 |
-| Gradient boosting | 481.1 | -0.0342 | 0.491 | 0.96 |
+| Gradient boosting | 481.1 | -0.0343 | 0.491 | 0.96 |
 
 Forecast for the next session:
 
@@ -482,13 +482,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.52 | 0.52 | 0.517 | 0.492 | 0.25 | 0.901 | 0.901 |
 | Logistic regression | 0.553 | 0.52 | 0.068 | 0.534 | 0.253 | 0.432 | 0.901 |
-| Gradient boosting | 0.542 | 0.52 | 0.163 | 0.536 | 0.261 | 0.599 | 0.901 |
+| Gradient boosting | 0.538 | 0.52 | 0.209 | 0.537 | 0.261 | 0.538 | 0.901 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.0 | 0.0 |  |  |
 | Ridge regression | 204.1 | -0.0304 | 0.522 | 0.988 |
-| Gradient boosting | 209.0 | -0.0807 | 0.513 | 0.999 |
+| Gradient boosting | 208.8 | -0.0788 | 0.515 | 0.999 |
 
 Forecast for the next session:
 
@@ -502,7 +502,7 @@ Forecast for the next session:
   daily volatility                 +3.03%
 ```
 
-Best out-of-sample AUC **0.536**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.537**: a small edge out of sample; still check the p-values before trusting it.
 
 ![GOOG feature effects](forecast_GOOG.png)
 
@@ -546,13 +546,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.477 | 0.25 | 0.542 | 0.542 |
 | Logistic regression | 0.509 | 0.524 | 0.766 | 0.504 | 0.255 | 0.622 | 0.542 |
-| Gradient boosting | 0.529 | 0.524 | 0.416 | 0.53 | 0.258 | 0.654 | 0.542 |
+| Gradient boosting | 0.531 | 0.524 | 0.383 | 0.531 | 0.258 | 0.664 | 0.542 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 240.5 | 0.0 |  |  |
 | Ridge regression | 241.5 | -0.008 | 0.505 | 0.676 |
-| Gradient boosting | 245.7 | -0.0433 | 0.502 | 0.961 |
+| Gradient boosting | 245.3 | -0.04 | 0.509 | 0.948 |
 
 Forecast for the next session:
 
@@ -566,7 +566,7 @@ Forecast for the next session:
   daily volatility                 +3.26%
 ```
 
-Best out-of-sample AUC **0.530**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.531**: a small edge out of sample; still check the p-values before trusting it.
 
 ![ETN feature effects](forecast_ETN.png)
 
@@ -578,7 +578,7 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.502 | 0.502 | 0.517 | 0.453 | 0.25 | 0.752 | 0.753 |
 | Logistic regression | 0.509 | 0.502 | 0.383 | 0.514 | 0.252 | 1.069 | 0.753 |
-| Gradient boosting | 0.515 | 0.502 | 0.29 | 0.515 | 0.266 | 0.804 | 0.753 |
+| Gradient boosting | 0.516 | 0.502 | 0.261 | 0.516 | 0.266 | 0.805 | 0.753 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
@@ -598,7 +598,7 @@ Forecast for the next session:
   daily volatility                 +2.24%
 ```
 
-Best out-of-sample AUC **0.515**: no reliable edge: treat the forecast as close to a coin flip.
+Best out-of-sample AUC **0.516**: no reliable edge: treat the forecast as close to a coin flip.
 
 ![TSLA feature effects](forecast_TSLA.png)
 
