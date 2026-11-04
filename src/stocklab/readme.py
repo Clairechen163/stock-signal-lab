@@ -140,33 +140,45 @@ def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: 
     return "\n\n".join(out)
 
 
-def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, source: str, report_path: str) -> str:
-    """The pre-market section: latest prices against the board's levels, plus the gap study."""
-    titles = {"pre-market": "Before the open: pre-market check", "regular session": "Intraday check",
-              "after-hours": "After the close: after-hours check", "closed": "Market closed: latest extended-hours prices"}
+def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, source: str, report_path: str,
+                     timing_text: str = "") -> str:
+    """The pre-market board: labels with the latest pre-market price as today's price."""
+    titles = {"pre-market": "Pre-market board", "regular session": "Intraday board",
+              "after-hours": "After-hours board", "closed": "Market closed: board at the latest extended-hours prices"}
     out = [f"## {titles.get(session, 'Latest prices')} at {when}"]
     out.append(
-        "*Refreshed each weekday before the US open by a second GitHub Actions workflow, and whenever "
-        "`python -m stocklab premarket` is run. Pre-market trading is thin and prices can move a lot by 9:30 ET, "
-        "so this is context for the board above, not a separate signal.*"
+        "*The same rules as the board above, with each stock's latest pre-market trade standing in for today's close "
+        "(the history before it is still daily closes). Refreshed each weekday before the US open by a second GitHub "
+        "Actions workflow, and whenever `python -m stocklab premarket` is run. Pre-market trading is thin and prices "
+        "can move a lot by 9:30 ET.*"
     )
     if source != "yahoo":
         out.append(f"> **Preview on `{source}` data, not real prices.**")
     lines = [
-        "| Ticker | Board (last close) | Last close | Latest | Change | What the move crosses | Label at this price† | Past days with a gap like this |",
-        "|---|---|---:|---:|---:|---|---|---|",
+        "| Ticker | Pre-market label | Board at last close | Last close | Pre-market | Change | Buy zone (pullback / breakout) | Stop | What the move crosses |",
+        "|---|---|---|---:|---:|---:|---|---:|---|",
     ]
     for t, r in v.iterrows():
         price = "" if pd.isna(r["price"]) else f"{r['price']:,.2f}"
-        lines.append(f"| {t} | {r['board']} | {_num(r['close'])} | {price} | {_pct(r['change'])} | "
-                     f"{r['crossed'] or '—'} | {r['what_if'] or '—'} | {r['history'] or '—'} |")
+        name = str(r["premarket_label"]).rstrip("*")
+        star = "\\*" if str(r["premarket_label"]).endswith("*") else ""
+        label = f"**{name}**{star}" + (" (changed)" if r.get("changed") else "") if name else "—"
+        zone = (f"{_num(r.get('pm_pullback_entry'))} / {_num(r.get('pm_breakout'))}"
+                if pd.notna(r.get("pm_pullback_entry")) else "—")
+        stop = _num(r.get("pm_stop")) if pd.notna(r.get("pm_stop")) else "—"
+        lines.append(f"| {t} | {label} | {r['board']} | {_num(r['close'])} | {price} | {_pct(r['change'])} | "
+                     f"{zone} | {stop} | {r['crossed'] or '—'} |")
     out.append("\n".join(lines))
     out.append(
-        "† Untested what-if: the board's rules applied as if today closed at the latest price (the two volume "
-        "rules can't fire on a pre-market price). The published board and its track record use closing prices only."
+        "The two volume rules can't fire on a pre-market price, and a label marked `*` is provisional (short history). "
+        "The close-based board above stays the reference: it is the one with the longer live track record."
     )
+    if timing_text:
+        out.append("**Does deciding before the open help?** " + timing_text +
+                   " The test uses the official opening price as a stand-in for the last pre-market trade, because free "
+                   "pre-market history only goes back a few days; every run logs real pre-market labels to "
+                   "`reports/premarket_log.csv` for a direct test later.")
     if gap_text:
-        out.append("**Do opening gaps carry into the day?** " + gap_text +
-                   " Historical gaps are measured at the official open, which is where pre-market trading ends up.")
+        out.append("**Do opening gaps carry into the day?** " + gap_text)
     out.append(f"Details: [`{report_path}`]({report_path}).")
     return "\n\n".join(out)

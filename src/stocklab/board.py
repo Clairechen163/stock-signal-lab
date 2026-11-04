@@ -64,9 +64,13 @@ EXIT_LABELS = {"SELL", "REDUCE", "AVOID", "NO SIGNAL"}
 
 
 # ------------------------------------------------------------ daily signals
-def ticker_signals(d: pd.DataFrame) -> pd.DataFrame:
-    """Per-day inputs for one stock: history length, sell score, trend tests and buy factors."""
-    n = np.arange(1, len(d) + 1)
+def ticker_signals(d: pd.DataFrame, offset: int = 0) -> pd.DataFrame:
+    """Per-day inputs for one stock: history length, sell score, trend tests and buy factors.
+
+    `offset` is the number of earlier trading days cut off the front of `d`, so a trailing
+    window of a long history still counts its true age (for NO SIGNAL and provisional labels).
+    """
+    n = offset + np.arange(1, len(d) + 1)
     states = rule_states(d)
     score = np.zeros(len(d))
     max_score = np.zeros(len(d))
@@ -105,9 +109,10 @@ def _cross_sectional_z(x: pd.DataFrame) -> pd.DataFrame:
     return x.sub(x.mean(axis=1), axis=0).div(sd, axis=0)
 
 
-def action_panel(frames: dict[str, pd.DataFrame]) -> dict[str, pd.DataFrame]:
+def action_panel(frames: dict[str, pd.DataFrame], day_offset: dict[str, int] | None = None) -> dict[str, pd.DataFrame]:
     """Label every stock on every date. Returns panels (dates x tickers)."""
-    sig = {t: ticker_signals(d) for t, d in frames.items()}
+    day_offset = day_offset or {}
+    sig = {t: ticker_signals(d, day_offset.get(t, 0)) for t, d in frames.items()}
     dates = sorted(set().union(*[s.index for s in sig.values()]))
 
     def panel(col):

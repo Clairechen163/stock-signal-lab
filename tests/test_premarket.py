@@ -83,3 +83,46 @@ def test_readme_gets_a_premarket_section_after_the_board(tmp_path):
     readme.write(str(p), "new table", readme.PM_START, readme.PM_END)
     text = p.read_text(encoding="utf-8")
     assert "new table" in text and "pre-market table" not in text and text.count(readme.PM_START) == 1
+
+
+def test_trailing_window_with_offset_reproduces_full_history_labels():
+    frames = _frames()
+    full = board.action_panel(frames)["action"]
+    day = full.index[-200]
+    sub, off = {}, {}
+    for t, d in frames.items():
+        i = d.index.get_loc(day)
+        lo = max(0, i + 1 - 320)
+        sub[t] = indicators.add_all(d[data.COLUMNS].iloc[lo:i + 1])
+        off[t] = lo
+    windowed = board.action_panel(sub, off)["action"].iloc[-1]
+    pd.testing.assert_series_equal(windowed, full.loc[day], check_names=False)
+
+
+def test_opening_labels_ignore_the_same_days_close():
+    frames = _frames()
+    day = frames["AAA"].index[-50]
+    base = premarket.opening_labels(frames, [day])
+    shocked = dict(frames)
+    raw = data.synthetic("AAA", years=3).copy()
+    raw.loc[day:, "Close"] *= 0.5  # crash from that day's close onwards
+    shocked["AAA"] = indicators.add_all(raw)
+    pd.testing.assert_frame_equal(base, premarket.opening_labels(shocked, [day]))
+
+
+def test_timing_comparison_shape():
+    frames = _frames()
+    c = premarket.compare_timing(frames, n_boot=50)
+    assert set(c["table"].index) == {"Board on the previous close", "Board on the pre-market price", "Equal-weight watchlist"}
+    assert 0 <= c["agreement"] <= 1
+    assert "deciding before the open" in premarket.timing_sentence(c)
+
+
+def test_premarket_view_has_labels_and_levels():
+    frames = _frames()
+    table, _ = board.today(frames)
+    snap = premarket._synthetic_snapshot(frames)
+    v = premarket.view(frames, table, snap)
+    assert v["premarket_label"].str.rstrip("*").isin(board.ORDER).all()
+    buyable = v["premarket_label"].str.rstrip("*").isin(["BUY", "HOLD", "WATCH"])
+    assert v.loc[buyable, "pm_stop"].notna().all()

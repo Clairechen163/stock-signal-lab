@@ -149,21 +149,40 @@ yet are dropped, and the README's live section is rewritten between two marker c
 leaving the rest of the README untouched. If fewer than half of the watchlist stocks load,
 the run stops without changing anything.
 
-## 9. Pre-market check and opening gaps (`premarket`)
+## 9. Pre-market board, timing test and opening gaps (`premarket`)
 
 **Snapshot.** One batched Yahoo request downloads 1-minute bars for the last five days
 including extended hours (`prepost=True`). For each stock the latest bar gives the price,
 its New York time and its session (pre-market 04:00-09:30, regular 09:30-16:00,
 after-hours 16:00-20:00; exchange holidays are not modelled). A stock with no trades yet
-today is flagged rather than shown as moving. The check lists which of the board's price
-levels the move from the last close crosses (50- and 200-day averages, chandelier stop,
-breakout level, the board's stop, and the user's own stop-loss).
+today is flagged rather than shown as moving.
 
-**What-if label.** A hypothetical bar is appended with open, high, low and close equal to
-the latest price and no volume, and the board's rules are re-run. It answers "would the
-label change if the stock closed here?" It is labelled untested, is never logged as a
-board signal, and the two volume rules cannot fire on it. The published labels and their
-track record use closing prices only.
+**Pre-market board.** Each stock's daily history (to the last close) gets one more bar for
+today, with open, high, low and close equal to the latest pre-market price and no volume,
+and the board's rules are re-run on it. The labels, buy ranks, pullback entries, breakout
+levels and stops therefore reflect the overnight move. Without volume the two volume rules
+cannot fire on that bar. The check also lists which levels from the last close the move
+crosses (50- and 200-day averages, chandelier stop, breakout level, stops).
+
+**Timing test.** Does deciding before the open beat deciding at the previous close? On the
+same review days (every 5 trading days), two versions of the label-trading rule (buy on
+BUY; exit on SELL, REDUCE, AVOID or NO SIGNAL; equal weight) are compared:
+
+* close board: labels from the previous close, traded at the open;
+* pre-market board: labels from a bar at today's open, traded at the open.
+
+Positions are held open to open with 5 bp turnover costs, so the only difference is the
+information set. Free pre-market history from Yahoo covers days, not years, so the official
+opening price stands in for the last pre-market trade. That flatters the pre-market version
+slightly (an 08:47 price is a noisier guide to the open than the open itself), which is the
+conservative direction for a test that asks whether it helps. The labels for each past day
+are recomputed on a trailing 320-day window (enough for every indicator; a unit test checks
+the result matches the full-history labels), with the true history length passed on so
+young listings stay provisional. A unit test also checks that a day's own close never
+enters that day's pre-market label. The Sharpe-ratio difference gets a paired circular
+block-bootstrap interval, and the share of stock-weeks where the two labels agree is
+reported. Each run appends the real pre-market labels to `reports/premarket_log.csv`, so a
+direct test with actual pre-market prices becomes possible as the log grows.
 
 **Gap study.** Over the watchlist's five years of daily data, the opening gap is
 open / previous close - 1 (where pre-market trading ends up) and the session return is
@@ -175,11 +194,6 @@ correlated. A table by gap size gives the average session return and how often t
 closed above its open. On the synthetic data used in CI the overnight and intraday moves
 are generated independently, so the interval should include zero; a unit test also plants
 a reversal and checks that it is found.
-
-**Limitation.** Historical gaps are measured at the official open, not at the moment of
-the pre-market snapshot; free intraday history from Yahoo is too short (days, not years) to
-test pre-market prices directly. Each run appends its snapshot to
-`reports/premarket_log.csv`, so a direct test becomes possible as the log grows.
 
 ## 10. Limitations
 

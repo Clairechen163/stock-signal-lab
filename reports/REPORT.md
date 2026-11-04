@@ -392,7 +392,7 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 390.4 | 0.0 |  |  |
 | Ridge regression | 394.7 | -0.0219 | 0.485 | 0.902 |
-| Gradient boosting | 399.7 | -0.0482 | 0.475 | 0.993 |
+| Gradient boosting | 399.7 | -0.0478 | 0.475 | 0.993 |
 
 Forecast for the next session:
 
@@ -450,13 +450,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.536 | 0.536 | 0.517 | 0.485 | 0.249 | 0.908 | 0.908 |
 | Logistic regression | 0.542 | 0.536 | 0.416 | 0.551 | 0.251 | 1.275 | 0.908 |
-| Gradient boosting | 0.527 | 0.536 | 0.681 | 0.544 | 0.262 | 0.888 | 0.908 |
+| Gradient boosting | 0.527 | 0.536 | 0.681 | 0.543 | 0.262 | 0.888 | 0.908 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 473.0 | 0.0 |  |  |
 | Ridge regression | 474.3 | -0.0051 | 0.524 | 0.632 |
-| Gradient boosting | 481.0 | -0.0339 | 0.493 | 0.958 |
+| Gradient boosting | 481.1 | -0.0342 | 0.495 | 0.957 |
 
 Forecast for the next session:
 
@@ -482,13 +482,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.52 | 0.52 | 0.517 | 0.492 | 0.25 | 0.901 | 0.901 |
 | Logistic regression | 0.553 | 0.52 | 0.068 | 0.534 | 0.253 | 0.432 | 0.901 |
-| Gradient boosting | 0.538 | 0.52 | 0.209 | 0.537 | 0.261 | 0.538 | 0.901 |
+| Gradient boosting | 0.538 | 0.52 | 0.209 | 0.535 | 0.262 | 0.515 | 0.901 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.0 | 0.0 |  |  |
 | Ridge regression | 204.1 | -0.0304 | 0.522 | 0.988 |
-| Gradient boosting | 208.9 | -0.0794 | 0.515 | 0.999 |
+| Gradient boosting | 208.8 | -0.0789 | 0.515 | 0.999 |
 
 Forecast for the next session:
 
@@ -502,7 +502,7 @@ Forecast for the next session:
   daily volatility                 +3.03%
 ```
 
-Best out-of-sample AUC **0.537**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.535**: a small edge out of sample; still check the p-values before trusting it.
 
 ![GOOG feature effects](forecast_GOOG.png)
 
@@ -546,13 +546,13 @@ Walk-forward test on 550 unseen days (2024-08-23 to 2026-11-02).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.477 | 0.25 | 0.542 | 0.542 |
 | Logistic regression | 0.509 | 0.524 | 0.766 | 0.504 | 0.255 | 0.622 | 0.542 |
-| Gradient boosting | 0.535 | 0.524 | 0.32 | 0.531 | 0.258 | 0.738 | 0.542 |
+| Gradient boosting | 0.533 | 0.524 | 0.351 | 0.531 | 0.258 | 0.676 | 0.542 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 240.5 | 0.0 |  |  |
 | Ridge regression | 241.5 | -0.008 | 0.505 | 0.676 |
-| Gradient boosting | 245.4 | -0.0414 | 0.505 | 0.954 |
+| Gradient boosting | 245.4 | -0.0414 | 0.504 | 0.953 |
 
 Forecast for the next session:
 
@@ -680,3 +680,15 @@ Across 9,609 stock-days (10 watchlist stocks, 2021-11-05 to 2026-11-03), each 1%
 | within 1% | 5173 | +0.0% | +0.02% | 50% |
 | up 1-3% | 1858 | +1.7% | +0.08% | 52% |
 | gap up 3%+ | 502 | +5.3% | -0.24% | 46% |
+
+## 9. Deciding before the open vs at the previous close
+
+From 2022-02-01 to 2026-11-02 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +27.1% a year (worst drawdown -43.0%) against +25.5% (-40.1%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference +0.04 (95% block-bootstrap CI [-0.17, +0.22]): deciding before the open has been **not distinguishable from deciding on the previous close**.
+
+| strategy | CAGR | Volatility | Sharpe | Max drawdown |
+|---|---|---|---|---|
+| Board on the previous close | +25.5% | 36.2% | 0.81 | -40.1% |
+| Board on the pre-market price | +27.1% | 35.5% | 0.85 | -43.0% |
+| Equal-weight watchlist | +37.8% | 39.3% | 1.01 | -43.8% |
+
+The pre-market version uses the official opening price as a stand-in for the last pre-market trade (free pre-market history is only days long), which slightly flatters it.

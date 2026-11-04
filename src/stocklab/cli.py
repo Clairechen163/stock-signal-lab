@@ -2,7 +2,7 @@
 
     python -m stocklab update                 # refresh everything and the README (what the daily job runs)
     python -m stocklab board                  # today's BUY / HOLD / WATCH / AVOID / REDUCE / SELL labels
-    python -m stocklab premarket              # pre-market prices against the board's levels (before the open)
+    python -m stocklab premarket              # the board re-run at pre-market prices (before the open)
     python -m stocklab report                 # full report in reports/REPORT.md
     python -m stocklab sell-check ALAB AMD:150 --stop 0.15
     python -m stocklab sell-study
@@ -406,8 +406,43 @@ def cmd_gaps(args, md=None, outdir=None, frames=None):
     return g
 
 
+def timing_table(c: dict) -> pd.DataFrame:
+    t = c["table"].copy()
+    for col in ["CAGR", "Max drawdown"]:
+        t[col] = t[col].map(lambda v: f"{v:+.1%}")
+    t["Volatility"] = t["Volatility"].map(lambda v: f"{v:.1%}")
+    t["Sharpe"] = t["Sharpe"].map(lambda v: f"{v:.2f}")
+    return t
+
+
+def cmd_timing(args, md=None, outdir=None, frames=None):
+    """Deciding before the open (pre-market price) vs at the previous close, on the same trading days."""
+    if frames is None:
+        _, frames = load_ind(list(watchlist(args)), args, min_rows=board.MIN_SIGNAL_DAYS)
+    print("Testing pre-market labels against close labels (about a minute)...")
+    c = premarket.compare_timing(frames, cost_bps=args.cost_bps, n_boot=args.n_boot)
+    if not c:
+        print("  timing test skipped: not enough history")
+        return c
+    section("Deciding before the open vs at the previous close")
+    print(timing_table(c).to_string())
+    text = premarket.timing_sentence(c)
+    print("\n" + text.replace("**", ""))
+    if md is not None:
+        md.append(text + "\n")
+        md.append(md_table(timing_table(c), index_label="strategy") + "\n")
+        md.append("The pre-market version uses the official opening price as a stand-in for the last pre-market trade "
+                  "(free pre-market history is only days long), which slightly flatters it.\n")
+    if outdir:  # the morning job reuses this instead of re-running a minute-long test
+        import json
+
+        with open(os.path.join(outdir, "timing_test.json"), "w", encoding="utf-8") as f:
+            json.dump({"sentence": text, "end": str(c["end"].date())}, f, indent=2)
+    return c
+
+
 def cmd_premarket(args, md=None, outdir=None):
-    """Latest pre-market (or intraday / after-hours) prices against the board's levels."""
+    """Pre-market board: the board's rules with the latest pre-market price as today's price."""
     wl = watchlist(args)
     tickers = [t.upper() for t in args.tickers] if getattr(args, "tickers", None) else list(wl)
     _, frames = load_ind(tickers, args, min_rows=1)
@@ -420,46 +455,67 @@ def cmd_premarket(args, md=None, outdir=None):
         raise SystemExit("No pre-market or intraday prices could be downloaded; nothing updated.")
     gaps = premarket.gap_study(frames, n_boot=args.n_boot)
     v = premarket.view(frames, table, snap, gaps, entries=wl, stop_pct=args.stop)
+    out = args.out
+    os.makedirs(out, exist_ok=True)
+
+    timing_text = ""
+    path = os.path.join(out, "timing_test.json")
+    if os.path.exists(path):
+        import json
+
+        with open(path, encoding="utf-8") as f:
+            timing_text = json.load(f).get("sentence", "")
+    else:
+        timing_text = premarket.timing_sentence(cmd_timing(args, None, out, frames))
+
     latest = max(pd.Timestamp(t) for t in snap["time"])
     session = premarket.session_of(latest)
     when = latest.strftime("%H:%M ET on %Y-%m-%d")
-    section(f"Latest prices ({session}, {when})")
+    section(f"Pre-market board ({session}, {when})")
     show = pd.DataFrame(index=v.index)
-    show["board (close)"] = v["board"]
+    show["pre-market label"] = v["premarket_label"] + v["changed"].map({True: " (changed)", False: ""})
+    show["board at close"] = v["board"]
     show["close"] = v["close"].map(lambda x: f"{x:,.2f}")
-    show["latest"] = v["price"].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}")
+    show["pre-market"] = v["price"].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}")
     show["change"] = v["change"].map(pct)
+    for c, label in [("pm_pullback_entry", "pullback entry"), ("pm_breakout", "breakout"), ("pm_stop", "stop")]:
+        show[label] = v[c].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}") if c in v else ""
     show["session"] = v["session"]
-    show["label at this price"] = v["what_if"]
     show["crosses"] = v["crossed"]
     show.index.name = "ticker"
     print(show.to_string())
-    print("\nLabel at this price: untested what-if, as if today closed at the latest price.")
+    if timing_text:
+        print("\n" + timing_text.replace("**", ""))
     if gaps:
         print("\n" + premarket.gap_sentence(gaps))
-    out = args.out
-    os.makedirs(out, exist_ok=True)
-    md_lines = [f"# Pre-market check, {when}\n", f"> {DISCLAIMER}\n",
-                "Latest extended-hours prices for the watchlist against the board's levels from the last close.\n",
-                md_table(show) + "\n",
-                "*Label at this price* is an untested what-if: the board's rules applied as if today closed at the latest "
-                "price. The published board and its track record use closing prices only.\n"]
+
+    md_lines = [f"# Pre-market board, {when}\n", f"> {DISCLAIMER}\n",
+                "The board's rules with each stock's latest pre-market trade standing in for today's close; the history "
+                "before it is daily closes. The volume rules can't fire on a pre-market price.\n",
+                md_table(show) + "\n"]
+    if timing_text:
+        md_lines += ["## Does deciding before the open help?\n", timing_text + "\n"]
     if gaps:
         md_lines += ["## Do opening gaps carry into the day?\n", premarket.gap_sentence(gaps) + "\n",
                      md_table(gap_table(gaps), index_label="opening gap") + "\n"]
     with open(os.path.join(out, "PREMARKET.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(md_lines))
-    log = v.reset_index()[["ticker", "board", "close", "price", "change", "session", "time", "what_if"]]
+
+    log = v.reset_index()[["ticker", "board", "premarket_label", "close", "price", "change", "session", "time"]]
     log_path = os.path.join(out, "premarket_log.csv")
     if os.path.exists(log_path):
-        log = pd.concat([pd.read_csv(log_path), log]).drop_duplicates(["ticker", "time"], keep="last")
-    log.to_csv(log_path, index=False, float_format="%.4f")
+        old = pd.read_csv(log_path)
+        if "what_if" in old and "premarket_label" not in old:  # logs written before the column was renamed
+            old["premarket_label"] = old.pop("what_if").astype(str).str.replace(" (changed)", "", regex=False)
+        log = pd.concat([old, log]).drop_duplicates(["ticker", "time"], keep="last")
+    log[[c for c in log.columns if c in ("ticker", "board", "premarket_label", "close", "price", "change", "session",
+                                          "time")]].to_csv(log_path, index=False, float_format="%.4f")
     print(f"\nWritten: {os.path.join(out, 'PREMARKET.md')}")
     if getattr(args, "readme", None) and args.readme.lower() != "none":
         base = os.path.dirname(os.path.abspath(args.readme))
         rel = os.path.relpath(os.path.abspath(out), base).replace(os.sep, "/")
         block = readme.render_premarket(v, gaps, premarket.gap_sentence(gaps), when, session, args.source,
-                                        f"{rel}/PREMARKET.md")
+                                        f"{rel}/PREMARKET.md", timing_text)
         readme.write(args.readme, block, readme.PM_START, readme.PM_END)
         print(f"Pre-market section of {args.readme} updated.")
     return {"view": v, "gaps": gaps}
@@ -501,13 +557,15 @@ def cmd_report(args):
     pf = cmd_portfolio(sub_args(args, tickers=None), md, args.out)
     md.append("## 8. Opening gaps: do pre-market moves carry into the day?\n")
     gaps = cmd_gaps(sub_args(args, tickers=None), md, args.out)
+    md.append("## 9. Deciding before the open vs at the previous close\n")
+    timing = cmd_timing(sub_args(args, tickers=None), md, args.out)
 
     path = os.path.join(args.out, "REPORT.md")
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
     print(f"\nReport written to {path}")
     return {"board": board_res, "study": study, "backtest": bt, "forecast": fc, "portfolio": pf, "gaps": gaps,
-            "watchlist": wl}
+            "timing": timing, "watchlist": wl}
 
 
 def key_findings(res: dict) -> dict:
@@ -561,6 +619,9 @@ def key_findings(res: dict) -> dict:
                             f"**{wl_share:.0%} of the risk**; the largest risk contributors are {', '.join(top.index)}.")
         if pf.get("skipped"):
             out["portfolio"] += f" Not yet included for lack of history: {', '.join(pf['skipped'])}."
+    tm = res.get("timing")
+    if tm:
+        out["timing"] = "Pre-market vs close: " + premarket.timing_sentence(tm)[0].lower() + premarket.timing_sentence(tm)[1:]
     g = res.get("gaps")
     if g:
         out["gaps"] = "Opening gaps: " + premarket.gap_sentence(g)[0].lower() + premarket.gap_sentence(g)[1:]
@@ -655,7 +716,7 @@ def build_parser():
     bd.add_argument("--tickers", nargs="+")
 
     pm = sp.add_parser("premarket", parents=[common, trade],
-                       help="pre-market prices against the board's levels, plus the opening-gap study")
+                       help="the board's rules at the latest pre-market prices, plus the timing and gap tests")
     pm.add_argument("--tickers", nargs="+")
     pm.add_argument("--readme", default="README.md", help="README whose pre-market section to refresh ('none' to skip)")
 
