@@ -1,0 +1,47 @@
+name: premarket-update
+
+# Before each US open: compares pre-market prices with the board's levels from the last
+# close, re-runs the opening-gap study and refreshes the README's pre-market section.
+# Disable it from the Actions tab if you only want the after-close refresh.
+
+on:
+  schedule:
+    # 12:47 UTC on weekdays = 07:47 New York in winter, 08:47 in summer: inside the
+    # 04:00-09:30 pre-market session, with room for GitHub's occasional start delays.
+    - cron: "47 12 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: readme-refresh  # shared with daily-update, so the two never push at the same time
+  cancel-in-progress: false
+
+jobs:
+  premarket:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e .
+      - name: Pre-market check
+        run: python -m stocklab premarket
+      - name: Commit the refreshed results
+        # Authored as the account that owns this workflow, so no bot account joins the contributors.
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git add README.md reports
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "Pre-market check: $(TZ=America/New_York date '+%Y-%m-%d %H:%M') ET"
+          git pull --rebase
+          git push

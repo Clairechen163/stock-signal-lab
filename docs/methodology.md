@@ -149,7 +149,39 @@ yet are dropped, and the README's live section is rewritten between two marker c
 leaving the rest of the README untouched. If fewer than half of the watchlist stocks load,
 the run stops without changing anything.
 
-## 9. Limitations
+## 9. Pre-market check and opening gaps (`premarket`)
+
+**Snapshot.** One batched Yahoo request downloads 1-minute bars for the last five days
+including extended hours (`prepost=True`). For each stock the latest bar gives the price,
+its New York time and its session (pre-market 04:00-09:30, regular 09:30-16:00,
+after-hours 16:00-20:00; exchange holidays are not modelled). A stock with no trades yet
+today is flagged rather than shown as moving. The check lists which of the board's price
+levels the move from the last close crosses (50- and 200-day averages, chandelier stop,
+breakout level, the board's stop, and the user's own stop-loss).
+
+**What-if label.** A hypothetical bar is appended with open, high, low and close equal to
+the latest price and no volume, and the board's rules are re-run. It answers "would the
+label change if the stock closed here?" It is labelled untested, is never logged as a
+board signal, and the two volume rules cannot fire on it. The published labels and their
+track record use closing prices only.
+
+**Gap study.** Over the watchlist's five years of daily data, the opening gap is
+open / previous close - 1 (where pre-market trading ends up) and the session return is
+close / open - 1. Both are winsorised at the 0.5th/99.5th percentile, and the pooled
+least-squares slope of session return on gap measures continuation (positive) or reversal
+(negative). Its 95% interval comes from a circular block bootstrap over dates (21-day
+blocks), which resamples whole cross-sections so same-day moves across stocks stay
+correlated. A table by gap size gives the average session return and how often the stock
+closed above its open. On the synthetic data used in CI the overnight and intraday moves
+are generated independently, so the interval should include zero; a unit test also plants
+a reversal and checks that it is found.
+
+**Limitation.** Historical gaps are measured at the official open, not at the moment of
+the pre-market snapshot; free intraday history from Yahoo is too short (days, not years) to
+test pre-market prices directly. Each run appends its snapshot to
+`reports/premarket_log.csv`, so a direct test becomes possible as the log grows.
+
+## 10. Limitations
 
 * **Selection and survivorship bias.** Universes are chosen today, from companies that
   survived and grew. Backtests on them flatter buy & hold and momentum.

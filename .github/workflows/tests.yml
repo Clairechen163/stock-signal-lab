@@ -21,3 +21,5 @@ jobs:
         run: pytest -q
       - name: Offline end-to-end update (synthetic prices, no network, README untouched)
         run: python -m stocklab update --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md --n-sims 300 --n-boot 200
+      - name: Offline pre-market check (synthetic prices)
+        run: python -m stocklab premarket --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md --n-boot 200

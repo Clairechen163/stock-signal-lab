@@ -82,10 +82,13 @@ def synthetic(ticker: str, years: int = 5, seed: int | None = None) -> pd.DataFr
     n = min(years * 252, SYNTHETIC_LISTING_DAYS.get(ticker, years * 252))
     dates = pd.bdate_range(end=pd.Timestamp("2026-10-14"), periods=n)
 
-    common = rng.normal(0, 0.012, n)  # shared "market" factor creates realistic correlation
+    # Market factor shared by every ticker (fixed seed, aligned on the common end date), so
+    # synthetic stocks move together the way real ones do.
+    market = np.random.default_rng(20261014).normal(0, 0.012, (2, max(5000, n)))[:, -n:]
     mu_bull, mu_bear = rng.uniform(0.25, 0.6), rng.uniform(-0.45, -0.15)
     sigma = rng.uniform(0.25, 0.6) / np.sqrt(252)
-    regime, rets = 1, np.empty(n)
+    regime = 1
+    night, day = np.empty(n), np.empty(n)
     remaining = rng.integers(60, 250)
     for i in range(n):
         if remaining == 0:
@@ -94,17 +97,22 @@ def synthetic(ticker: str, years: int = 5, seed: int | None = None) -> pd.DataFr
         remaining -= 1
         mu = (mu_bull if regime else mu_bear) / 252
         vol = sigma * (1.0 if regime else 1.6)
-        rets[i] = mu + 0.8 * common[i] + rng.normal(0, vol)
+        # A day's return is an overnight move (previous close to open) plus an independent
+        # intraday move (open to close), so synthetic opening gaps carry no information about
+        # the session that follows: the gap study should find nothing here.
+        night[i] = 0.3 * mu + np.sqrt(0.3) * (0.8 * market[0, i] + rng.normal(0, vol))
+        day[i] = 0.7 * mu + np.sqrt(0.7) * (0.8 * market[1, i] + rng.normal(0, vol))
+    rets = night + day
 
     close = 100 * np.exp(np.cumsum(rets))
+    open_ = close * np.exp(-day)
     spread = np.abs(rng.normal(0, sigma, n)) * close
-    high = close + spread
-    low = np.maximum(close - spread, 0.01)
-    open_ = np.r_[close[0], close[:-1]] * (1 + rng.normal(0, sigma / 3, n))
+    high = np.maximum(close, open_) + spread
+    low = np.maximum(np.minimum(close, open_) - spread, 0.01)
     base_vol = rng.lognormal(15, 0.3)
     volume = base_vol * np.exp(rng.normal(0, 0.35, n) + 8 * np.abs(rets))  # big moves, big volume
     df = pd.DataFrame(
-        {"Open": open_, "High": np.maximum(high, open_), "Low": np.minimum(low, open_), "Close": close, "Volume": volume},
+        {"Open": open_, "High": high, "Low": low, "Close": close, "Volume": volume},
         index=dates,
     )
     df.index.name = "Date"

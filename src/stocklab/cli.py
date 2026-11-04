@@ -2,6 +2,7 @@
 
     python -m stocklab update                 # refresh everything and the README (what the daily job runs)
     python -m stocklab board                  # today's BUY / HOLD / WATCH / AVOID / REDUCE / SELL labels
+    python -m stocklab premarket              # pre-market prices against the board's levels (before the open)
     python -m stocklab report                 # full report in reports/REPORT.md
     python -m stocklab sell-check ALAB AMD:150 --stop 0.15
     python -m stocklab sell-study
@@ -24,7 +25,7 @@ import sys
 import pandas as pd
 from scipy import stats as st
 
-from . import backtest, board, config, data, forecast, indicators, plots, portfolio, readme, screener, sell_signals
+from . import backtest, board, config, data, forecast, indicators, plots, portfolio, premarket, readme, screener, sell_signals
 
 STUDY_UNIVERSE = sorted(
     set(screener.DEFAULT_UNIVERSE)
@@ -380,6 +381,90 @@ def cmd_board(args, md=None, outdir=None):
     return {"table": table, "evaluation": evaluation, "as_of": as_of, "skipped": skipped}
 
 
+def gap_table(g: dict) -> pd.DataFrame:
+    b = g["buckets"].copy()
+    b["avg gap"] = b["avg gap"].map(pct)
+    b["avg open-to-close"] = b["avg open-to-close"].map(lambda v: "" if pd.isna(v) else f"{v:+.2%}")
+    b["closed above open"] = b["closed above open"].map(lambda v: "" if pd.isna(v) else f"{v:.0%}")
+    return b
+
+
+def cmd_gaps(args, md=None, outdir=None, frames=None):
+    """Gap study on the watchlist: do opening gaps continue or reverse during the session?"""
+    if frames is None:
+        _, frames = load_ind(list(watchlist(args)), args, min_rows=board.MIN_SIGNAL_DAYS)
+    g = premarket.gap_study(frames, n_boot=args.n_boot)
+    if not g:
+        print("  gap study skipped: not enough history")
+        return g
+    section("Opening gaps vs the regular session")
+    print(gap_table(g).to_string())
+    print("\n" + premarket.gap_sentence(g))
+    if md is not None:
+        md.append(premarket.gap_sentence(g) + "\n")
+        md.append(md_table(gap_table(g), index_label="opening gap") + "\n")
+    return g
+
+
+def cmd_premarket(args, md=None, outdir=None):
+    """Latest pre-market (or intraday / after-hours) prices against the board's levels."""
+    wl = watchlist(args)
+    tickers = [t.upper() for t in args.tickers] if getattr(args, "tickers", None) else list(wl)
+    _, frames = load_ind(tickers, args, min_rows=1)
+    if not frames:
+        raise SystemExit("No price data could be loaded for the watchlist.")
+    table, _ = board.today(frames, entries=wl, stop_pct=args.stop, capital=args.capital, risk_per_trade=args.risk,
+                           max_weight=args.max_position)
+    snap = premarket.snapshot(list(frames), args.source, frames)
+    if snap.empty:
+        raise SystemExit("No pre-market or intraday prices could be downloaded; nothing updated.")
+    gaps = premarket.gap_study(frames, n_boot=args.n_boot)
+    v = premarket.view(frames, table, snap, gaps, entries=wl, stop_pct=args.stop)
+    latest = max(pd.Timestamp(t) for t in snap["time"])
+    session = premarket.session_of(latest)
+    when = latest.strftime("%H:%M ET on %Y-%m-%d")
+    section(f"Latest prices ({session}, {when})")
+    show = pd.DataFrame(index=v.index)
+    show["board (close)"] = v["board"]
+    show["close"] = v["close"].map(lambda x: f"{x:,.2f}")
+    show["latest"] = v["price"].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}")
+    show["change"] = v["change"].map(pct)
+    show["session"] = v["session"]
+    show["label at this price"] = v["what_if"]
+    show["crosses"] = v["crossed"]
+    show.index.name = "ticker"
+    print(show.to_string())
+    print("\nLabel at this price: untested what-if, as if today closed at the latest price.")
+    if gaps:
+        print("\n" + premarket.gap_sentence(gaps))
+    out = args.out
+    os.makedirs(out, exist_ok=True)
+    md_lines = [f"# Pre-market check, {when}\n", f"> {DISCLAIMER}\n",
+                "Latest extended-hours prices for the watchlist against the board's levels from the last close.\n",
+                md_table(show) + "\n",
+                "*Label at this price* is an untested what-if: the board's rules applied as if today closed at the latest "
+                "price. The published board and its track record use closing prices only.\n"]
+    if gaps:
+        md_lines += ["## Do opening gaps carry into the day?\n", premarket.gap_sentence(gaps) + "\n",
+                     md_table(gap_table(gaps), index_label="opening gap") + "\n"]
+    with open(os.path.join(out, "PREMARKET.md"), "w", encoding="utf-8") as f:
+        f.write("\n".join(md_lines))
+    log = v.reset_index()[["ticker", "board", "close", "price", "change", "session", "time", "what_if"]]
+    log_path = os.path.join(out, "premarket_log.csv")
+    if os.path.exists(log_path):
+        log = pd.concat([pd.read_csv(log_path), log]).drop_duplicates(["ticker", "time"], keep="last")
+    log.to_csv(log_path, index=False, float_format="%.4f")
+    print(f"\nWritten: {os.path.join(out, 'PREMARKET.md')}")
+    if getattr(args, "readme", None) and args.readme.lower() != "none":
+        base = os.path.dirname(os.path.abspath(args.readme))
+        rel = os.path.relpath(os.path.abspath(out), base).replace(os.sep, "/")
+        block = readme.render_premarket(v, gaps, premarket.gap_sentence(gaps), when, session, args.source,
+                                        f"{rel}/PREMARKET.md")
+        readme.write(args.readme, block, readme.PM_START, readme.PM_END)
+        print(f"Pre-market section of {args.readme} updated.")
+    return {"view": v, "gaps": gaps}
+
+
 def sub_args(args, **kw):
     ns = argparse.Namespace(**vars(args))
     for k, v in kw.items():
@@ -414,12 +499,15 @@ def cmd_report(args):
     cmd_screen(sub_args(args, tickers=None), md, args.out)
     md.append("## 7. Portfolio construction\n")
     pf = cmd_portfolio(sub_args(args, tickers=None), md, args.out)
+    md.append("## 8. Opening gaps: do pre-market moves carry into the day?\n")
+    gaps = cmd_gaps(sub_args(args, tickers=None), md, args.out)
 
     path = os.path.join(args.out, "REPORT.md")
     with open(path, "w", encoding="utf-8") as f:
         f.write("\n".join(md))
     print(f"\nReport written to {path}")
-    return {"board": board_res, "study": study, "backtest": bt, "forecast": fc, "portfolio": pf, "watchlist": wl}
+    return {"board": board_res, "study": study, "backtest": bt, "forecast": fc, "portfolio": pf, "gaps": gaps,
+            "watchlist": wl}
 
 
 def key_findings(res: dict) -> dict:
@@ -473,6 +561,9 @@ def key_findings(res: dict) -> dict:
                             f"**{wl_share:.0%} of the risk**; the largest risk contributors are {', '.join(top.index)}.")
         if pf.get("skipped"):
             out["portfolio"] += f" Not yet included for lack of history: {', '.join(pf['skipped'])}."
+    g = res.get("gaps")
+    if g:
+        out["gaps"] = "Opening gaps: " + premarket.gap_sentence(g)[0].lower() + premarket.gap_sentence(g)[1:]
     return out
 
 
@@ -501,6 +592,7 @@ def prefetch_for(args) -> None:
         "sell-study": STUDY_UNIVERSE,
         "screen": screener.DEFAULT_UNIVERSE,
         "portfolio": DIVERSIFIERS,
+        "premarket": [],
     }.get(args.command, [])
     chosen = getattr(args, "tickers", None) or [h.split(":")[0] for h in (getattr(args, "holdings", None) or [])] or wl
     data.prefetch([t.upper() for t in chosen] + extra + [getattr(args, "benchmark", "SPY")], args.years, args.source, args.csv_dir)
@@ -562,6 +654,11 @@ def build_parser():
     bd = sp.add_parser("board", parents=[common, trade], help="today's buy/sell labels for the watchlist")
     bd.add_argument("--tickers", nargs="+")
 
+    pm = sp.add_parser("premarket", parents=[common, trade],
+                       help="pre-market prices against the board's levels, plus the opening-gap study")
+    pm.add_argument("--tickers", nargs="+")
+    pm.add_argument("--readme", default="README.md", help="README whose pre-market section to refresh ('none' to skip)")
+
     b = sp.add_parser("backtest", parents=[common, trade], help="compare buy/sell rules against buy & hold")
     b.add_argument("--tickers", nargs="+")
 
@@ -588,6 +685,7 @@ def main(argv=None):
     print(DISCLAIMER)
     handlers = {
         "board": cmd_board,
+        "premarket": cmd_premarket,
         "backtest": cmd_backtest,
         "sell-check": cmd_sell_check,
         "sell-study": cmd_sell_study,

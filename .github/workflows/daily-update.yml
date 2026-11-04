@@ -15,7 +15,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: daily-update
+  group: readme-refresh  # shared with premarket-update, so the two never push at the same time
   cancel-in-progress: false
 
 jobs:
