@@ -1,4 +1,4 @@
-# Pre-market board, 05:17 ET on 2026-11-05
+# Pre-market board, 06:07 ET on 2026-11-05
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,17 +6,17 @@ The board's rules with each stock's latest pre-market trade standing in for toda
 
 | ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | crosses |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 266.03 | 267.60 | +0.6% | 254.80 | 268.14 | 238.65 | pre-market | now above breakout level (266.56) |
-| TSLA | REDUCE (changed) | WATCH | 385.19 | 378.32 | -1.8% |  |  |  | pre-market | now below 200-day average (384.76) |
-| AMD | REDUCE | REDUCE | 488.78 | 475.75 | -2.7% |  |  |  | pre-market |  |
-| NVDA | REDUCE | REDUCE | 200.13 | 199.30 | -0.4% |  |  |  | pre-market |  |
-| SKHY | REDUCE* | REDUCE* | 143.07 | 137.21 | -4.1% |  |  |  | pre-market |  |
-| FSLR | AVOID (changed) | REDUCE | 194.51 | 199.77 | +2.7% |  |  |  | pre-market |  |
-| MRVL | REDUCE (changed) | SELL | 159.80 | 156.19 | -2.3% |  |  |  | pre-market |  |
-| ALAB | REDUCE (changed) | SELL | 223.27 | 217.00 | -2.8% |  |  |  | pre-market |  |
-| ETN | SELL | SELL | 353.08 | 348.20 | -1.4% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 287.30 | 289.48 | +0.8% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 135.92 | 134.50 | -1.0% |  |  |  | pre-market |  |
+| AMZN | BUY | BUY | 266.03 | 269.50 | +1.3% | 254.90 | 270.04 | 238.48 | pre-market | now above breakout level (266.56) |
+| TSLA | REDUCE (changed) | WATCH | 385.19 | 377.07 | -2.1% |  |  |  | pre-market | now below 200-day average (384.76) |
+| AMD | REDUCE | REDUCE | 488.78 | 474.75 | -2.9% |  |  |  | pre-market |  |
+| NVDA | REDUCE | REDUCE | 200.13 | 198.48 | -0.8% |  |  |  | pre-market |  |
+| SKHY | REDUCE* | REDUCE* | 143.07 | 136.10 | -4.9% |  |  |  | pre-market |  |
+| FSLR | AVOID (changed) | REDUCE | 194.51 | 200.61 | +3.1% |  |  |  | pre-market |  |
+| MRVL | REDUCE (changed) | SELL | 159.80 | 154.60 | -3.3% |  |  |  | pre-market |  |
+| ALAB | REDUCE (changed) | SELL | 223.27 | 216.80 | -2.9% |  |  |  | pre-market |  |
+| ETN | SELL | SELL | 353.08 | 351.00 | -0.6% |  |  |  | pre-market |  |
+| GOOG | SELL | SELL | 287.30 | 289.90 | +0.9% |  |  |  | pre-market |  |
+| SPCX | SELL* | SELL* | 135.92 | 133.91 | -1.5% |  |  |  | pre-market |  |
 
 ## Does deciding before the open help?
 
