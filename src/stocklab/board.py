@@ -61,6 +61,23 @@ SHORT_RULE = {
     "chandelier_stop": "below chandelier stop",
 }
 EXIT_LABELS = {"SELL", "REDUCE", "AVOID", "NO SIGNAL"}
+VOLUME_RULES = [r.key for r in RULES if r.category == "volume"]
+
+
+def board_states(d: pd.DataFrame) -> pd.DataFrame:
+    """Rule states as the board uses them.
+
+    A bar without volume (a pre-market price, or the opening price in the timing test) cannot
+    say whether today's volume is heavy, so the two volume rules keep their value from the
+    last full session instead of switching off. A label can then change before the open only
+    through the price-based rules, which is what the pre-market board reports.
+    """
+    states = rule_states(d)
+    if "Volume" in d and d["Volume"].isna().any():
+        no_volume = d["Volume"].isna().to_numpy()
+        for k in VOLUME_RULES:
+            states[k] = states[k].astype(float).where(~no_volume).ffill().fillna(0.0).astype(bool)
+    return states
 
 
 # ------------------------------------------------------------ daily signals
@@ -71,7 +88,7 @@ def ticker_signals(d: pd.DataFrame, offset: int = 0) -> pd.DataFrame:
     window of a long history still counts its true age (for NO SIGNAL and provisional labels).
     """
     n = offset + np.arange(1, len(d) + 1)
-    states = rule_states(d)
+    states = board_states(d)
     score = np.zeros(len(d))
     max_score = np.zeros(len(d))
     for r in RULES:
@@ -159,7 +176,7 @@ def today(frames, entries=None, stop_pct=0.15, capital=100_000, risk_per_trade=0
     """Today's board: one row per stock with its label, the reasons and the levels to act on."""
     entries = entries or {}
     pan = action_panel(frames)
-    states_today = {t: rule_states(d).iloc[-1] for t, d in frames.items()}
+    states_today = {t: board_states(d).iloc[-1] for t, d in frames.items()}
     rows = []
     n_ranked = int(pan["buy_score"].iloc[-1].notna().sum())
     for t, d in frames.items():

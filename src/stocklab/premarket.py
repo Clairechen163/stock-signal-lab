@@ -125,8 +125,9 @@ def snapshot(tickers, source: str, frames: dict, now: pd.Timestamp | None = None
 def _price_bar(price: float, day: pd.Timestamp) -> pd.DataFrame:
     """A bar for a price seen before the session: open = high = low = close, no volume.
 
-    Pre-market volume is not comparable with a full session, so the two volume rules cannot
-    fire on this bar; every other rule is evaluated as usual.
+    Pre-market volume is not comparable with a full session, so on this bar the two volume
+    rules keep their value from the last close (see `board.board_states`); every other rule
+    is evaluated at the new price.
     """
     return pd.DataFrame({"Open": [price], "High": [price], "Low": [price], "Close": [price], "Volume": [np.nan]},
                         index=[pd.Timestamp(day)])
@@ -148,7 +149,8 @@ def _premarket_frames(frames: dict, snap: pd.DataFrame) -> dict:
 _what_if_frames = _premarket_frames  # earlier name, kept for compatibility
 
 
-def _crossings(close: float, price: float, levels: dict) -> list[str]:
+def _crossings(close: float, price: float, levels: dict, names: list | None = None) -> list[str]:
+    """Levels the move from the last close to `price` crosses; their names are added to `names`."""
     out = []
     for name, lvl in levels.items():
         if lvl is None or pd.isna(lvl):
@@ -157,6 +159,36 @@ def _crossings(close: float, price: float, levels: dict) -> list[str]:
             out.append(f"now below {name} ({lvl:,.2f})")
         elif close <= lvl < price:
             out.append(f"now above {name} ({lvl:,.2f})")
+        else:
+            continue
+        if names is not None:
+            names.append(name)
+    return out
+
+
+# A level the "What the move changes" column checks, and the sell rule that switches when the
+# price crosses it, so a label change is not explained twice.
+LEVEL_RULE = {"50-day average": "below_sma50", "200-day average": "below_sma200",
+              "chandelier stop": "chandelier_stop", "80% of the 52-week high": "drawdown_20"}
+
+
+def _rule_set(triggered) -> list[str]:
+    """Sell rules named in a board row's `triggered` text, in rule order (stop-loss notes dropped)."""
+    named = {x.strip() for part in str(triggered or "").split(";") for x in part.split(",")}
+    return [name for name in board.SHORT_RULE.values() if name in named]
+
+
+def _switches(before, after, crossed_levels: list[str]) -> list[str]:
+    """Sell rules that switched between the last close and the pre-market price, beyond the crossings listed."""
+    covered = {board.SHORT_RULE[LEVEL_RULE[n]] for n in crossed_levels if n in LEVEL_RULE}
+    b, a = _rule_set(before), _rule_set(after)
+    on = [x for x in a if x not in b and x not in covered]
+    off = [x for x in b if x not in a and x not in covered]
+    out = []
+    if on:
+        out.append("rule now on: " + ", ".join(on))
+    if off:
+        out.append("rule now off: " + ", ".join(off))
     return out
 
 
@@ -193,6 +225,7 @@ def view(frames: dict, table: pd.DataFrame, snap: pd.DataFrame, gaps: dict | Non
             "50-day average": last.get("SMA50"),
             "200-day average": last.get("SMA200"),
             "chandelier stop": last["HighestHigh22"] - 3 * last["ATR"] if pd.notna(last.get("ATR")) else np.nan,
+            "80% of the 52-week high": 0.8 * last["High252"] if pd.notna(last.get("High252")) else np.nan,
         }
         if r["action"] in ("BUY", "HOLD", "WATCH"):
             levels["breakout level"] = r.get("breakout_trigger")
@@ -210,15 +243,23 @@ def view(frames: dict, table: pd.DataFrame, snap: pd.DataFrame, gaps: dict | Non
         h = hyp_table.loc[t] if t in hyp_table.index else None
         label = "" if h is None else h["action"] + ("*" if h["provisional"] else "")
         buyable = h is not None and h["action"] in ("BUY", "HOLD", "WATCH")
+        changed = bool(h is not None and h["action"] != r["action"])
+        names: list[str] = []
+        crossed = _crossings(close, price, levels, names)
+        if changed:  # say what moved the label, even when it is not one of the levels above
+            more = _switches(r.get("triggered", ""), h.get("triggered", ""), names)
+            if not crossed and not more and r.get("buy_rank") and h.get("buy_rank") and r["buy_rank"] != h["buy_rank"]:
+                more = [f"buy rank {r['buy_rank']} to {h['buy_rank']}"]
+            crossed += more
         row.update({
             "price": price,
             "change": change,
             "session": s["session"] + (" (no trades yet today)" if stale else ""),
             "time": ts.strftime("%Y-%m-%d %H:%M") + " ET",
             "premarket_volume": s.get("premarket_volume", np.nan),
-            "crossed": "; ".join(_crossings(close, price, levels)),
+            "crossed": "; ".join(crossed),
             "premarket_label": label,
-            "changed": bool(h is not None and h["action"] != r["action"]),
+            "changed": changed,
             "pm_pullback_entry": h.get("pullback_entry") if buyable else np.nan,
             "pm_breakout": h.get("breakout_trigger") if buyable else np.nan,
             "pm_stop": h.get("stop") if buyable else np.nan,

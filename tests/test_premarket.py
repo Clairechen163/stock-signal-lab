@@ -126,3 +126,52 @@ def test_premarket_view_has_labels_and_levels():
     assert v["premarket_label"].str.rstrip("*").isin(board.ORDER).all()
     buyable = v["premarket_label"].str.rstrip("*").isin(["BUY", "HOLD", "WATCH"])
     assert v.loc[buyable, "pm_stop"].notna().all()
+
+
+def _breakdown_frame(n=400, seed=3):
+    """An uptrend that ends with a heavy-volume drop below the 50-day average on the last day."""
+    rng = np.random.default_rng(seed)
+    dates = pd.bdate_range(end="2026-11-04", periods=n)
+    close = 100 * np.exp(np.cumsum(0.001 + rng.normal(0, 0.01, n)))
+    close[-1] = close[-2] * 0.85
+    vol = np.full(n, 5e6)
+    vol[-1] = 2e7
+    raw = pd.DataFrame({"Open": close, "High": close * 1.01, "Low": close * 0.99, "Close": close, "Volume": vol},
+                       index=dates)
+    return raw
+
+
+def test_volume_rules_keep_their_last_close_value_on_a_premarket_bar():
+    raw = _breakdown_frame()
+    at_close = board.board_states(indicators.add_all(raw)).iloc[-1]
+    assert at_close["high_volume_breakdown"]
+    bar = premarket._price_bar(float(raw["Close"].iloc[-1]) * 0.97, raw.index[-1] + pd.Timedelta(days=1))
+    pre = board.board_states(indicators.add_all(pd.concat([raw, bar])))
+    for k in board.VOLUME_RULES:
+        assert pre[k].iloc[-1] == at_close[k]
+    # a further fall before the open cannot lower the sell-warning score through missing volume
+    sig_close = board.ticker_signals(indicators.add_all(raw)).iloc[-1]
+    sig_pre = board.ticker_signals(indicators.add_all(pd.concat([raw, bar]))).iloc[-1]
+    assert sig_pre["sell_max"] == sig_close["sell_max"]
+    assert sig_pre["sell_score"] >= sig_close["sell_score"] - 1  # only a price rule can switch off
+
+
+def test_data_without_any_volume_is_unchanged():
+    raw = _breakdown_frame()
+    raw["Volume"] = np.nan
+    st = board.board_states(indicators.add_all(raw))
+    assert not st[board.VOLUME_RULES].any().any()
+
+
+def test_every_changed_premarket_label_is_explained():
+    frames = _frames(("AAA", "BBB", "CCC", "DDD", "EEE", "FFF", "GGG", "HHH"))
+    table, _ = board.today(frames)
+    explained = checked = 0
+    for move in (-0.12, -0.06, 0.06, 0.12):
+        snap = premarket._synthetic_snapshot(frames)
+        snap["price"] = [float(frames[t]["Close"].iloc[-1]) * (1 + move) for t in snap.index]
+        v = premarket.view(frames, table, snap)
+        changed = v[v["changed"]]
+        checked += len(changed)
+        explained += int((changed["crossed"].str.len() > 0).sum())
+    assert checked > 0 and explained == checked

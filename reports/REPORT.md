@@ -417,13 +417,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.522 | 0.529 | 0.65 | 0.487 | 0.25 | 1.324 | 1.17 |
 | Logistic regression | 0.484 | 0.529 | 0.985 | 0.486 | 0.256 | 0.355 | 1.17 |
-| Gradient boosting | 0.484 | 0.529 | 0.985 | 0.484 | 0.268 | 0.499 | 1.17 |
+| Gradient boosting | 0.484 | 0.529 | 0.985 | 0.483 | 0.268 | 0.499 | 1.17 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 390.2 | 0.0 |  |  |
 | Ridge regression | 394.1 | -0.02 | 0.489 | 0.879 |
-| Gradient boosting | 399.2 | -0.0468 | 0.485 | 0.993 |
+| Gradient boosting | 399.3 | -0.0471 | 0.485 | 0.993 |
 
 Forecast for the next session:
 
@@ -455,7 +455,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 279.2 | 0.0 |  |  |
 | Ridge regression | 280.5 | -0.0097 | 0.518 | 0.642 |
-| Gradient boosting | 284.9 | -0.0413 | 0.533 | 0.93 |
+| Gradient boosting | 284.9 | -0.0415 | 0.531 | 0.931 |
 
 Forecast for the next session:
 
@@ -481,13 +481,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.536 | 0.536 | 0.517 | 0.479 | 0.249 | 0.889 | 0.89 |
 | Logistic regression | 0.535 | 0.536 | 0.551 | 0.547 | 0.252 | 0.905 | 0.89 |
-| Gradient boosting | 0.535 | 0.536 | 0.551 | 0.545 | 0.26 | 0.672 | 0.89 |
+| Gradient boosting | 0.535 | 0.536 | 0.551 | 0.545 | 0.26 | 0.607 | 0.89 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 473.7 | 0.0 |  |  |
 | Ridge regression | 475.6 | -0.0078 | 0.524 | 0.697 |
-| Gradient boosting | 482.5 | -0.0375 | 0.505 | 0.972 |
+| Gradient boosting | 482.6 | -0.0377 | 0.505 | 0.972 |
 
 Forecast for the next session:
 
@@ -513,13 +513,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.52 | 0.52 | 0.517 | 0.484 | 0.25 | 0.941 | 0.942 |
 | Logistic regression | 0.549 | 0.52 | 0.093 | 0.53 | 0.253 | 0.442 | 0.942 |
-| Gradient boosting | 0.516 | 0.52 | 0.585 | 0.523 | 0.264 | 0.408 | 0.942 |
+| Gradient boosting | 0.516 | 0.52 | 0.585 | 0.524 | 0.264 | 0.435 | 0.942 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.5 | 0.0 |  |  |
 | Ridge regression | 204.5 | -0.0304 | 0.522 | 0.986 |
-| Gradient boosting | 209.0 | -0.0762 | 0.509 | 0.999 |
+| Gradient boosting | 209.2 | -0.0778 | 0.513 | 0.999 |
 
 Forecast for the next session:
 
@@ -551,7 +551,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 363.5 | 0.0 |  |  |
 | Ridge regression | 364.1 | -0.0033 | 0.507 | 0.608 |
-| Gradient boosting | 373.6 | -0.0566 | 0.487 | 0.998 |
+| Gradient boosting | 373.7 | -0.0572 | 0.485 | 0.998 |
 
 Forecast for the next session:
 
@@ -577,19 +577,19 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.48 | 0.25 | 0.428 | 0.429 |
 | Logistic regression | 0.511 | 0.524 | 0.739 | 0.509 | 0.255 | 0.509 | 0.429 |
-| Gradient boosting | 0.54 | 0.524 | 0.234 | 0.533 | 0.259 | 0.733 | 0.429 |
+| Gradient boosting | 0.54 | 0.524 | 0.234 | 0.532 | 0.259 | 0.719 | 0.429 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 244.5 | 0.0 |  |  |
 | Ridge regression | 245.8 | -0.0108 | 0.52 | 0.735 |
-| Gradient boosting | 250.3 | -0.0482 | 0.504 | 0.976 |
+| Gradient boosting | 250.1 | -0.0462 | 0.509 | 0.968 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      63.1%
-  P(up) | Gradient boosting        68.2%
+  P(up) | Gradient boosting        71.1%
   P(up) | historical base rate     53.9%
   expected return (ridge)          +1.33%
   80% range low                    -3.50%
@@ -597,7 +597,7 @@ Forecast for the next session:
   daily volatility                 +3.82%
 ```
 
-Best out-of-sample AUC **0.533**; smallest p-value against a naive baseline 0.234, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.532**; smallest p-value against a naive baseline 0.234, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![ETN feature effects](forecast_ETN.png)
 
@@ -609,13 +609,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.502 | 0.502 | 0.517 | 0.457 | 0.25 | 0.751 | 0.752 |
 | Logistic regression | 0.496 | 0.502 | 0.617 | 0.514 | 0.253 | 0.725 | 0.752 |
-| Gradient boosting | 0.522 | 0.502 | 0.185 | 0.53 | 0.261 | 0.575 | 0.752 |
+| Gradient boosting | 0.524 | 0.502 | 0.163 | 0.53 | 0.261 | 0.619 | 0.752 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 366.3 | 0.0 |  |  |
 | Ridge regression | 371.2 | -0.0268 | 0.496 | 0.966 |
-| Gradient boosting | 374.0 | -0.0426 | 0.533 | 0.945 |
+| Gradient boosting | 373.7 | -0.041 | 0.524 | 0.938 |
 
 Forecast for the next session:
 
@@ -629,7 +629,7 @@ Forecast for the next session:
   daily volatility                 +2.38%
 ```
 
-Best out-of-sample AUC **0.530**; smallest p-value against a naive baseline 0.185, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.530**; smallest p-value against a naive baseline 0.163, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![TSLA feature effects](forecast_TSLA.png)
 
@@ -647,7 +647,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 212.2 | 0.0 |  |  |
 | Ridge regression | 213.9 | -0.0155 | 0.531 | 0.856 |
-| Gradient boosting | 220.3 | -0.0774 | 0.515 | 0.999 |
+| Gradient boosting | 220.4 | -0.0783 | 0.515 | 0.999 |
 
 Forecast for the next session:
 
@@ -747,12 +747,12 @@ Across 10,865 stock-days (11 watchlist stocks, 2021-11-08 to 2026-11-04), each 1
 
 ## 9. Deciding before the open vs at the previous close
 
-From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +37.7% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.13 (95% block-bootstrap CI [-0.41, +0.11]): deciding before the open has been **not distinguishable from deciding on the previous close**.
+From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +39.1% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference -0.10 (95% block-bootstrap CI [-0.38, +0.14]): deciding before the open has been **not distinguishable from deciding on the previous close**.
 
 | strategy | CAGR | Volatility | Sharpe | Max drawdown |
 |---|---|---|---|---|
 | Board on the previous close | +43.1% | 33.1% | 1.25 | -30.6% |
-| Board on the pre-market price | +37.7% | 33.4% | 1.12 | -30.6% |
+| Board on the pre-market price | +39.1% | 33.7% | 1.15 | -30.6% |
 | Equal-weight watchlist | +33.7% | 37.7% | 0.96 | -42.3% |
 
 The pre-market version uses the official opening price as a stand-in for the last pre-market trade (free pre-market history is only days long), which slightly flatters it.

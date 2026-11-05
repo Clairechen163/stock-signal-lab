@@ -159,7 +159,7 @@ def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, sour
     if source != "yahoo":
         out.append(f"> **Preview on `{source}` data, not real prices.**")
     lines = [
-        "| Ticker | Pre-market label | Board at last close | Last close | Pre-market | Change | Buy zone (pullback / breakout) | Stop | What the move crosses |",
+        "| Ticker | Pre-market label | Board at last close | Last close | Pre-market | Change | Buy zone (pullback / breakout) | Stop | What the move changes |",
         "|---|---|---|---:|---:|---:|---|---:|---|",
     ]
     for t, r in v.iterrows():
@@ -174,7 +174,9 @@ def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, sour
                      f"{zone} | {stop} | {r['crossed'] or '—'} |")
     out.append("\n".join(lines))
     out.append(
-        "The two volume rules can't fire on a pre-market price, and a label marked `*` is provisional (short history). "
+        "The two volume rules keep their value from the last close, because pre-market volume can't be compared "
+        "with a full session's, so a label changes here only when the price move switches a price-based rule; the "
+        "last column says which. A label marked `*` is provisional (short history). "
         "The close-based board above stays the reference: it is the one with the longer live track record."
     )
     if timing_text:

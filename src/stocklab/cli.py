@@ -466,6 +466,7 @@ def cmd_premarket(args, md=None, outdir=None):
     os.makedirs(out, exist_ok=True)
 
     timing_text = ""
+    gap_text = premarket.gap_sentence(gaps) if gaps else ""
     path = os.path.join(out, "timing_test.json")
     if os.path.exists(path):
         import json
@@ -475,6 +476,8 @@ def cmd_premarket(args, md=None, outdir=None):
         timing_text = payload.get("sentence", "")
         if payload.get("stability"):
             timing_text += f" *Stability: {payload['stability']}.*"
+        if gap_text and payload.get("gap_stability"):
+            gap_text += f" *Stability: {payload['gap_stability']}.*"
     else:
         timing_text = premarket.timing_sentence(cmd_timing(args, None, out, frames))
 
@@ -491,22 +494,23 @@ def cmd_premarket(args, md=None, outdir=None):
     for c, label in [("pm_pullback_entry", "pullback entry"), ("pm_breakout", "breakout"), ("pm_stop", "stop")]:
         show[label] = v[c].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}") if c in v else ""
     show["session"] = v["session"]
-    show["crosses"] = v["crossed"]
+    show["what the move changes"] = v["crossed"]
     show.index.name = "ticker"
     print(show.to_string())
     if timing_text:
-        print("\n" + timing_text.replace("**", ""))
+        print("\n" + timing_text.replace("*", ""))
     if gaps:
-        print("\n" + premarket.gap_sentence(gaps))
+        print("\n" + gap_text.replace("*", ""))
 
     md_lines = [f"# Pre-market board, {when}\n", f"> {DISCLAIMER}\n",
                 "The board's rules with each stock's latest pre-market trade standing in for today's close; the history "
-                "before it is daily closes. The volume rules can't fire on a pre-market price.\n",
+                "before it is daily closes. The volume rules keep their value from the last close, so a label changes only "
+                "when the price move switches a price-based rule (the last column says which).\n",
                 md_table(show) + "\n"]
     if timing_text:
         md_lines += ["## Does deciding before the open help?\n", timing_text + "\n"]
     if gaps:
-        md_lines += ["## Do opening gaps carry into the day?\n", premarket.gap_sentence(gaps) + "\n",
+        md_lines += ["## Do opening gaps carry into the day?\n", gap_text + "\n",
                      md_table(gap_table(gaps), index_label="opening gap") + "\n"]
     with open(os.path.join(out, "PREMARKET.md"), "w", encoding="utf-8") as f:
         f.write("\n".join(md_lines))
@@ -524,7 +528,7 @@ def cmd_premarket(args, md=None, outdir=None):
     if getattr(args, "readme", None) and args.readme.lower() != "none":
         base = os.path.dirname(os.path.abspath(args.readme))
         rel = os.path.relpath(os.path.abspath(out), base).replace(os.sep, "/")
-        block = readme.render_premarket(v, gaps, premarket.gap_sentence(gaps), when, session, args.source,
+        block = readme.render_premarket(v, gaps, gap_text, when, session, args.source,
                                         f"{rel}/PREMARKET.md", timing_text)
         readme.write(args.readme, block, readme.PM_START, readme.PM_END)
         print(f"Pre-market section of {args.readme} updated.")
@@ -688,12 +692,13 @@ def cmd_update(args):
     stab = findings.stability(flog, res["board"]["as_of"])
     print(f"Findings log: {len(flog)} run(s) recorded in {os.path.join(args.out, 'findings_log.csv')}")
     timing_json = os.path.join(args.out, "timing_test.json")
-    if os.path.exists(timing_json) and stab.get("timing"):  # the morning job shows the same stability note
+    if os.path.exists(timing_json) and (stab.get("timing") or stab.get("gaps")):  # the morning job shows the same notes
         import json
 
         with open(timing_json, encoding="utf-8") as f:
             payload = json.load(f)
-        payload["stability"] = stab["timing"]
+        payload["stability"] = stab.get("timing", "")
+        payload["gap_stability"] = stab.get("gaps", "")
         with open(timing_json, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
     if write_readme:

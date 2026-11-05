@@ -166,9 +166,14 @@ today is flagged rather than shown as moving.
 **Pre-market board.** Each stock's daily history (to the last close) gets one more bar for
 today, with open, high, low and close equal to the latest pre-market price and no volume,
 and the board's rules are re-run on it. The labels, buy ranks, pullback entries, breakout
-levels and stops therefore reflect the overnight move. Without volume the two volume rules
-cannot fire on that bar. The check also lists which levels from the last close the move
-crosses (50- and 200-day averages, chandelier stop, breakout level, stops).
+levels and stops therefore reflect the overnight move. Pre-market volume can't be compared
+with a full session's, so on that bar the two volume rules keep their value from the last
+close. (An earlier version let them switch off, which quietly removed up to 3 of the 15
+sell-warning points before every open and softened SELL labels on stocks that were falling.)
+A label can therefore change before the open only when the price move switches a
+price-based rule. The check lists which levels from the last close the move crosses (50-
+and 200-day averages, chandelier stop, 80% of the 52-week high, breakout level, stops) and,
+for any label that changed, the rules that switched on or off.
 
 **Timing test.** Does deciding before the open beat deciding at the previous close? On the
 same review days (every 5 trading days), two versions of the label-trading rule (buy on
