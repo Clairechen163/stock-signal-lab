@@ -1,0 +1,3 @@
+as_of,watchlist,event_tests,event_significant,backtest_tests,backtest_better,backtest_worse,backtest_beyond_chance,forecast_tests,forecast_significant,forecast_median_auc,board_verdict,timing_verdict,gap_verdict
+2026-11-03,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX,33,,48,1,2,False,32,0,0.527,not distinguishable,not distinguishable,none
+2026-11-04,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX;AMZN,33,death_cross (21d);rsi_rollover (63d),54,1,2,False,36,0,0.53,not distinguishable,not distinguishable,none

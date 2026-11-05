@@ -73,7 +73,7 @@ def board_table(table: pd.DataFrame) -> str:
 
 
 def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: str, report_path: str,
-           log_info: str | None = None) -> str:
+           log_info: str | None = None, board_stability: str | None = None) -> str:
     """The full live section: board, legend, evidence and key numbers."""
     out = [f"## Today's board: data as of the {as_of} close"]
     out.append(
@@ -108,6 +108,8 @@ def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: 
                 verdict = "not distinguishable from"
             verdict = (f" The Sharpe ratio difference is {test['diff']:+.2f} (95% block-bootstrap CI "
                        f"[{test['ci_low']:+.2f}, {test['ci_high']:+.2f}]): **{verdict} simply holding the watchlist**.")
+            if board_stability:
+                verdict += f" *Stability: {board_stability}.*"
         out.append("### Does the board work?")
         out.append(
             f"Trading the labels since {evaluation['start'].date()} (buy on BUY; exit on SELL, REDUCE or AVOID; "
@@ -133,6 +135,8 @@ def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: 
 
     if findings:
         out.append("### Key numbers from the latest full report")
+        out.append("*Each line ends with how many of the last runs (one per trading day, up to 10) reached the same "
+                   "verdict: a result that flips from day to day is sitting on its threshold and is best read as noise.*")
         out.append("\n".join(f"- {line}" for line in findings.values()))
     if log_info:
         out.append(log_info)

@@ -71,6 +71,12 @@ offsets it, but p-values should be read as approximate.
   * out-of-sample R² relative to the zero forecast (Campbell-Thompson style),
   * **Diebold-Mariano** test (Harvey-Leybourne-Newbold correction) of squared-error loss vs zero,
   * a simple trading check: hold only when P(up) > 0.5, compared with buy & hold.
+* **Verdict across stocks.** Each stock contributes four model-vs-baseline tests (two
+  classifiers' accuracy against the majority-class rate, two regressions' squared error
+  against a zero forecast). The summary pools all of them across the watchlist and applies
+  Benjamini-Hochberg: the forecasts are said to have an edge only if a test survives at
+  q < 0.10. Picking the best model or the best stock without that correction would find an
+  "edge" in random data.
 * **Tomorrow's forecast** refits on all history and reports P(up), the expected return,
   and an 80% range from recent volatility. The report places it next to the model's
   out-of-sample AUC so it is read with appropriate scepticism.
@@ -195,7 +201,20 @@ closed above its open. On the synthetic data used in CI the overnight and intrad
 are generated independently, so the interval should include zero; a unit test also plants
 a reversal and checks that it is found.
 
-## 10. Limitations
+## 10. Stability of the headline results
+
+Statistical verdicts near their threshold can flip when one more day of data arrives. Every
+`update` run therefore appends a row to `reports/findings_log.csv` with its data date and
+its headline verdicts: which sell rules survive FDR control, whether the single-stock rule
+wins exceed chance, how many forecast tests survive correction, and the board, timing and
+gap verdicts. A second run on the same data date replaces the first. Each headline in the
+README then reports how many of the last 10 logged runs reached the same verdict. A verdict
+that holds in 10 of 10 runs is robust to the most recent data; one that holds in 1 of 10 is
+sitting on its threshold. Changing the watchlist changes some of these results, so a run
+after a watchlist change is not strictly comparable with earlier ones (the log records the
+watchlist used).
+
+## 11. Limitations
 
 * **Selection and survivorship bias.** Universes are chosen today, from companies that
   survived and grew. Backtests on them flatter buy & hold and momentum.

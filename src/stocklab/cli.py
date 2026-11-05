@@ -25,7 +25,7 @@ import sys
 import pandas as pd
 from scipy import stats as st
 
-from . import backtest, board, config, data, forecast, indicators, plots, portfolio, premarket, readme, screener, sell_signals
+from . import backtest, board, config, data, findings, forecast, indicators, plots, portfolio, premarket, readme, screener, sell_signals
 
 STUDY_UNIVERSE = sorted(
     set(screener.DEFAULT_UNIVERSE)
@@ -165,7 +165,7 @@ def cmd_forecast(args, md=None, outdir=None):
         for name in os.listdir(outdir):
             if name.startswith("forecast_") and name.endswith(".png") and name[9:-4] not in frames:
                 os.remove(os.path.join(outdir, name))
-    best = {}
+    best, pvals = {}, []
     market = None
     if args.benchmark:
         try:
@@ -180,6 +180,12 @@ def cmd_forecast(args, md=None, outdir=None):
             print(f"  {t}: {e}")
             continue
         clf, reg = forecast.evaluate(preds)
+        # Every model is tested against its naive baseline; the p-values are pooled across stocks
+        # and corrected for multiple testing in the summary (findings.forecast_tests).
+        for model, p in clf["p (beats majority)"].drop("Majority class (baseline)", errors="ignore").items():
+            pvals.append((t, model, "accuracy vs majority class", float(p)))
+        for model, p in reg["DM p (beats zero)"].drop("Zero / random walk (baseline)", errors="ignore").items():
+            pvals.append((t, model, "error vs zero forecast", float(p)))
         tom = forecast.predict_tomorrow(X, y)
         section(f"Next-day forecast {t} (walk-forward test on {len(preds)} days)")
         reg = reg.round({"RMSE (bps)": 1, "R2 out-of-sample vs zero": 4, "direction hit rate": 3, "DM p (beats zero)": 3})
@@ -196,9 +202,10 @@ def cmd_forecast(args, md=None, outdir=None):
             lines.append(f"  {k:<32} {s}")
         print("\n".join(lines))
         best_auc = clf["AUC"].drop("Majority class (baseline)", errors="ignore").max()
-        verdict = ("no reliable edge: treat the forecast as close to a coin flip"
-                   if best_auc < 0.53 else "a small edge out of sample; still check the p-values before trusting it")
-        print(f"  Best out-of-sample AUC {best_auc:.3f} -> {verdict}")
+        min_p = min(p for tt, _, _, p in pvals if tt == t and pd.notna(p))
+        verdict = (f"smallest p-value against a naive baseline {min_p:.3f}, before correcting for the four models "
+                   "tested here and the other stocks (the corrected count is in the summary)")
+        print(f"  Best out-of-sample AUC {best_auc:.3f}; {verdict}")
         best[t] = float(best_auc)
         if md is not None:
             md.append(f"### {t}\n\nWalk-forward test on {len(preds)} unseen days "
@@ -206,12 +213,12 @@ def cmd_forecast(args, md=None, outdir=None):
             md.append(md_table(clf) + "\n")
             md.append(md_table(reg) + "\n")
             md.append("Forecast for the next session:\n\n```\n" + "\n".join(lines) + "\n```\n")
-            md.append(f"Best out-of-sample AUC **{best_auc:.3f}**: {verdict}.\n")
+            md.append(f"Best out-of-sample AUC **{best_auc:.3f}**; {verdict}.\n")
         if outdir:
             plots.forecast_importance(forecast.feature_importance(X, y), os.path.join(outdir, f"forecast_{t}.png"), t)
             if md is not None:
                 md.append(f"![{t} feature effects](forecast_{t}.png)\n")
-    return best
+    return {"auc": best, "pvals": pvals}
 
 
 def cmd_screen(args, md=None, outdir=None):
@@ -464,7 +471,10 @@ def cmd_premarket(args, md=None, outdir=None):
         import json
 
         with open(path, encoding="utf-8") as f:
-            timing_text = json.load(f).get("sentence", "")
+            payload = json.load(f)
+        timing_text = payload.get("sentence", "")
+        if payload.get("stability"):
+            timing_text += f" *Stability: {payload['stability']}.*"
     else:
         timing_text = premarket.timing_sentence(cmd_timing(args, None, out, frames))
 
@@ -568,45 +578,45 @@ def cmd_report(args):
             "timing": timing, "watchlist": wl}
 
 
-def key_findings(res: dict) -> dict:
-    """Plain-English summary lines computed from the latest run (no hand-written numbers)."""
+def key_findings(res: dict, stab: dict | None = None) -> dict:
+    """Plain-English summary lines computed from the latest run (no hand-written numbers).
+
+    `stab` adds, for each line, how many recent runs reached the same verdict.
+    """
+    stab = stab or {}
     out = {}
+
+    def tail(key):
+        return f" *Stability: {stab[key]}.*" if stab.get(key) else ""
+
     study = res.get("study")
     if study is not None and len(study):
         useful = study[study["verdict"] == "useful"]
         names = ", ".join(f"{r.rule} ({r.horizon})" for r in useful.itertuples())
         out["study"] = (f"Sell-signal event study: **{len(useful)} of {len(study)}** rule-by-horizon tests show significantly "
                         f"weaker returns after the signal once the false discovery rate is controlled (q < 0.10)"
-                        + (f": {names}." if names else "."))
+                        + (f": {names}." if names else ".") + tail("study"))
     tables = (res.get("backtest") or {}).get("tables") or {}
     if tables:
-        better = worse = total = 0
-        for tab in tables.values():
-            rows = tab.drop(index="Buy & Hold", errors="ignore")
-            if "_ci_low" in rows:
-                better += int((rows["_ci_low"] > 0).sum())
-                worse += int((rows["_ci_high"] < 0).sum())
-                total += len(rows)
-        # Each test's 95% interval misses zero on either side 2.5% of the time by chance alone, so with many
-        # tests a few "significant" results are expected even if no rule works. A binomial tail says whether the
-        # count of wins is more than chance would produce (tests on the same stock are correlated, so roughly).
-        chance = total * 0.025
-        p_more = float(st.binomtest(better, total, 0.025, alternative="greater").pvalue) if total else float("nan")
-        verdict = ("no more than chance alone would produce, so no rule has shown an edge"
-                   if p_more >= 0.05 else ("more than chance alone would produce (binomial p "
-                   + ("< 0.001)" if p_more < 0.001 else f"= {p_more:.3f})")))
-        out["backtest"] = (f"Single-stock rule backtests: of {total} rule-by-stock tests on {len(tables)} stocks, "
-                           f"**{better}** had a significantly higher Sharpe ratio than buy & hold and {worse} a significantly "
-                           f"lower one. About {chance:.1f} of each would be expected by chance with {total} tests: "
-                           f"{verdict}.")
+        bt = findings.backtest_counts(tables)
+        verdict = ("no more than chance alone would produce, so no rule has shown an edge" if not bt["beyond_chance"]
+                   else "more than chance alone would produce (binomial p "
+                   + ("< 0.001)" if bt["p_more"] < 0.001 else f"= {bt['p_more']:.3f})"))
+        out["backtest"] = (f"Single-stock rule backtests: of {bt['total']} rule-by-stock tests on {len(tables)} stocks, "
+                           f"**{bt['better']}** had a significantly higher Sharpe ratio than buy & hold and {bt['worse']} a "
+                           f"significantly lower one. About {bt['expected']:.1f} of each would be expected by chance with "
+                           f"{bt['total']} tests: {verdict}." + tail("backtest"))
     fc = res.get("forecast") or {}
-    if fc:
-        t_best = max(fc, key=fc.get)
-        med = float(pd.Series(fc).median())
-        edge = "no reliable edge" if med < 0.53 else "a possible small edge, worth checking against its p-values"
-        out["forecast"] = (f"Next-day forecasts: the median out-of-sample AUC across {len(fc)} stocks is **{med:.2f}** "
-                           f"(0.50 is a coin flip; highest {fc[t_best]:.2f} for {t_best}, and the highest of {len(fc)} "
-                           f"values sits above 0.50 by chance alone): {edge}.")
+    if fc.get("pvals"):
+        f = findings.forecast_tests(fc)
+        if f["significant"]:
+            verdict = f"a possible edge worth watching: {', '.join(f['hits'])}"
+        else:
+            verdict = f"no reliable edge (smallest uncorrected p-value {f['min_p']:.3f})"
+        out["forecast"] = (f"Next-day forecasts: **{f['significant']} of {f['tests']}** model-vs-baseline tests (4 models x "
+                           f"{f['stocks']} stocks) beat their naive baseline once the false discovery rate is controlled "
+                           f"(q < 0.10), with a median out-of-sample AUC of {f['median_auc']:.2f} (0.50 is a coin flip): "
+                           f"{verdict}." + tail("forecast"))
     pf = res.get("portfolio")
     if pf:
         rs = pf["w_table"][("risk share", "Equal weight")].sort_values(ascending=False)
@@ -621,10 +631,12 @@ def key_findings(res: dict) -> dict:
             out["portfolio"] += f" Not yet included for lack of history: {', '.join(pf['skipped'])}."
     tm = res.get("timing")
     if tm:
-        out["timing"] = "Pre-market vs close: " + premarket.timing_sentence(tm)[0].lower() + premarket.timing_sentence(tm)[1:]
+        text = premarket.timing_sentence(tm)
+        out["timing"] = "Pre-market vs close: " + text[0].lower() + text[1:] + tail("timing")
     g = res.get("gaps")
     if g:
-        out["gaps"] = "Opening gaps: " + premarket.gap_sentence(g)[0].lower() + premarket.gap_sentence(g)[1:]
+        text = premarket.gap_sentence(g)
+        out["gaps"] = "Opening gaps: " + text[0].lower() + text[1:] + tail("gaps")
     return out
 
 
@@ -672,9 +684,22 @@ def cmd_update(args):
     base = os.path.dirname(os.path.abspath(args.readme)) if write_readme else os.getcwd()
     rel = os.path.relpath(os.path.abspath(args.out), base).replace(os.sep, "/")
     log_info = append_log(res["board"]["table"], os.path.join(args.out, "board_log.csv"), f"{rel}/board_log.csv")
+    flog = findings.append(findings.record(res, res["board"]["as_of"]), os.path.join(args.out, "findings_log.csv"))
+    stab = findings.stability(flog, res["board"]["as_of"])
+    print(f"Findings log: {len(flog)} run(s) recorded in {os.path.join(args.out, 'findings_log.csv')}")
+    timing_json = os.path.join(args.out, "timing_test.json")
+    if os.path.exists(timing_json) and stab.get("timing"):  # the morning job shows the same stability note
+        import json
+
+        with open(timing_json, encoding="utf-8") as f:
+            payload = json.load(f)
+        payload["stability"] = stab["timing"]
+        with open(timing_json, "w", encoding="utf-8") as f:
+            json.dump(payload, f, indent=2)
     if write_readme:
-        block = readme.render(res["board"]["table"], res["board"]["evaluation"], key_findings(res),
-                              res["board"]["as_of"], args.source, rel, f"{rel}/REPORT.md", log_info)
+        block = readme.render(res["board"]["table"], res["board"]["evaluation"], key_findings(res, stab),
+                              res["board"]["as_of"], args.source, rel, f"{rel}/REPORT.md", log_info,
+                              board_stability=stab.get("board"))
         readme.write(args.readme, block)
         print(f"Live section of {args.readme} updated.")
 

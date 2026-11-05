@@ -405,7 +405,7 @@ Forecast for the next session:
   daily volatility                 +5.64%
 ```
 
-Best out-of-sample AUC **0.483**: no reliable edge: treat the forecast as close to a coin flip.
+Best out-of-sample AUC **0.483**; smallest p-value against a naive baseline 0.851, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![ALAB feature effects](forecast_ALAB.png)
 
@@ -417,13 +417,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.522 | 0.529 | 0.65 | 0.487 | 0.25 | 1.324 | 1.17 |
 | Logistic regression | 0.484 | 0.529 | 0.985 | 0.486 | 0.256 | 0.355 | 1.17 |
-| Gradient boosting | 0.484 | 0.529 | 0.985 | 0.483 | 0.268 | 0.499 | 1.17 |
+| Gradient boosting | 0.484 | 0.529 | 0.985 | 0.484 | 0.268 | 0.499 | 1.17 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 390.2 | 0.0 |  |  |
 | Ridge regression | 394.1 | -0.02 | 0.489 | 0.879 |
-| Gradient boosting | 399.3 | -0.0471 | 0.485 | 0.993 |
+| Gradient boosting | 399.2 | -0.0468 | 0.485 | 0.993 |
 
 Forecast for the next session:
 
@@ -437,7 +437,7 @@ Forecast for the next session:
   daily volatility                 +4.54%
 ```
 
-Best out-of-sample AUC **0.486**: no reliable edge: treat the forecast as close to a coin flip.
+Best out-of-sample AUC **0.486**; smallest p-value against a naive baseline 0.879, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![AMD feature effects](forecast_AMD.png)
 
@@ -455,7 +455,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 279.2 | 0.0 |  |  |
 | Ridge regression | 280.5 | -0.0097 | 0.518 | 0.642 |
-| Gradient boosting | 285.1 | -0.0427 | 0.533 | 0.936 |
+| Gradient boosting | 284.9 | -0.0413 | 0.533 | 0.93 |
 
 Forecast for the next session:
 
@@ -469,7 +469,7 @@ Forecast for the next session:
   daily volatility                 +2.07%
 ```
 
-Best out-of-sample AUC **0.526**: no reliable edge: treat the forecast as close to a coin flip.
+Best out-of-sample AUC **0.526**; smallest p-value against a naive baseline 0.517, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![NVDA feature effects](forecast_NVDA.png)
 
@@ -501,7 +501,7 @@ Forecast for the next session:
   daily volatility                 +5.82%
 ```
 
-Best out-of-sample AUC **0.547**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.547**; smallest p-value against a naive baseline 0.551, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![MRVL feature effects](forecast_MRVL.png)
 
@@ -513,13 +513,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.52 | 0.52 | 0.517 | 0.484 | 0.25 | 0.941 | 0.942 |
 | Logistic regression | 0.549 | 0.52 | 0.093 | 0.53 | 0.253 | 0.442 | 0.942 |
-| Gradient boosting | 0.515 | 0.52 | 0.618 | 0.523 | 0.264 | 0.407 | 0.942 |
+| Gradient boosting | 0.516 | 0.52 | 0.585 | 0.523 | 0.264 | 0.408 | 0.942 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.5 | 0.0 |  |  |
 | Ridge regression | 204.5 | -0.0304 | 0.522 | 0.986 |
-| Gradient boosting | 208.9 | -0.075 | 0.509 | 0.999 |
+| Gradient boosting | 209.0 | -0.0762 | 0.509 | 0.999 |
 
 Forecast for the next session:
 
@@ -533,7 +533,7 @@ Forecast for the next session:
   daily volatility                 +3.16%
 ```
 
-Best out-of-sample AUC **0.530**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.530**; smallest p-value against a naive baseline 0.093, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![GOOG feature effects](forecast_GOOG.png)
 
@@ -551,7 +551,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 363.5 | 0.0 |  |  |
 | Ridge regression | 364.1 | -0.0033 | 0.507 | 0.608 |
-| Gradient boosting | 373.7 | -0.0572 | 0.485 | 0.998 |
+| Gradient boosting | 373.6 | -0.0566 | 0.487 | 0.998 |
 
 Forecast for the next session:
 
@@ -565,7 +565,7 @@ Forecast for the next session:
   daily volatility                 +2.45%
 ```
 
-Best out-of-sample AUC **0.530**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.530**; smallest p-value against a naive baseline 0.608, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![FSLR feature effects](forecast_FSLR.png)
 
@@ -577,19 +577,19 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.48 | 0.25 | 0.428 | 0.429 |
 | Logistic regression | 0.511 | 0.524 | 0.739 | 0.509 | 0.255 | 0.509 | 0.429 |
-| Gradient boosting | 0.542 | 0.524 | 0.209 | 0.533 | 0.259 | 0.723 | 0.429 |
+| Gradient boosting | 0.54 | 0.524 | 0.234 | 0.533 | 0.259 | 0.733 | 0.429 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 244.5 | 0.0 |  |  |
 | Ridge regression | 245.8 | -0.0108 | 0.52 | 0.735 |
-| Gradient boosting | 250.1 | -0.0461 | 0.511 | 0.968 |
+| Gradient boosting | 250.3 | -0.0482 | 0.504 | 0.976 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      63.1%
-  P(up) | Gradient boosting        71.1%
+  P(up) | Gradient boosting        68.2%
   P(up) | historical base rate     53.9%
   expected return (ridge)          +1.33%
   80% range low                    -3.50%
@@ -597,7 +597,7 @@ Forecast for the next session:
   daily volatility                 +3.82%
 ```
 
-Best out-of-sample AUC **0.533**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.533**; smallest p-value against a naive baseline 0.234, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![ETN feature effects](forecast_ETN.png)
 
@@ -615,7 +615,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 366.3 | 0.0 |  |  |
 | Ridge regression | 371.2 | -0.0268 | 0.496 | 0.966 |
-| Gradient boosting | 374.1 | -0.0431 | 0.533 | 0.947 |
+| Gradient boosting | 374.0 | -0.0426 | 0.533 | 0.945 |
 
 Forecast for the next session:
 
@@ -629,7 +629,7 @@ Forecast for the next session:
   daily volatility                 +2.38%
 ```
 
-Best out-of-sample AUC **0.530**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.530**; smallest p-value against a naive baseline 0.185, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![TSLA feature effects](forecast_TSLA.png)
 
@@ -661,7 +661,7 @@ Forecast for the next session:
   daily volatility                 +2.64%
 ```
 
-Best out-of-sample AUC **0.561**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.561**; smallest p-value against a naive baseline 0.079, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![AMZN feature effects](forecast_AMZN.png)
 
