@@ -1,5 +1,5 @@
 # stocklab report
-Generated 2026-11-05 | data source: `yahoo` | history: 5 years | watchlist: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, SKHY, ETN, TSLA, SPCX
+Generated 2026-11-05 | data source: `yahoo` | history: 5 years | watchlist: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, SKHY, ETN, TSLA, SPCX, AMZN
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -9,16 +9,17 @@ Data as of the 2026-11-04 close. `*` = provisional (under 200 trading days of hi
 
 | ticker | action | close | 1 day | 1 month | buy rank | sell warnings | pullback entry | breakout | stop | why |
 |---|---|---|---|---|---|---|---|---|---|---|
-| TSLA | WATCH | 385.19 | -3.3% | +1.2% | 5/10 | 4/15 | 383.21 | 408.27 | 355.03 | +0% vs 200-day average; death cross, distribution days, 20%+ off high |
-| AMD | REDUCE | 488.78 | +1.0% | -24.7% | 1/10 | 6/15 |  |  |  | +18% vs 200-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop |
-| NVDA | REDUCE | 200.13 | -3.2% | -16.3% | 3/10 | 7/15 |  |  |  | -2% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, below chandelier stop |
-| SKHY | REDUCE* | 143.07 | -5.1% | -21.6% | 9/10 | 5/10 |  |  |  | -15% vs 50-day average; below 50-day, distribution days, 20%+ off high, below chandelier stop (provisional: 83 days of history) |
-| FSLR | REDUCE | 194.51 | +4.6% | +8.2% | 10/10 | 6/15 |  |  |  | -10% vs 200-day average; below 200-day, death cross, distribution days, 20%+ off high |
-| MRVL | SELL | 159.80 | -7.1% | -44.3% | 2/10 | 10/15 |  |  |  | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, below chandelier stop |
-| ALAB | SELL | 223.27 | -4.4% | -42.7% | 4/10 | 10/15 |  |  |  | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, below chandelier stop |
-| ETN | SELL | 353.08 | -9.9% | -20.7% | 6/10 | 11/15 |  |  |  | -11% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, volatility spike, below chandelier stop |
-| GOOG | SELL | 287.30 | +3.2% | -16.6% | 7/10 | 11/15 |  |  |  | -15% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop |
-| SPCX | SELL* | 135.92 | -3.8% | -20.9% | 8/10 | 6/10 |  |  |  | -9% vs 50-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop (provisional: 101 days of history) |
+| AMZN | BUY | 266.03 | +6.1% | +3.8% | 4/11 | 1/15 | 254.13 | 266.56 | 236.97 | buy rank 4/11; +9% vs 200-day average; distribution days |
+| TSLA | WATCH | 385.19 | -3.3% | +1.2% | 6/11 | 4/15 | 383.21 | 408.27 | 355.03 | +0% vs 200-day average; death cross, distribution days, 20%+ off high |
+| AMD | REDUCE | 488.78 | +1.0% | -24.7% | 1/11 | 6/15 |  |  |  | +18% vs 200-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop |
+| NVDA | REDUCE | 200.13 | -3.2% | -16.3% | 3/11 | 7/15 |  |  |  | -2% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, below chandelier stop |
+| SKHY | REDUCE* | 143.07 | -5.1% | -21.6% | 10/11 | 5/10 |  |  |  | -15% vs 50-day average; below 50-day, distribution days, 20%+ off high, below chandelier stop (provisional: 83 days of history) |
+| FSLR | REDUCE | 194.51 | +4.6% | +8.2% | 11/11 | 6/15 |  |  |  | -10% vs 200-day average; below 200-day, death cross, distribution days, 20%+ off high |
+| MRVL | SELL | 159.80 | -7.1% | -44.3% | 2/11 | 10/15 |  |  |  | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, below chandelier stop |
+| ALAB | SELL | 223.27 | -4.4% | -42.7% | 5/11 | 10/15 |  |  |  | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, below chandelier stop |
+| ETN | SELL | 353.08 | -9.9% | -20.7% | 7/11 | 11/15 |  |  |  | -11% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, volatility spike, below chandelier stop |
+| GOOG | SELL | 287.30 | +3.2% | -16.6% | 8/11 | 11/15 |  |  |  | -15% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop |
+| SPCX | SELL* | 135.92 | -3.8% | -20.9% | 9/11 | 6/10 |  |  |  | -9% vs 50-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop (provisional: 101 days of history) |
 
 ![Board label each week](board_history.png)
 
@@ -26,22 +27,22 @@ Data as of the 2026-11-04 close. `*` = provisional (under 200 trading days of hi
 
 | strategy | CAGR | Volatility | Sharpe | Max drawdown | Time invested | Avg holdings |
 |---|---|---|---|---|---|---|
-| Board strategy | +43.5% | 34.8% | 1.21 | -28.1% | 89% | 3.1 |
-| Equal-weight watchlist | +36.5% | 38.4% | 1.00 | -41.5% | 100% | 7.6 |
+| Board strategy | +41.7% | 32.7% | 1.23 | -29.2% | 90% | 3.6 |
+| Equal-weight watchlist | +34.1% | 36.7% | 0.98 | -39.8% | 100% | 8.6 |
 | SPY (buy & hold) | +13.0% | 17.2% | 0.80 | -22.1% |  |  |
 
-Sharpe difference vs equal weight: +0.21, 95% block-bootstrap CI [-0.41, +0.86].
+Sharpe difference vs equal weight: +0.24, 95% block-bootstrap CI [-0.37, +0.87].
 
 Forward 21-day return after each label, relative to the watchlist average on the same date (sampled every 21 days, t-test across dates):
 
 | label | observations | dates | mean 21d excess return | hit rate | p_value |
 |---|---|---|---|---|---|
-| BUY | 117 | 45 | -0.5% | 53% | 0.70 |
-| HOLD | 57 | 34 | -0.4% | 47% | 0.88 |
-| WATCH | 89 | 42 | -0.6% | 45% | 0.65 |
-| AVOID | 24 | 16 | +0.2% | 62% | 0.91 |
-| REDUCE | 79 | 38 | +1.0% | 63% | 0.56 |
-| SELL | 54 | 24 | -0.5% | 42% | 0.79 |
+| BUY | 132 | 47 | -0.4% | 45% | 0.74 |
+| HOLD | 71 | 36 | -1.0% | 39% | 0.63 |
+| WATCH | 97 | 42 | -0.2% | 55% | 0.86 |
+| AVOID | 29 | 18 | +0.6% | 61% | 0.75 |
+| REDUCE | 84 | 38 | +1.2% | 63% | 0.49 |
+| SELL | 63 | 26 | -0.1% | 42% | 0.94 |
 
 ![Board strategy vs holding](board_equity.png)
 
@@ -203,6 +204,17 @@ SPCX  EXIT  (score 6/10, close 135.92 on 2026-11-04)
     50-day SMA                 149.64  (price is below, -9.2%)
 ```
 
+```
+AMZN  HOLD  (score 1/15, close 266.03 on 2026-11-04)
+  RSI 60 | -6.3% from 52-week high
+  Triggered:
+    - [volume] 5+ distribution days in the last 25 sessions (institutional selling) (+1)
+  Levels to watch:
+    50-day SMA                 253.89  (price is above, +4.8%)
+    Chandelier stop            245.76  (price is above, +8.2%)
+    200-day SMA                243.67  (price is above, +9.2%)
+```
+
 ## 3. Which sell signals actually work? (event study)
 
 Panel: 40 stocks, 5 years. Null hypothesis: returns after a signal look like returns on random days from the same stocks.
@@ -347,6 +359,18 @@ Not included: SKHY (only 83 trading days of history, needs 452); SPCX (only 101 
 | Trailing stop 20% | +32.1% | +6.9% | -47.9% | +44.6% | 0.37 | 11 | 71% | -0.02 | [-0.64, +0.61] | 0.94 |
 | Volume breakout | +40.5% | +8.5% | -35.4% | +25.7% | 0.44 | 9 | 18% | +0.05 | [-0.93, +1.04] | 0.91 |
 
+### AMZN (2022-08-23 to 2026-11-04)
+
+| strategy | Total return | CAGR | Max drawdown | Volatility | Sharpe | Round trips | Time in market | Sharpe vs B&H | 95% CI | p-value |
+|---|---|---|---|---|---|---|---|---|---|---|
+| Buy & Hold | +98.7% | +17.8% | -40.4% | +34.1% | 0.65 | 0 | 100% |  |  |  |
+| 50/200 SMA cross | +36.8% | +7.8% | -41.4% | +27.7% | 0.41 | 2 | 73% | -0.24 | [-0.88, +0.36] | 0.46 |
+| Close > 50-day SMA | +24.8% | +5.4% | -40.8% | +23.4% | 0.34 | 35 | 63% | -0.31 | [-0.94, +0.37] | 0.41 |
+| MACD > signal | -2.8% | -0.7% | -28.7% | +22.7% | 0.08 | 50 | 49% | -0.57 | [-1.26, +0.16] | 0.12 |
+| RSI 30/70 | +94.0% | +17.1% | -22.0% | +21.6% | 0.84 | 4 | 33% | +0.19 | [-0.47, +0.99] | 0.62 |
+| Trailing stop 20% | +103.9% | +18.6% | -24.2% | +29.9% | 0.72 | 3 | 87% | +0.07 | [-0.35, +0.49] | 0.76 |
+| Volume breakout | +4.1% | +1.0% | -35.5% | +18.7% | 0.14 | 11 | 45% | -0.51 | [-1.41, +0.40] | 0.27 |
+
 ![Strategy equity curves](backtest_equity.png)
 
 ## 5. Next-day forecasts
@@ -393,19 +417,19 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.522 | 0.529 | 0.65 | 0.487 | 0.25 | 1.324 | 1.17 |
 | Logistic regression | 0.484 | 0.529 | 0.985 | 0.486 | 0.256 | 0.355 | 1.17 |
-| Gradient boosting | 0.484 | 0.529 | 0.985 | 0.484 | 0.268 | 0.499 | 1.17 |
+| Gradient boosting | 0.487 | 0.529 | 0.978 | 0.485 | 0.268 | 0.616 | 1.17 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 390.2 | 0.0 |  |  |
 | Ridge regression | 394.1 | -0.02 | 0.489 | 0.879 |
-| Gradient boosting | 399.0 | -0.0453 | 0.489 | 0.991 |
+| Gradient boosting | 398.9 | -0.0448 | 0.484 | 0.99 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      61.5%
-  P(up) | Gradient boosting        52.7%
+  P(up) | Gradient boosting        55.2%
   P(up) | historical base rate     51.3%
   expected return (ridge)          +1.19%
   80% range low                    -4.53%
@@ -425,13 +449,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.499 | 0.25 | 0.699 | 0.7 |
 | Logistic regression | 0.52 | 0.524 | 0.585 | 0.526 | 0.252 | 0.637 | 0.7 |
-| Gradient boosting | 0.524 | 0.524 | 0.517 | 0.503 | 0.263 | 0.763 | 0.7 |
+| Gradient boosting | 0.527 | 0.524 | 0.449 | 0.503 | 0.263 | 0.823 | 0.7 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 279.2 | 0.0 |  |  |
 | Ridge regression | 280.5 | -0.0097 | 0.518 | 0.642 |
-| Gradient boosting | 284.9 | -0.0415 | 0.531 | 0.93 |
+| Gradient boosting | 285.3 | -0.0441 | 0.529 | 0.941 |
 
 Forecast for the next session:
 
@@ -457,13 +481,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.536 | 0.536 | 0.517 | 0.479 | 0.249 | 0.889 | 0.89 |
 | Logistic regression | 0.535 | 0.536 | 0.551 | 0.547 | 0.252 | 0.905 | 0.89 |
-| Gradient boosting | 0.536 | 0.536 | 0.517 | 0.546 | 0.26 | 0.623 | 0.89 |
+| Gradient boosting | 0.533 | 0.536 | 0.585 | 0.544 | 0.26 | 0.604 | 0.89 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 473.7 | 0.0 |  |  |
 | Ridge regression | 475.6 | -0.0078 | 0.524 | 0.697 |
-| Gradient boosting | 482.0 | -0.0354 | 0.5 | 0.966 |
+| Gradient boosting | 482.3 | -0.0364 | 0.498 | 0.969 |
 
 Forecast for the next session:
 
@@ -495,7 +519,7 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.5 | 0.0 |  |  |
 | Ridge regression | 204.5 | -0.0304 | 0.522 | 0.986 |
-| Gradient boosting | 209.3 | -0.0794 | 0.511 | 0.999 |
+| Gradient boosting | 208.9 | -0.0752 | 0.509 | 0.999 |
 
 Forecast for the next session:
 
@@ -521,13 +545,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.509 | 0.515 | 0.618 | 0.456 | 0.25 | 0.186 | 0.144 |
 | Logistic regression | 0.507 | 0.515 | 0.65 | 0.53 | 0.251 | -0.16 | 0.144 |
-| Gradient boosting | 0.498 | 0.515 | 0.791 | 0.519 | 0.262 | -0.225 | 0.144 |
+| Gradient boosting | 0.5 | 0.515 | 0.766 | 0.52 | 0.262 | -0.207 | 0.144 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 363.5 | 0.0 |  |  |
 | Ridge regression | 364.1 | -0.0033 | 0.507 | 0.608 |
-| Gradient boosting | 373.6 | -0.0566 | 0.487 | 0.998 |
+| Gradient boosting | 373.7 | -0.0567 | 0.487 | 0.998 |
 
 Forecast for the next session:
 
@@ -553,19 +577,19 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.48 | 0.25 | 0.428 | 0.429 |
 | Logistic regression | 0.511 | 0.524 | 0.739 | 0.509 | 0.255 | 0.509 | 0.429 |
-| Gradient boosting | 0.533 | 0.524 | 0.351 | 0.532 | 0.259 | 0.512 | 0.429 |
+| Gradient boosting | 0.544 | 0.524 | 0.185 | 0.532 | 0.26 | 0.789 | 0.429 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 244.5 | 0.0 |  |  |
 | Ridge regression | 245.8 | -0.0108 | 0.52 | 0.735 |
-| Gradient boosting | 250.1 | -0.0465 | 0.509 | 0.97 |
+| Gradient boosting | 250.3 | -0.0479 | 0.507 | 0.975 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      63.1%
-  P(up) | Gradient boosting        71.1%
+  P(up) | Gradient boosting        68.2%
   P(up) | historical base rate     53.9%
   expected return (ridge)          +1.33%
   80% range low                    -3.50%
@@ -585,13 +609,13 @@ Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.502 | 0.502 | 0.517 | 0.457 | 0.25 | 0.751 | 0.752 |
 | Logistic regression | 0.496 | 0.502 | 0.617 | 0.514 | 0.253 | 0.725 | 0.752 |
-| Gradient boosting | 0.525 | 0.502 | 0.143 | 0.531 | 0.261 | 0.624 | 0.752 |
+| Gradient boosting | 0.527 | 0.502 | 0.125 | 0.532 | 0.261 | 0.642 | 0.752 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 366.3 | 0.0 |  |  |
 | Ridge regression | 371.2 | -0.0268 | 0.496 | 0.966 |
-| Gradient boosting | 373.7 | -0.0408 | 0.524 | 0.938 |
+| Gradient boosting | 373.7 | -0.0408 | 0.524 | 0.937 |
 
 Forecast for the next session:
 
@@ -605,9 +629,41 @@ Forecast for the next session:
   daily volatility                 +2.38%
 ```
 
-Best out-of-sample AUC **0.531**: a small edge out of sample; still check the p-values before trusting it.
+Best out-of-sample AUC **0.532**: a small edge out of sample; still check the p-values before trusting it.
 
 ![TSLA feature effects](forecast_TSLA.png)
+
+### AMZN
+
+Walk-forward test on 550 unseen days (2024-08-26 to 2026-11-03).
+
+| model | accuracy | always-majority accuracy | p (beats majority) | AUC | Brier | strategy Sharpe | buy & hold Sharpe |
+|---|---|---|---|---|---|---|---|
+| Majority class (baseline) | 0.516 | 0.516 | 0.517 | 0.463 | 0.25 | 0.728 | 0.728 |
+| Logistic regression | 0.547 | 0.516 | 0.079 | 0.561 | 0.248 | 0.993 | 0.728 |
+| Gradient boosting | 0.531 | 0.516 | 0.261 | 0.53 | 0.261 | 0.428 | 0.728 |
+
+| model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
+|---|---|---|---|---|
+| Zero / random walk (baseline) | 212.2 | 0.0 |  |  |
+| Ridge regression | 213.9 | -0.0155 | 0.531 | 0.856 |
+| Gradient boosting | 220.3 | -0.0774 | 0.515 | 0.999 |
+
+Forecast for the next session:
+
+```
+  P(up) | Logistic regression      44.7%
+  P(up) | Gradient boosting        42.5%
+  P(up) | historical base rate     51.3%
+  expected return (ridge)          -0.10%
+  80% range low                    -3.42%
+  80% range high                   +3.34%
+  daily volatility                 +2.64%
+```
+
+Best out-of-sample AUC **0.561**: a small edge out of sample; still check the p-values before trusting it.
+
+![AMZN feature effects](forecast_AMZN.png)
 
 ## 6. Stock screen and entry plans
 
@@ -633,42 +689,43 @@ Best out-of-sample AUC **0.531**: a small edge out of sample; still check the p-
 
 Not included: SKHY (only 83 trading days of history, needs 252); SPCX (only 101 trading days of history, needs 252).
 
-Assets: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, ETN, TSLA, JPM, XOM, UNH, COST, TLT, GLD. Covariance: Ledoit-Wolf shrinkage on the last 252 trading days.
+Assets: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, ETN, TSLA, AMZN, JPM, XOM, UNH, COST, TLT, GLD. Covariance: Ledoit-Wolf shrinkage on the last 252 trading days.
 
 Weights and share of risk (%):
 
 | asset | weight: Equal weight | weight: Inverse volatility | weight: Risk parity | weight: Minimum variance | risk share: Equal weight | risk share: Inverse volatility | risk share: Risk parity | risk share: Minimum variance |
 |---|---|---|---|---|---|---|---|---|
-| ALAB | 7.1 | 2.4 | 1.6 | 0.0 | 23.0 | 10.4 | 7.1 | 0.0 |
-| AMD | 7.1 | 3.4 | 2.0 | 0.0 | 16.5 | 11.7 | 7.1 | 0.0 |
-| NVDA | 7.1 | 6.2 | 4.5 | 6.1 | 6.9 | 9.7 | 7.1 | 7.0 |
-| MRVL | 7.1 | 2.9 | 1.7 | 0.0 | 19.3 | 11.0 | 7.1 | 0.0 |
-| GOOG | 7.1 | 7.0 | 5.9 | 6.2 | 3.9 | 7.3 | 7.1 | 7.1 |
-| FSLR | 7.1 | 4.5 | 3.1 | 0.4 | 8.7 | 9.1 | 7.1 | 0.5 |
-| ETN | 7.1 | 5.6 | 3.5 | 3.5 | 9.0 | 10.7 | 7.1 | 4.0 |
-| TSLA | 7.1 | 5.3 | 3.4 | 0.8 | 8.2 | 10.2 | 7.1 | 0.9 |
-| JPM | 7.1 | 10.0 | 8.3 | 10.0 | 1.9 | 6.3 | 7.1 | 11.6 |
-| XOM | 7.1 | 8.5 | 16.9 | 18.3 | -1.6 | -2.4 | 7.1 | 21.1 |
-| UNH | 7.1 | 6.7 | 6.6 | 3.2 | 1.2 | 3.8 | 7.1 | 3.7 |
-| COST | 7.1 | 10.9 | 16.9 | 18.6 | -1.3 | -0.9 | 7.1 | 21.4 |
-| TLT | 7.1 | 18.6 | 20.3 | 30.0 | 0.5 | 4.3 | 7.1 | 19.5 |
-| GLD | 7.1 | 8.0 | 5.3 | 2.9 | 3.9 | 8.7 | 7.1 | 3.4 |
+| ALAB | 6.7 | 2.3 | 1.8 | 0.0 | 21.8 | 9.5 | 6.8 | 0.0 |
+| AMD | 6.7 | 3.2 | 2.1 | 0.0 | 15.7 | 10.7 | 6.8 | 0.0 |
+| NVDA | 6.7 | 5.8 | 4.9 | 5.8 | 6.6 | 8.9 | 7.2 | 6.7 |
+| MRVL | 6.7 | 2.7 | 2.0 | 0.0 | 18.2 | 10.0 | 6.8 | 0.0 |
+| GOOG | 6.7 | 6.5 | 5.3 | 4.2 | 4.1 | 7.7 | 7.0 | 4.8 |
+| FSLR | 6.7 | 4.2 | 3.3 | 0.2 | 8.4 | 8.5 | 6.9 | 0.3 |
+| ETN | 6.7 | 5.2 | 4.0 | 3.1 | 8.6 | 9.9 | 7.1 | 3.6 |
+| TSLA | 6.7 | 4.9 | 3.6 | 0.6 | 8.0 | 9.5 | 6.9 | 0.7 |
+| AMZN | 6.7 | 6.4 | 5.1 | 3.9 | 4.3 | 7.8 | 7.0 | 4.5 |
+| JPM | 6.7 | 9.3 | 9.4 | 9.6 | 1.8 | 5.9 | 7.4 | 11.0 |
+| XOM | 6.7 | 7.9 | 0.0 | 18.7 | -1.7 | -2.8 | -0.0 | 21.5 |
+| UNH | 6.7 | 6.3 | 7.7 | 3.2 | 1.2 | 3.4 | 7.1 | 3.7 |
+| COST | 6.7 | 10.2 | 22.1 | 17.8 | -1.2 | -0.8 | 7.7 | 20.4 |
+| TLT | 6.7 | 17.5 | 22.3 | 30.0 | 0.5 | 3.9 | 8.2 | 19.5 |
+| GLD | 6.7 | 7.5 | 6.3 | 2.9 | 3.7 | 7.9 | 7.1 | 3.3 |
 
 | method | expected volatility | diversification ratio | effective number of bets | largest risk share | largest risk holder |
 |---|---|---|---|---|---|
-| Equal weight | 23.8% | 1.83 | 6.74 | 23.0% | ALAB |
-| Inverse volatility | 14.3% | 2.31 | 10.31 | 11.7% | AMD |
-| Risk parity | 10.3% | 2.85 | 14.00 | 7.1% | TLT |
-| Minimum variance | 8.3% | 2.85 | 6.44 | 21.4% | COST |
+| Equal weight | 23.1% | 1.86 | 7.34 | 21.8% | ALAB |
+| Inverse volatility | 14.4% | 2.30 | 11.16 | 10.7% | AMD |
+| Risk parity | 12.6% | 2.35 | 13.96 | 8.2% | TLT |
+| Minimum variance | 8.3% | 2.88 | 6.64 | 21.5% | XOM |
 
 Out-of-sample comparison, monthly rebalance (2025-03-25 to 2026-11-04):
 
 | method | CAGR | Volatility | Sharpe | Max drawdown |
 |---|---|---|---|---|
-| Equal weight | +45.3% | +25.3% | 1.60 | -14.2% |
-| Inverse volatility | +32.6% | +16.8% | 1.77 | -10.2% |
-| Risk parity | +26.8% | +13.4% | 1.85 | -8.2% |
-| Minimum variance | +16.3% | +9.7% | 1.60 | -6.2% |
+| Equal weight | +43.6% | +24.9% | 1.58 | -14.1% |
+| Inverse volatility | +31.7% | +17.0% | 1.71 | -10.7% |
+| Risk parity | +26.3% | +13.4% | 1.80 | -8.4% |
+| Minimum variance | +16.2% | +9.8% | 1.59 | -6.4% |
 
 ![Correlations](portfolio_correlation.png)
 
@@ -678,24 +735,24 @@ Out-of-sample comparison, monthly rebalance (2025-03-25 to 2026-11-04):
 
 ## 8. Opening gaps: do pre-market moves carry into the day?
 
-Across 9,612 stock-days (10 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
+Across 10,865 stock-days (11 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
 
 | opening gap | days | avg gap | avg open-to-close | closed above open |
 |---|---|---|---|---|
-| gap down 3%+ | 431 | -5.2% | +0.26% | 49% |
-| down 1-3% | 1651 | -1.7% | +0.04% | 53% |
-| within 1% | 5170 | +0.0% | +0.02% | 50% |
-| up 1-3% | 1857 | +1.7% | +0.09% | 52% |
-| gap up 3%+ | 503 | +5.3% | -0.25% | 46% |
+| gap down 3%+ | 458 | -5.2% | +0.31% | 49% |
+| down 1-3% | 1811 | -1.7% | +0.04% | 52% |
+| within 1% | 6032 | +0.0% | +0.01% | 50% |
+| up 1-3% | 2033 | +1.7% | +0.08% | 52% |
+| gap up 3%+ | 531 | +5.4% | -0.26% | 46% |
 
 ## 9. Deciding before the open vs at the previous close
 
-From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +38.5% a year (worst drawdown -38.1%) against +45.6% (-30.5%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.15 (95% block-bootstrap CI [-0.50, +0.12]): deciding before the open has been **not distinguishable from deciding on the previous close**.
+From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +37.7% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.13 (95% block-bootstrap CI [-0.41, +0.11]): deciding before the open has been **not distinguishable from deciding on the previous close**.
 
 | strategy | CAGR | Volatility | Sharpe | Max drawdown |
 |---|---|---|---|---|
-| Board on the previous close | +45.6% | 35.1% | 1.25 | -30.5% |
-| Board on the pre-market price | +38.5% | 35.4% | 1.10 | -38.1% |
-| Equal-weight watchlist | +36.1% | 39.3% | 0.98 | -43.8% |
+| Board on the previous close | +43.1% | 33.1% | 1.25 | -30.6% |
+| Board on the pre-market price | +37.7% | 33.4% | 1.12 | -30.6% |
+| Equal-weight watchlist | +33.7% | 37.7% | 0.96 | -42.3% |
 
 The pre-market version uses the official opening price as a stand-in for the last pre-market trade (free pre-market history is only days long), which slightly flatters it.

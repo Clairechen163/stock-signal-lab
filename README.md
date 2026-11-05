@@ -10,7 +10,7 @@ honest about how well they work: when to buy, when to sell, how to spread risk, 
 whether tomorrow is predictable at all.**
 
 > **TL;DR.** After every US trading day, an automated job downloads fresh prices for
-> ALAB, AMD, NVDA, MRVL, GOOG, FSLR, SKHY, ETN, TSLA and SPCX, labels each one
+> ALAB, AMD, NVDA, MRVL, GOOG, AMZN, FSLR, SKHY, ETN, TSLA and SPCX, labels each one
 > BUY, HOLD, WATCH, AVOID, REDUCE or SELL with fixed, published rules, and re-tests
 > whether trading those labels has beaten simply holding the same stocks. The rules
 > come from an October 2026 study in which **only 1 of 33 popular sell-signal tests
@@ -39,6 +39,7 @@ applies the same machinery every day to a watchlist.
 
 | Ticker | Action | Close | 1 day | 1 month | Why | Buy zone (pullback / breakout) | Stop |
 |---|---|---:|---:|---:|---|---|---:|
+| AMZN | **BUY** | 266.03 | +6.1% | +3.8% | buy rank 4/11; +9% vs 200-day average; distribution days | 254.13 / 266.56 | 236.97 |
 | TSLA | **WATCH** | 385.19 | -3.3% | +1.2% | +0% vs 200-day average; death cross, distribution days, 20%+ off high | 383.21 / 408.27 | 355.03 |
 | AMD | **REDUCE** | 488.78 | +1.0% | -24.7% | +18% vs 200-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop | — | — |
 | NVDA | **REDUCE** | 200.13 | -3.2% | -16.3% | -2% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, below chandelier stop | — | — |
@@ -58,9 +59,9 @@ What each label means: **BUY**: keep or add if you own it, buy near the pullback
 
 ### Does the board work?
 
-Trading the labels since 2022-02-01 (buy on BUY; exit on SELL, REDUCE or AVOID; weekly, next-day execution, 5 bp costs) returned **+43.5% a year** with a worst drawdown of -28.1%, versus +36.5% and -41.5% for holding every watchlist stock in equal weight. The Sharpe ratio difference is +0.21 (95% block-bootstrap CI [-0.41, +0.86]): **not distinguishable from simply holding the watchlist**.
+Trading the labels since 2022-02-01 (buy on BUY; exit on SELL, REDUCE or AVOID; weekly, next-day execution, 5 bp costs) returned **+41.7% a year** with a worst drawdown of -29.2%, versus +34.1% and -39.8% for holding every watchlist stock in equal weight. The Sharpe ratio difference is +0.24 (95% block-bootstrap CI [-0.37, +0.87]): **not distinguishable from simply holding the watchlist**.
 
-Label by label: BUY labels were followed by -0.5% versus the watchlist average over 21 days (p = 0.70, 117 observations); SELL labels were followed by -0.5% versus the watchlist average over 21 days (p = 0.79, 54 observations).
+Label by label: BUY labels were followed by -0.4% versus the watchlist average over 21 days (p = 0.74, 132 observations); SELL labels were followed by -0.1% versus the watchlist average over 21 days (p = 0.94, 63 observations).
 
 ![Board strategy vs holding](reports/board_equity.png)
 
@@ -69,11 +70,11 @@ These tests use stocks chosen today, which flatters every long-only strategy (su
 ### Key numbers from the latest full report
 
 - Sell-signal event study: **2 of 33** rule-by-horizon tests show significantly weaker returns after the signal once the false discovery rate is controlled (q < 0.10): death_cross (21d), rsi_rollover (63d).
-- Single-stock rule backtests: of 48 rule-by-stock tests on 8 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 2 a significantly lower one. About 1.2 of each would be expected by chance with 48 tests: no more than chance alone would produce, so no rule has shown an edge.
-- Next-day forecasts: the median out-of-sample AUC across 8 stocks is **0.53** (0.50 is a coin flip; highest 0.55 for MRVL, and the highest of 8 values sits above 0.50 by chance alone): a possible small edge, worth checking against its p-values.
-- Risk concentration: in an equal-weight portfolio of 14 assets (8 watchlist stocks plus 6 diversifiers), the watchlist stocks make up 57% of the money and **95% of the risk**; the largest risk contributors are ALAB, MRVL, AMD. Not yet included for lack of history: SKHY, SPCX.
-- Pre-market vs close: from 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +38.5% a year (worst drawdown -38.1%) against +45.6% (-30.5%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.15 (95% block-bootstrap CI [-0.50, +0.12]): deciding before the open has been **not distinguishable from deciding on the previous close**.
-- Opening gaps: across 9,612 stock-days (10 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
+- Single-stock rule backtests: of 54 rule-by-stock tests on 9 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 2 a significantly lower one. About 1.4 of each would be expected by chance with 54 tests: no more than chance alone would produce, so no rule has shown an edge.
+- Next-day forecasts: the median out-of-sample AUC across 9 stocks is **0.53** (0.50 is a coin flip; highest 0.56 for AMZN, and the highest of 9 values sits above 0.50 by chance alone): a possible small edge, worth checking against its p-values.
+- Risk concentration: in an equal-weight portfolio of 15 assets (9 watchlist stocks plus 6 diversifiers), the watchlist stocks make up 60% of the money and **96% of the risk**; the largest risk contributors are ALAB, MRVL, AMD. Not yet included for lack of history: SKHY, SPCX.
+- Pre-market vs close: from 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +37.7% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.13 (95% block-bootstrap CI [-0.41, +0.11]): deciding before the open has been **not distinguishable from deciding on the previous close**.
+- Opening gaps: across 10,865 stock-days (11 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
 
 Live track record: 2 trading days of labels logged since 2026-11-03 in [`reports/board_log.csv`](reports/board_log.csv), so the board can later be judged on signals it published before the prices moved.
 
@@ -81,28 +82,29 @@ Full tables and charts: [`reports/REPORT.md`](reports/REPORT.md).
 <!-- LIVE:END -->
 
 <!-- PREMARKET:START (generated by `python -m stocklab premarket`; edits here are overwritten) -->
-## Pre-market board at 05:02 ET on 2026-11-05
+## Pre-market board at 05:17 ET on 2026-11-05
 
 *The same rules as the board above, with each stock's latest pre-market trade standing in for today's close (the history before it is still daily closes). Refreshed each weekday before the US open by a second GitHub Actions workflow, and whenever `python -m stocklab premarket` is run. Pre-market trading is thin and prices can move a lot by 9:30 ET.*
 
 | Ticker | Pre-market label | Board at last close | Last close | Pre-market | Change | Buy zone (pullback / breakout) | Stop | What the move crosses |
 |---|---|---|---:|---:|---:|---|---:|---|
-| TSLA | **REDUCE** (changed) | WATCH | 385.19 | 377.70 | -1.9% | — | — | now below 200-day average (384.76) |
-| AMD | **REDUCE** | REDUCE | 488.78 | 475.56 | -2.7% | — | — | — |
-| NVDA | **REDUCE** | REDUCE | 200.13 | 199.20 | -0.5% | — | — | — |
-| SKHY | **REDUCE**\* | REDUCE* | 143.07 | 137.46 | -3.9% | — | — | — |
-| FSLR | **AVOID** (changed) | REDUCE | 194.51 | 198.76 | +2.2% | — | — | — |
-| MRVL | **REDUCE** (changed) | SELL | 159.80 | 156.20 | -2.3% | — | — | — |
+| AMZN | **BUY** | BUY | 266.03 | 267.60 | +0.6% | 254.80 / 268.14 | 238.65 | now above breakout level (266.56) |
+| TSLA | **REDUCE** (changed) | WATCH | 385.19 | 378.32 | -1.8% | — | — | now below 200-day average (384.76) |
+| AMD | **REDUCE** | REDUCE | 488.78 | 475.75 | -2.7% | — | — | — |
+| NVDA | **REDUCE** | REDUCE | 200.13 | 199.30 | -0.4% | — | — | — |
+| SKHY | **REDUCE**\* | REDUCE* | 143.07 | 137.21 | -4.1% | — | — | — |
+| FSLR | **AVOID** (changed) | REDUCE | 194.51 | 199.77 | +2.7% | — | — | — |
+| MRVL | **REDUCE** (changed) | SELL | 159.80 | 156.19 | -2.3% | — | — | — |
 | ALAB | **REDUCE** (changed) | SELL | 223.27 | 217.00 | -2.8% | — | — | — |
 | ETN | **SELL** | SELL | 353.08 | 348.20 | -1.4% | — | — | — |
-| GOOG | **SELL** | SELL | 287.30 | 289.15 | +0.6% | — | — | — |
-| SPCX | **SELL**\* | SELL* | 135.92 | 134.23 | -1.2% | — | — | — |
+| GOOG | **SELL** | SELL | 287.30 | 289.48 | +0.8% | — | — | — |
+| SPCX | **SELL**\* | SELL* | 135.92 | 134.50 | -1.0% | — | — | — |
 
 The two volume rules can't fire on a pre-market price, and a label marked `*` is provisional (short history). The close-based board above stays the reference: it is the one with the longer live track record.
 
-**Does deciding before the open help?** From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +38.5% a year (worst drawdown -38.1%) against +45.6% (-30.5%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.15 (95% block-bootstrap CI [-0.50, +0.12]): deciding before the open has been **not distinguishable from deciding on the previous close**. The test uses the official opening price as a stand-in for the last pre-market trade, because free pre-market history only goes back a few days; every run logs real pre-market labels to `reports/premarket_log.csv` for a direct test later.
+**Does deciding before the open help?** From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +37.7% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 87% of stock-weeks. Sharpe ratio difference -0.13 (95% block-bootstrap CI [-0.41, +0.11]): deciding before the open has been **not distinguishable from deciding on the previous close**. The test uses the official opening price as a stand-in for the last pre-market trade, because free pre-market history only goes back a few days; every run logs real pre-market labels to `reports/premarket_log.csv` for a direct test later.
 
-**Do opening gaps carry into the day?** Across 9,612 stock-days (10 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
+**Do opening gaps carry into the day?** Across 10,865 stock-days (11 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes.
 
 Details: [`reports/PREMARKET.md`](reports/PREMARKET.md).
 <!-- PREMARKET:END -->
