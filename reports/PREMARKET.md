@@ -1,4 +1,4 @@
-# Pre-market board, 09:10 ET on 2026-11-05
+# Pre-market board, 15:18 ET on 2026-11-05
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,17 +6,17 @@ The board's rules with each stock's latest pre-market trade standing in for toda
 
 | ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 266.03 | 270.50 | +1.7% | 254.95 | 271.04 | 238.38 | pre-market | now above breakout level (266.56) |
-| TSLA | REDUCE (changed) | WATCH | 385.19 | 374.92 | -2.7% |  |  |  | pre-market | now below 200-day average (384.76); rule now on: MACD bearish |
-| AMD | REDUCE | REDUCE | 488.78 | 458.99 | -6.1% |  |  |  | pre-market |  |
-| NVDA | REDUCE | REDUCE | 200.13 | 196.75 | -1.7% |  |  |  | pre-market |  |
-| SKHY | REDUCE* | REDUCE* | 143.07 | 133.78 | -6.5% |  |  |  | pre-market |  |
-| FSLR | REDUCE | REDUCE | 194.51 | 202.75 | +4.2% |  |  |  | pre-market |  |
-| MRVL | SELL | SELL | 159.80 | 152.17 | -4.8% |  |  |  | pre-market |  |
-| ALAB | SELL | SELL | 223.27 | 209.75 | -6.1% |  |  |  | pre-market |  |
-| ETN | SELL | SELL | 353.08 | 344.00 | -2.6% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 287.30 | 290.69 | +1.2% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 135.92 | 132.11 | -2.8% |  |  |  | pre-market |  |
+| AMZN | BUY | BUY | 266.03 | 259.43 | -2.5% | 254.40 | 266.56 | 237.53 | regular session |  |
+| TSLA | SELL (changed) | WATCH | 385.19 | 342.39 | -11.1% |  |  |  | regular session | now below 50-day average (372.11); now below 200-day average (384.76); now below chandelier stop (371.96); now below board stop (355.03); rule now on: MACD bearish |
+| AMD | REDUCE | REDUCE | 488.78 | 415.56 | -15.0% |  |  |  | regular session |  |
+| NVDA | REDUCE | REDUCE | 200.13 | 182.98 | -8.6% |  |  |  | regular session | now below 80% of the 52-week high (191.39) |
+| SKHY | SELL* (changed) | REDUCE* | 143.07 | 127.11 | -11.2% |  |  |  | regular session | rule now on: MACD bearish |
+| FSLR | REDUCE | REDUCE | 194.51 | 196.89 | +1.2% |  |  |  | regular session |  |
+| MRVL | SELL | SELL | 159.80 | 137.01 | -14.3% |  |  |  | regular session |  |
+| ALAB | SELL | SELL | 223.27 | 185.83 | -16.8% |  |  |  | regular session |  |
+| ETN | SELL | SELL | 353.08 | 330.26 | -6.5% |  |  |  | regular session |  |
+| GOOG | SELL | SELL | 287.30 | 283.56 | -1.3% |  |  |  | regular session |  |
+| SPCX | SELL* | SELL* | 135.92 | 125.26 | -7.8% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 
