@@ -10,7 +10,7 @@ from __future__ import annotations
 import csv
 import os
 
-DEFAULT_WATCHLIST = ["ALAB", "AMD", "NVDA", "MRVL", "GOOG", "FSLR", "SKHY", "ETN", "TSLA", "SPCX"]
+DEFAULT_WATCHLIST = ["ALAB", "AMD", "NVDA", "MRVL", "GOOG", "FSLR", "SKHY", "ETN", "TSLA", "SPCX", "AMZN", "IBM"]
 DEFAULT_PATH = "watchlist.csv"
 
 
