@@ -1,4 +1,4 @@
-# Pre-market board, 15:18 ET on 2026-11-05
+# Pre-market board, 04:38 ET on 2026-11-06
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,30 +6,30 @@ The board's rules with each stock's latest pre-market trade standing in for toda
 
 | ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 266.03 | 259.43 | -2.5% | 254.40 | 266.56 | 237.53 | regular session |  |
-| TSLA | SELL (changed) | WATCH | 385.19 | 342.39 | -11.1% |  |  |  | regular session | now below 50-day average (372.11); now below 200-day average (384.76); now below chandelier stop (371.96); now below board stop (355.03); rule now on: MACD bearish |
-| AMD | REDUCE | REDUCE | 488.78 | 415.56 | -15.0% |  |  |  | regular session |  |
-| NVDA | REDUCE | REDUCE | 200.13 | 182.98 | -8.6% |  |  |  | regular session | now below 80% of the 52-week high (191.39) |
-| SKHY | SELL* (changed) | REDUCE* | 143.07 | 127.11 | -11.2% |  |  |  | regular session | rule now on: MACD bearish |
-| FSLR | REDUCE | REDUCE | 194.51 | 196.89 | +1.2% |  |  |  | regular session |  |
-| MRVL | SELL | SELL | 159.80 | 137.01 | -14.3% |  |  |  | regular session |  |
-| ALAB | SELL | SELL | 223.27 | 185.83 | -16.8% |  |  |  | regular session |  |
-| ETN | SELL | SELL | 353.08 | 330.26 | -6.5% |  |  |  | regular session |  |
-| GOOG | SELL | SELL | 287.30 | 283.56 | -1.3% |  |  |  | regular session |  |
-| SPCX | SELL* | SELL* | 135.92 | 125.26 | -7.8% |  |  |  | regular session |  |
+| AMZN | BUY | BUY | 260.21 | 258.70 | -0.6% | 254.25 | 266.56 | 236.46 | pre-market |  |
+| FSLR | AVOID | AVOID | 195.76 | 198.40 | +1.3% |  |  |  | pre-market |  |
+| AMD | SELL | SELL | 404.40 | 436.00 | +7.8% |  |  |  | pre-market | now above 200-day average (415.00) |
+| MRVL | SELL | SELL | 133.55 | 144.50 | +8.2% |  |  |  | pre-market |  |
+| NVDA | SELL | SELL | 181.60 | 189.30 | +4.2% |  |  |  | pre-market |  |
+| ALAB | SELL | SELL | 179.47 | 195.63 | +9.0% |  |  |  | pre-market |  |
+| SPCX | SELL* | SELL* | 123.62 | 128.73 | +4.1% |  |  |  | pre-market |  |
+| ETN | SELL | SELL | 327.02 | 343.00 | +4.9% |  |  |  | pre-market |  |
+| GOOG | SELL | SELL | 281.74 | 285.42 | +1.3% |  |  |  | pre-market |  |
+| TSLA | SELL | SELL | 343.69 | 353.73 | +2.9% |  |  |  | pre-market |  |
+| SKHY | SELL* | SELL* | 123.90 | 130.01 | +4.9% |  |  |  | pre-market |  |
 
 ## Does deciding before the open help?
 
-From 2022-02-02 to 2026-11-03 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +39.1% a year (worst drawdown -30.6%) against +43.1% (-30.6%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference -0.10 (95% block-bootstrap CI [-0.38, +0.14]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 2 of the last 2 runs.*
+From 2022-02-03 to 2026-11-04 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +35.5% a year (worst drawdown -29.0%) against +33.0% (-31.3%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.09 (95% block-bootstrap CI [-0.13, +0.37]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 3 of the last 3 runs.*
 
 ## Do opening gaps carry into the day?
 
-Across 10,865 stock-days (11 watchlist stocks, 2021-11-08 to 2026-11-04), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 2 of the last 2 runs.*
+Across 10,868 stock-days (11 watchlist stocks, 2021-11-09 to 2026-11-05), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.04%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 3 of the last 3 runs.*
 
 | opening gap | days | avg gap | avg open-to-close | closed above open |
 |---|---|---|---|---|
-| gap down 3%+ | 458 | -5.2% | +0.31% | 49% |
-| down 1-3% | 1811 | -1.7% | +0.04% | 52% |
-| within 1% | 6032 | +0.0% | +0.01% | 50% |
-| up 1-3% | 2033 | +1.7% | +0.08% | 52% |
-| gap up 3%+ | 531 | +5.4% | -0.26% | 46% |
+| gap down 3%+ | 463 | -5.2% | +0.18% | 48% |
+| down 1-3% | 1813 | -1.7% | +0.03% | 52% |
+| within 1% | 6028 | +0.0% | +0.01% | 50% |
+| up 1-3% | 2032 | +1.7% | +0.07% | 52% |
+| gap up 3%+ | 532 | +5.4% | -0.27% | 46% |
