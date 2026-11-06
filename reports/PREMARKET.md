@@ -1,4 +1,4 @@
-# Pre-market board, 05:29 ET on 2026-11-06
+# Pre-market board, 06:00 ET on 2026-11-06
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,18 +6,18 @@ The board's rules with each stock's latest pre-market trade standing in for toda
 
 | ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 260.21 | 258.30 | -0.7% | 254.23 | 266.56 | 236.39 | pre-market |  |
-| IBM | REDUCE (changed) | WATCH | 247.11 | 244.00 | -1.3% |  |  |  | pre-market | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
-| FSLR | AVOID | AVOID | 195.76 | 196.02 | +0.1% |  |  |  | pre-market |  |
-| AMD | SELL | SELL | 404.40 | 434.00 | +7.3% |  |  |  | pre-market | now above 200-day average (415.00) |
-| MRVL | SELL | SELL | 133.55 | 143.35 | +7.3% |  |  |  | pre-market |  |
-| NVDA | SELL | SELL | 181.60 | 189.19 | +4.2% |  |  |  | pre-market |  |
-| ALAB | SELL | SELL | 179.47 | 193.80 | +8.0% |  |  |  | pre-market |  |
-| ETN | SELL | SELL | 327.02 | 338.90 | +3.6% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 281.74 | 283.41 | +0.6% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 123.62 | 128.33 | +3.8% |  |  |  | pre-market |  |
-| TSLA | SELL | SELL | 343.69 | 350.00 | +1.8% |  |  |  | pre-market |  |
-| SKHY | SELL* | SELL* | 123.90 | 129.50 | +4.5% |  |  |  | pre-market |  |
+| AMZN | BUY | BUY | 260.21 | 258.02 | -0.8% | 254.21 | 266.56 | 236.33 | pre-market |  |
+| IBM | REDUCE (changed) | WATCH | 247.11 | 243.50 | -1.5% |  |  |  | pre-market | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
+| FSLR | AVOID | AVOID | 195.76 | 197.00 | +0.6% |  |  |  | pre-market |  |
+| AMD | SELL | SELL | 404.40 | 430.97 | +6.6% |  |  |  | pre-market | now above 200-day average (415.00) |
+| MRVL | SELL | SELL | 133.55 | 142.70 | +6.9% |  |  |  | pre-market |  |
+| NVDA | SELL | SELL | 181.60 | 188.89 | +4.0% |  |  |  | pre-market |  |
+| ALAB | SELL | SELL | 179.47 | 194.99 | +8.6% |  |  |  | pre-market |  |
+| ETN | SELL | SELL | 327.02 | 341.00 | +4.3% |  |  |  | pre-market |  |
+| GOOG | SELL | SELL | 281.74 | 282.51 | +0.3% |  |  |  | pre-market |  |
+| SPCX | SELL* | SELL* | 123.62 | 128.16 | +3.7% |  |  |  | pre-market |  |
+| TSLA | SELL | SELL | 343.69 | 348.78 | +1.5% |  |  |  | pre-market |  |
+| SKHY | SELL* | SELL* | 123.90 | 129.05 | +4.2% |  |  |  | pre-market |  |
 
 ## Does deciding before the open help?
 
