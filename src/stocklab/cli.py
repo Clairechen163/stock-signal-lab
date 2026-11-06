@@ -2,7 +2,8 @@
 
     python -m stocklab update                 # refresh everything and the README (what the daily job runs)
     python -m stocklab board                  # today's BUY / HOLD / WATCH / AVOID / REDUCE / SELL labels
-    python -m stocklab premarket              # the board re-run at pre-market prices (before the open)
+    python -m stocklab premarket              # the board at the latest price (pre-market, intraday or after-hours)
+    python -m stocklab live                   # the same, redrawn in the terminal every minute (Ctrl+C to stop)
     python -m stocklab report                 # full report in reports/REPORT.md
     python -m stocklab sell-check ALAB AMD:150 --stop 0.15
     python -m stocklab sell-study
@@ -448,8 +449,8 @@ def cmd_timing(args, md=None, outdir=None, frames=None):
     return c
 
 
-def cmd_premarket(args, md=None, outdir=None):
-    """Pre-market board: the board's rules with the latest pre-market price as today's price."""
+def _board_inputs(args):
+    """Watchlist, daily frames and the close-based board that the latest-price views start from."""
     wl = watchlist(args)
     tickers = [t.upper() for t in args.tickers] if getattr(args, "tickers", None) else list(wl)
     _, frames = load_ind(tickers, args, min_rows=1)
@@ -457,6 +458,28 @@ def cmd_premarket(args, md=None, outdir=None):
         raise SystemExit("No price data could be loaded for the watchlist.")
     table, _ = board.today(frames, entries=wl, stop_pct=args.stop, capital=args.capital, risk_per_trade=args.risk,
                            max_weight=args.max_position)
+    return wl, frames, table
+
+
+def _latest_show(v: pd.DataFrame) -> pd.DataFrame:
+    """The latest-price board as a printable table."""
+    show = pd.DataFrame(index=v.index)
+    show["label now"] = v["premarket_label"] + v["changed"].map({True: " (changed)", False: ""})
+    show["board at close"] = v["board"]
+    show["close"] = v["close"].map(lambda x: f"{x:,.2f}")
+    show["latest"] = v["price"].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}")
+    show["change"] = v["change"].map(pct)
+    for c, label in [("pm_pullback_entry", "pullback entry"), ("pm_breakout", "breakout"), ("pm_stop", "stop")]:
+        show[label] = v[c].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}") if c in v else ""
+    show["session"] = v["session"]
+    show["what the move changes"] = v["crossed"]
+    show.index.name = "ticker"
+    return show
+
+
+def cmd_premarket(args, md=None, outdir=None):
+    """The board's rules with each stock's latest trade (pre-market, intraday or after-hours) as today's price."""
+    wl, frames, table = _board_inputs(args)
     snap = premarket.snapshot(list(frames), args.source, frames)
     if snap.empty:
         raise SystemExit("No pre-market or intraday prices could be downloaded; nothing updated.")
@@ -484,28 +507,19 @@ def cmd_premarket(args, md=None, outdir=None):
     latest = max(pd.Timestamp(t) for t in snap["time"])
     session = premarket.session_of(latest)
     when = latest.strftime("%H:%M ET on %Y-%m-%d")
-    section(f"Pre-market board ({session}, {when})")
-    show = pd.DataFrame(index=v.index)
-    show["pre-market label"] = v["premarket_label"] + v["changed"].map({True: " (changed)", False: ""})
-    show["board at close"] = v["board"]
-    show["close"] = v["close"].map(lambda x: f"{x:,.2f}")
-    show["pre-market"] = v["price"].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}")
-    show["change"] = v["change"].map(pct)
-    for c, label in [("pm_pullback_entry", "pullback entry"), ("pm_breakout", "breakout"), ("pm_stop", "stop")]:
-        show[label] = v[c].map(lambda x: "" if pd.isna(x) else f"{x:,.2f}") if c in v else ""
-    show["session"] = v["session"]
-    show["what the move changes"] = v["crossed"]
-    show.index.name = "ticker"
+    title = readme.LATEST_TITLES.get(session, "Board at the latest prices")
+    section(f"{title} ({when})")
+    show = _latest_show(v)
     print(show.to_string())
     if timing_text:
         print("\n" + timing_text.replace("*", ""))
     if gaps:
         print("\n" + gap_text.replace("*", ""))
 
-    md_lines = [f"# Pre-market board, {when}\n", f"> {DISCLAIMER}\n",
-                "The board's rules with each stock's latest pre-market trade standing in for today's close; the history "
-                "before it is daily closes. The volume rules keep their value from the last close, so a label changes only "
-                "when the price move switches a price-based rule (the last column says which).\n",
+    md_lines = [f"# {title}, {when}\n", f"> {DISCLAIMER}\n",
+                "The board's rules with each stock's latest trade standing in for today's close; the history before it "
+                "is daily closes. The volume rules keep their value from the last close, so a label changes only when "
+                "the price move switches a price-based rule (the last column says which).\n",
                 md_table(show) + "\n"]
     if timing_text:
         md_lines += ["## Does deciding before the open help?\n", timing_text + "\n"]
@@ -531,7 +545,7 @@ def cmd_premarket(args, md=None, outdir=None):
         block = readme.render_premarket(v, gaps, gap_text, when, session, args.source,
                                         f"{rel}/PREMARKET.md", timing_text)
         readme.write(args.readme, block, readme.PM_START, readme.PM_END)
-        print(f"Pre-market section of {args.readme} updated.")
+        print(f"Latest-price section of {args.readme} updated.")
     return {"view": v, "gaps": gaps}
 
 
@@ -670,9 +684,64 @@ def prefetch_for(args) -> None:
         "screen": screener.DEFAULT_UNIVERSE,
         "portfolio": DIVERSIFIERS,
         "premarket": [],
+        "live": [],
     }.get(args.command, [])
     chosen = getattr(args, "tickers", None) or [h.split(":")[0] for h in (getattr(args, "holdings", None) or [])] or wl
     data.prefetch([t.upper() for t in chosen] + extra + [getattr(args, "benchmark", "SPY")], args.years, args.source, args.csv_dir)
+
+
+def cmd_live(args, md=None, outdir=None):
+    """The board at the latest price, redrawn in the terminal every --every seconds until Ctrl+C.
+
+    Nothing is written to disk or to the README. The daily history is reloaded when the New
+    York date changes and again once the day's close is final (16:15 ET).
+    """
+    import time
+
+    every = max(15, int(args.every))
+
+    def stamp():
+        now = premarket.now_ny()
+        return now.date(), now.hour * 60 + now.minute >= 16 * 60 + 15
+
+    loaded, before = None, {}
+    try:
+        while True:
+            if loaded != stamp():
+                if loaded is not None:
+                    data._CACHE.clear()
+                    prefetch_for(args)
+                wl, frames, table = _board_inputs(args)
+                loaded = stamp()
+            snap = premarket.snapshot(list(frames), args.source, frames)
+            cleared = sys.stdout.isatty() and not args.once
+            if cleared:
+                os.system("cls" if os.name == "nt" else "clear")
+            checked = premarket.now_ny()
+            if snap.empty:
+                print(f"{checked:%H:%M:%S} ET: no prices could be downloaded.")
+            else:
+                v = premarket.view(frames, table, snap, entries=wl, stop_pct=args.stop)
+                latest = max(pd.Timestamp(t) for t in snap["time"])
+                session = premarket.session_of(latest)
+                print(f"{readme.LATEST_TITLES.get(session, 'Board at the latest prices')}: last trade "
+                      f"{latest:%Y-%m-%d %H:%M} ET, checked {checked:%H:%M:%S} ET\n")
+                print(_latest_show(v).drop(columns="session").to_string())
+                labels = v["premarket_label"].to_dict()
+                moved = [f"{t} {before[t]} -> {lab}" for t, lab in labels.items() if before.get(t) and before[t] != lab]
+                if moved:
+                    print("\nChanged since the last refresh: " + "; ".join(moved))
+                before = labels
+                if session == "closed":
+                    print("\nThe US market is closed; prices start moving again at 04:00 ET on the next weekday.")
+            print(("\n" + DISCLAIMER if cleared else "") + "\nThe close-based board is the tested one; a label at an "
+                  "intraday price can change by the close.")
+            if args.once:
+                return
+            print(f"Refreshing every {every} seconds. Press Ctrl+C to stop.")
+            time.sleep(every)
+    except KeyboardInterrupt:
+        print("\nStopped.")
 
 
 def cmd_update(args):
@@ -746,9 +815,16 @@ def build_parser():
     bd.add_argument("--tickers", nargs="+")
 
     pm = sp.add_parser("premarket", parents=[common, trade],
-                       help="the board's rules at the latest pre-market prices, plus the timing and gap tests")
+                       help="the board's rules at the latest price (pre-market, intraday or after-hours), "
+                            "plus the timing and gap tests")
     pm.add_argument("--tickers", nargs="+")
     pm.add_argument("--readme", default="README.md", help="README whose pre-market section to refresh ('none' to skip)")
+
+    lv = sp.add_parser("live", parents=[common, trade],
+                       help="the board at the latest price, redrawn in the terminal every minute (Ctrl+C to stop)")
+    lv.add_argument("--tickers", nargs="+")
+    lv.add_argument("--every", type=int, default=60, help="seconds between refreshes (minimum 15)")
+    lv.add_argument("--once", action="store_true", help="refresh once and exit")
 
     b = sp.add_parser("backtest", parents=[common, trade], help="compare buy/sell rules against buy & hold")
     b.add_argument("--tickers", nargs="+")
@@ -777,6 +853,7 @@ def main(argv=None):
     handlers = {
         "board": cmd_board,
         "premarket": cmd_premarket,
+        "live": cmd_live,
         "backtest": cmd_backtest,
         "sell-check": cmd_sell_check,
         "sell-study": cmd_sell_study,

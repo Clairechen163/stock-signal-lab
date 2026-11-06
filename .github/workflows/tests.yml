@@ -23,3 +23,5 @@ jobs:
         run: python -m stocklab update --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md --n-sims 300 --n-boot 200
       - name: Offline pre-market check (synthetic prices)
         run: python -m stocklab premarket --source synthetic --out reports/synthetic --readme reports/synthetic/README_preview.md --n-boot 200
+      - name: Offline live board, one refresh (synthetic prices)
+        run: python -m stocklab live --source synthetic --once --out reports/synthetic

@@ -175,3 +175,26 @@ def test_every_changed_premarket_label_is_explained():
         checked += len(changed)
         explained += int((changed["crossed"].str.len() > 0).sum())
     assert checked > 0 and explained == checked
+
+
+def test_latest_price_section_wording_follows_the_session():
+    frames = _frames()
+    table, _ = board.today(frames)
+    v = premarket.view(frames, table, premarket._synthetic_snapshot(frames))
+    intraday = readme.render_premarket(v, None, "", "10:05 ET on 2026-11-06", "regular session", "yahoo", "r.md")
+    assert intraday.startswith("## Intraday board") and "| Label now |" in intraday and "Pre-market label" not in intraday
+    assert "preview" in intraday
+    before_open = readme.render_premarket(v, None, "", "07:47 ET on 2026-11-06", "pre-market", "yahoo", "r.md")
+    assert "| Pre-market label |" in before_open and "thin" in before_open
+
+
+def test_live_board_refreshes_once_offline(tmp_path, capsys):
+    from stocklab import cli
+
+    wl = tmp_path / "watchlist.csv"
+    wl.write_text("ticker,entry_price\nAAA,\nBBB,\nCCC,\nDDD,\n", encoding="utf-8")
+    cli.main(["live", "--source", "synthetic", "--once", "--out", str(tmp_path), "--watchlist", str(wl)])
+    out = capsys.readouterr().out
+    assert "Pre-market board: last trade" in out and "label now" in out
+    assert all(t in out for t in ("AAA", "BBB", "CCC", "DDD"))
+    assert not any(p.suffix == ".md" for p in tmp_path.iterdir())  # the live view writes nothing

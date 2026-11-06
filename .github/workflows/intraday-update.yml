@@ -1,0 +1,49 @@
+name: intraday-update
+
+# Every hour during US trading: re-runs the board at each stock's latest price and refreshes
+# the README's latest-price section (the same command as the pre-market check). Each run is
+# one commit; disable this workflow from the Actions tab to keep only the pre-market and
+# after-close refreshes.
+
+on:
+  schedule:
+    # :07 past each hour from 14:07 to 20:07 UTC on weekdays. New York winter time: 09:07
+    # (pre-market) to 15:07; summer time: 10:07 to 16:07 (the last one just after the close).
+    # GitHub may start scheduled runs a few minutes late, and drops some at busy times.
+    - cron: "7 14-20 * * 1-5"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: readme-refresh  # shared with the other refreshes, so only one pushes at a time
+  cancel-in-progress: false
+
+jobs:
+  intraday:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+          cache: pip
+      - name: Install
+        run: pip install -e .
+      - name: Board at the latest prices
+        run: python -m stocklab premarket
+      - name: Commit the refreshed results
+        # Authored as the account that owns this workflow, so no bot account joins the contributors.
+        run: |
+          git config user.name "${{ github.actor }}"
+          git config user.email "${{ github.actor_id }}+${{ github.actor }}@users.noreply.github.com"
+          git add README.md reports
+          if git diff --cached --quiet; then
+            echo "Nothing changed."
+            exit 0
+          fi
+          git commit -m "Intraday check: $(TZ=America/New_York date '+%Y-%m-%d %H:%M') ET"
+          git pull --rebase
+          git push

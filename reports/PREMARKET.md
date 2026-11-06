@@ -1,26 +1,26 @@
-# Pre-market board, 09:47 ET on 2026-11-06
+# Intraday board, 10:05 ET on 2026-11-06
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
-The board's rules with each stock's latest pre-market trade standing in for today's close; the history before it is daily closes. The volume rules keep their value from the last close, so a label changes only when the price move switches a price-based rule (the last column says which).
+The board's rules with each stock's latest trade standing in for today's close; the history before it is daily closes. The volume rules keep their value from the last close, so a label changes only when the price move switches a price-based rule (the last column says which).
 
-| ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | what the move changes |
+| ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 260.21 | 261.66 | +0.6% | 254.40 | 266.56 | 236.62 | regular session |  |
-| IBM | REDUCE (changed) | WATCH | 247.11 | 242.48 | -1.9% |  |  |  | regular session | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
-| FSLR | AVOID | AVOID | 195.76 | 198.59 | +1.4% |  |  |  | regular session |  |
-| AMD | SELL | SELL | 404.40 | 457.03 | +13.0% |  |  |  | regular session | now above 200-day average (415.00) |
-| MRVL | SELL | SELL | 133.55 | 145.48 | +8.9% |  |  |  | regular session |  |
-| NVDA | SELL | SELL | 181.60 | 193.94 | +6.8% |  |  |  | regular session | now above 80% of the 52-week high (191.39) |
-| ALAB | SELL | SELL | 179.47 | 192.09 | +7.0% |  |  |  | regular session |  |
-| ETN | SELL | SELL | 327.02 | 339.88 | +3.9% |  |  |  | regular session |  |
-| GEV | SELL | SELL | 770.51 | 801.51 | +4.0% |  |  |  | regular session |  |
-| GOOG | SELL | SELL | 281.74 | 287.17 | +1.9% |  |  |  | regular session |  |
-| TSLA | SELL | SELL | 343.69 | 354.14 | +3.0% |  |  |  | regular session |  |
-| SPCX | SELL* | SELL* | 123.62 | 132.07 | +6.8% |  |  |  | regular session |  |
-| CEG | SELL | SELL | 239.65 | 247.40 | +3.2% |  |  |  | regular session |  |
-| VST | SELL | SELL | 112.89 | 120.33 | +6.6% |  |  |  | regular session |  |
-| SKHY | SELL* | SELL* | 123.90 | 131.97 | +6.5% |  |  |  | regular session |  |
+| AMZN | BUY | BUY | 260.21 | 262.62 | +0.9% | 254.44 | 266.56 | 236.53 | regular session |  |
+| IBM | REDUCE (changed) | WATCH | 247.11 | 242.80 | -1.7% |  |  |  | regular session | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
+| FSLR | AVOID | AVOID | 195.76 | 198.99 | +1.7% |  |  |  | regular session |  |
+| AMD | SELL | SELL | 404.40 | 452.01 | +11.8% |  |  |  | regular session | now above 200-day average (415.00) |
+| MRVL | SELL | SELL | 133.55 | 142.51 | +6.7% |  |  |  | regular session |  |
+| NVDA | SELL | SELL | 181.60 | 192.82 | +6.2% |  |  |  | regular session | now above 80% of the 52-week high (191.39) |
+| ALAB | SELL | SELL | 179.47 | 188.76 | +5.2% |  |  |  | regular session |  |
+| ETN | SELL | SELL | 327.02 | 338.26 | +3.4% |  |  |  | regular session |  |
+| GEV | SELL | SELL | 770.51 | 799.23 | +3.7% |  |  |  | regular session |  |
+| GOOG | SELL | SELL | 281.74 | 286.75 | +1.8% |  |  |  | regular session |  |
+| TSLA | SELL | SELL | 343.69 | 356.03 | +3.6% |  |  |  | regular session |  |
+| SPCX | SELL* | SELL* | 123.62 | 130.70 | +5.7% |  |  |  | regular session |  |
+| CEG | SELL | SELL | 239.65 | 248.13 | +3.5% |  |  |  | regular session |  |
+| VST | SELL | SELL | 112.89 | 119.81 | +6.1% |  |  |  | regular session |  |
+| SKHY | SELL* | SELL* | 123.90 | 130.50 | +5.3% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 

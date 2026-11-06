@@ -155,7 +155,7 @@ yet are dropped, and the README's live section is rewritten between two marker c
 leaving the rest of the README untouched. If fewer than half of the watchlist stocks load,
 the run stops without changing anything.
 
-## 9. Pre-market board, timing test and opening gaps (`premarket`)
+## 9. Board at the latest price, timing test and opening gaps (`premarket`, `live`)
 
 **Snapshot.** One batched Yahoo request downloads 1-minute bars for the last five days
 including extended hours (`prepost=True`). For each stock the latest bar gives the price,
@@ -174,6 +174,15 @@ A label can therefore change before the open only when the price move switches a
 price-based rule. The check lists which levels from the last close the move crosses (50-
 and 200-day averages, chandelier stop, 80% of the 52-week high, breakout level, stops) and,
 for any label that changed, the rules that switched on or off.
+
+**During the session.** The same view is computed at any time of day: the latest minute bar
+may be pre-market, regular-session or after-hours, and the section is titled by that
+session. A GitHub Actions job refreshes it hourly while the market is open, and
+`python -m stocklab live` redraws it every minute in a terminal without writing anything.
+Yahoo's minute bars carry Nasdaq's real-time last sale and can trail it by a minute or two.
+An intraday label has not been backtested: it is the label the close would set if the
+price stayed where it is, and only the close-based and pre-market boards have a tested
+track record.
 
 **Timing test.** Does deciding before the open beat deciding at the previous close? On the
 same review days (every 5 trading days), two versions of the label-trading rule (buy on

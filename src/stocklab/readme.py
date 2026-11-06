@@ -144,22 +144,34 @@ def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: 
     return "\n\n".join(out)
 
 
+LATEST_TITLES = {"pre-market": "Pre-market board", "regular session": "Intraday board",
+                 "after-hours": "After-hours board", "closed": "Market closed: board at the latest prices"}
+_SESSION_NOTE = {
+    "pre-market": "Pre-market trading is thin and prices can move a lot by 9:30 ET.",
+    "regular session": "A label at an intraday price is a preview: it can change by the close, and the close-based "
+                       "label is the one that has been tested.",
+    "after-hours": "After-hours trading is thin.",
+}
+_COLUMNS = {"pre-market": ("Pre-market label", "Pre-market"), "after-hours": ("After-hours label", "After-hours")}
+
+
 def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, source: str, report_path: str,
                      timing_text: str = "") -> str:
-    """The pre-market board: labels with the latest pre-market price as today's price."""
-    titles = {"pre-market": "Pre-market board", "regular session": "Intraday board",
-              "after-hours": "After-hours board", "closed": "Market closed: board at the latest extended-hours prices"}
-    out = [f"## {titles.get(session, 'Latest prices')} at {when}"]
+    """The board at the latest price: labels with each stock's latest trade as today's price."""
+    out = [f"## {LATEST_TITLES.get(session, 'Board at the latest prices')} at {when}"]
     out.append(
-        "*The same rules as the board above, with each stock's latest pre-market trade standing in for today's close "
-        "(the history before it is still daily closes). Refreshed each weekday before the US open by a second GitHub "
-        "Actions workflow, and whenever `python -m stocklab premarket` is run. Pre-market trading is thin and prices "
-        "can move a lot by 9:30 ET.*"
+        "*The same rules as the board above, with each stock's latest trade standing in for today's close (the "
+        "history before it is still daily closes). Prices are Yahoo Finance minute bars, which carry Nasdaq's "
+        "real-time last sale and can trail it by a minute or two. Refreshed by GitHub Actions before the US open and "
+        "every hour during the session, and whenever `python -m stocklab premarket` is run; `python -m stocklab live` "
+        "redraws it every minute in a terminal. " + _SESSION_NOTE.get(session, "") + "*"
     )
     if source != "yahoo":
         out.append(f"> **Preview on `{source}` data, not real prices.**")
+    label_col, price_col = _COLUMNS.get(session, ("Label now", "Latest price"))
     lines = [
-        "| Ticker | Pre-market label | Board at last close | Last close | Pre-market | Change | Buy zone (pullback / breakout) | Stop | What the move changes |",
+        f"| Ticker | {label_col} | Board at last close | Last close | {price_col} | Change | Buy zone (pullback / breakout) "
+        "| Stop | What the move changes |",
         "|---|---|---|---:|---:|---:|---|---:|---|",
     ]
     for t, r in v.iterrows():
@@ -174,7 +186,7 @@ def render_premarket(v, gaps: dict, gap_text: str, when: str, session: str, sour
                      f"{zone} | {stop} | {r['crossed'] or '—'} |")
     out.append("\n".join(lines))
     out.append(
-        "The two volume rules keep their value from the last close, because pre-market volume can't be compared "
+        "The two volume rules keep their value from the last close, because a part-day's volume can't be compared "
         "with a full session's, so a label changes here only when the price move switches a price-based rule; the "
         "last column says which. A label marked `*` is provisional (short history). "
         "The close-based board above stays the reference: it is the one with the longer live track record."
