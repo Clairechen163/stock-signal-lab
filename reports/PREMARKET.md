@@ -1,4 +1,4 @@
-# Intraday board, 14:43 ET on 2026-11-06
+# Intraday board, 15:49 ET on 2026-11-06
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,21 +6,21 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 260.21 | 262.05 | +0.7% | 254.42 | 266.56 | 236.58 | regular session |  |
-| IBM | REDUCE (changed) | WATCH | 247.11 | 244.92 | -0.9% |  |  |  | regular session | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
-| FSLR | AVOID | AVOID | 195.76 | 202.30 | +3.3% |  |  |  | regular session |  |
-| AMD | SELL | SELL | 404.40 | 445.44 | +10.1% |  |  |  | regular session | now above 200-day average (415.00) |
-| MRVL | SELL | SELL | 133.55 | 138.90 | +4.0% |  |  |  | regular session |  |
-| NVDA | SELL | SELL | 181.60 | 187.40 | +3.2% |  |  |  | regular session |  |
-| ALAB | SELL | SELL | 179.47 | 184.57 | +2.8% |  |  |  | regular session |  |
-| ETN | SELL | SELL | 327.02 | 340.95 | +4.3% |  |  |  | regular session |  |
-| GEV | SELL | SELL | 770.51 | 766.67 | -0.5% |  |  |  | regular session |  |
-| GOOG | SELL | SELL | 281.74 | 284.57 | +1.0% |  |  |  | regular session |  |
-| TSLA | SELL | SELL | 343.69 | 360.73 | +5.0% |  |  |  | regular session |  |
-| SPCX | SELL* | SELL* | 123.62 | 134.48 | +8.8% |  |  |  | regular session |  |
-| CEG | SELL | SELL | 239.65 | 251.26 | +4.8% |  |  |  | regular session |  |
-| VST | SELL | SELL | 112.89 | 124.12 | +9.9% |  |  |  | regular session |  |
-| SKHY | SELL* | SELL* | 123.90 | 126.66 | +2.2% |  |  |  | regular session |  |
+| AMZN | BUY | BUY | 260.21 | 260.36 | +0.1% | 254.33 | 266.56 | 236.74 | regular session |  |
+| IBM | REDUCE (changed) | WATCH | 247.11 | 245.24 | -0.8% |  |  |  | regular session | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
+| FSLR | AVOID | AVOID | 195.76 | 201.69 | +3.0% |  |  |  | regular session |  |
+| AMD | SELL | SELL | 404.40 | 446.37 | +10.4% |  |  |  | regular session | now above 200-day average (415.00) |
+| MRVL | SELL | SELL | 133.55 | 139.98 | +4.8% |  |  |  | regular session |  |
+| NVDA | SELL | SELL | 181.60 | 187.36 | +3.2% |  |  |  | regular session |  |
+| ALAB | SELL | SELL | 179.47 | 187.58 | +4.5% |  |  |  | regular session |  |
+| ETN | SELL | SELL | 327.02 | 342.65 | +4.8% |  |  |  | regular session |  |
+| GEV | SELL | SELL | 770.51 | 778.88 | +1.1% |  |  |  | regular session |  |
+| GOOG | SELL | SELL | 281.74 | 284.46 | +1.0% |  |  |  | regular session |  |
+| TSLA | SELL | SELL | 343.69 | 359.54 | +4.6% |  |  |  | regular session |  |
+| SPCX | SELL* | SELL* | 123.62 | 133.96 | +8.4% |  |  |  | regular session |  |
+| CEG | SELL | SELL | 239.65 | 250.75 | +4.6% |  |  |  | regular session |  |
+| VST | SELL | SELL | 112.89 | 124.43 | +10.2% |  |  |  | regular session |  |
+| SKHY | SELL* | SELL* | 123.90 | 126.77 | +2.3% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 
