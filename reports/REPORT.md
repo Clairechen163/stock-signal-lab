@@ -431,7 +431,7 @@ Walk-forward test on 550 unseen days (2024-08-27 to 2026-11-04).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.507 | 0.527 | 0.837 | 0.49 | 0.25 | 0.97 | 1.024 |
 | Logistic regression | 0.476 | 0.527 | 0.992 | 0.485 | 0.256 | 0.317 | 1.024 |
-| Gradient boosting | 0.473 | 0.527 | 0.995 | 0.48 | 0.269 | -0.009 | 1.024 |
+| Gradient boosting | 0.469 | 0.527 | 0.997 | 0.478 | 0.269 | -0.037 | 1.024 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
@@ -501,7 +501,7 @@ Walk-forward test on 550 unseen days (2024-08-27 to 2026-11-04).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 479.8 | 0.0 |  |  |
 | Ridge regression | 482.3 | -0.0103 | 0.518 | 0.754 |
-| Gradient boosting | 487.6 | -0.0325 | 0.495 | 0.958 |
+| Gradient boosting | 487.3 | -0.0314 | 0.498 | 0.953 |
 
 Forecast for the next session:
 
@@ -527,19 +527,19 @@ Walk-forward test on 550 unseen days (2024-08-27 to 2026-11-04).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.52 | 0.52 | 0.517 | 0.483 | 0.25 | 0.926 | 0.926 |
 | Logistic regression | 0.545 | 0.52 | 0.125 | 0.533 | 0.253 | 0.388 | 0.926 |
-| Gradient boosting | 0.516 | 0.52 | 0.585 | 0.525 | 0.264 | 0.686 | 0.926 |
+| Gradient boosting | 0.522 | 0.52 | 0.483 | 0.527 | 0.263 | 0.706 | 0.926 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 201.6 | 0.0 |  |  |
 | Ridge regression | 204.4 | -0.0278 | 0.522 | 0.98 |
-| Gradient boosting | 209.0 | -0.0748 | 0.518 | 0.999 |
+| Gradient boosting | 209.0 | -0.0747 | 0.52 | 0.999 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      35.8%
-  P(up) | Gradient boosting        43.9%
+  P(up) | Gradient boosting        44.5%
   P(up) | historical base rate     52.8%
   expected return (ridge)          +0.62%
   80% range low                    -3.35%
@@ -591,13 +591,13 @@ Walk-forward test on 550 unseen days (2024-08-27 to 2026-11-04).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.524 | 0.524 | 0.517 | 0.483 | 0.25 | 0.341 | 0.342 |
 | Logistic regression | 0.515 | 0.524 | 0.681 | 0.508 | 0.256 | 0.482 | 0.342 |
-| Gradient boosting | 0.545 | 0.524 | 0.163 | 0.526 | 0.26 | 0.463 | 0.342 |
+| Gradient boosting | 0.545 | 0.524 | 0.163 | 0.524 | 0.26 | 0.507 | 0.342 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 246.7 | 0.0 |  |  |
 | Ridge regression | 248.7 | -0.0167 | 0.516 | 0.825 |
-| Gradient boosting | 252.5 | -0.0479 | 0.515 | 0.967 |
+| Gradient boosting | 252.6 | -0.0484 | 0.513 | 0.968 |
 
 Forecast for the next session:
 
@@ -611,7 +611,7 @@ Forecast for the next session:
   daily volatility                 +4.06%
 ```
 
-Best out-of-sample AUC **0.526**; smallest p-value against a naive baseline 0.163, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.524**; smallest p-value against a naive baseline 0.163, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![ETN feature effects](forecast_ETN.png)
 
@@ -623,13 +623,13 @@ Walk-forward test on 550 unseen days (2024-08-27 to 2026-11-04).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.502 | 0.502 | 0.517 | 0.459 | 0.25 | 0.677 | 0.677 |
 | Logistic regression | 0.505 | 0.502 | 0.449 | 0.511 | 0.253 | 0.784 | 0.677 |
-| Gradient boosting | 0.507 | 0.502 | 0.416 | 0.52 | 0.263 | 0.232 | 0.677 |
+| Gradient boosting | 0.505 | 0.502 | 0.449 | 0.519 | 0.264 | 0.197 | 0.677 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 369.4 | 0.0 |  |  |
 | Ridge regression | 374.3 | -0.0266 | 0.495 | 0.964 |
-| Gradient boosting | 376.0 | -0.036 | 0.533 | 0.919 |
+| Gradient boosting | 376.2 | -0.0373 | 0.527 | 0.926 |
 
 Forecast for the next session:
 
@@ -643,7 +643,7 @@ Forecast for the next session:
   daily volatility                 +3.45%
 ```
 
-Best out-of-sample AUC **0.520**; smallest p-value against a naive baseline 0.416, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.519**; smallest p-value against a naive baseline 0.449, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![TSLA feature effects](forecast_TSLA.png)
 
@@ -683,8 +683,8 @@ Best out-of-sample AUC **0.561**; smallest p-value against a naive baseline 0.05
 
 | ticker | rank | score | passes_filters | close | momentum_12_1 | momentum_6m | volatility | off_52w_high | forward_pe | pullback_entry | breakout_trigger | stop | stop_% | shares | position_$ | max_loss_$ | filter_notes |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
-| LLY | 1 | +0.49 | True | 1364.73 | +31.9% | +40.4% | +31.4% | -3.8% | 27.2 | 1293.22 | 1420.83 | 1198.01 | -7.4% | 7 | 9053.0 | 666.0 |  |
-| XOM | 2 | +0.48 | True | 165.30 | +47.9% | +14.3% | +27.6% | -11.7% | 13.8 | 160.45 | 187.62 | 150.74 | -6.0% | 62 | 9948.0 | 602.0 |  |
+| XOM | 1 | +0.49 | True | 165.30 | +47.9% | +14.3% | +27.6% | -11.7% | 13.4 | 160.45 | 187.62 | 150.74 | -6.0% | 62 | 9948.0 | 602.0 |  |
+| LLY | 2 | +0.49 | True | 1364.73 | +31.9% | +40.4% | +31.4% | -3.8% | 27.2 | 1293.22 | 1420.83 | 1198.01 | -7.4% | 7 | 9053.0 | 666.0 |  |
 | V | 3 | +0.46 | True | 422.59 | +10.2% | +32.1% | +21.8% | -3.2% | 24.7 | 407.0 | 437.44 | 388.79 | -4.5% | 24 | 9768.0 | 437.0 |  |
 | KO | 4 | +0.45 | True | 95.73 | +28.3% | +23.6% | +17.4% | -0.1% | 27.1 | 92.9 | 96.02 | 89.46 | -3.7% | 107 | 9940.0 | 367.0 |  |
 | MSFT | 5 | +0.44 | True | 535.93 | +3.8% | +27.9% | +26.7% | -3.6% | 22.2 | 531.63 | 556.91 | 500.51 | -5.9% | 18 | 9569.0 | 560.0 |  |
@@ -696,7 +696,7 @@ Best out-of-sample AUC **0.561**; smallest p-value against a naive baseline 0.05
 | LIN | 11 | +0.02 | True | 521.23 | +17.4% | +6.2% | +16.0% | -4.3% | 26.7 | 504.58 | 525.79 | 485.88 | -3.7% | 19 | 9587.0 | 355.0 |  |
 | AMT | 12 | -0.12 | True | 193.99 | -4.1% | +10.1% | +29.2% | -0.4% | 27.7 | 184.95 | 195.25 | 173.81 | -6.0% | 54 | 9987.0 | 601.0 |  |
 | AMZN | 13 | -0.17 | True | 260.21 | +4.3% | -4.0% | +31.1% | -8.4% | 23.8 | 254.43 | 266.56 | 235.51 | -7.4% | 39 | 9923.0 | 738.0 |  |
-| NEE | 14 | -0.23 | True | 88.25 | -3.0% | -4.0% | +20.5% | -8.5% | 20.2 | 81.4 | 88.63 | 77.76 | -4.5% | 122 | 9930.0 | 443.0 |  |
+| NEE | 14 | -0.24 | True | 88.25 | -3.0% | -4.0% | +20.5% | -8.5% | 20.2 | 81.4 | 88.63 | 77.76 | -4.5% | 122 | 9930.0 | 443.0 |  |
 | COST | 15 | -0.24 | True | 1065.59 | +0.6% | +5.6% | +20.1% | -2.3% | 42.6 | 997.93 | 1067.72 | 957.78 | -4.0% | 10 | 9979.0 | 401.0 |  |
 
 ## 7. Portfolio construction
