@@ -1,4 +1,4 @@
-# Pre-market board, 06:43 ET on 2026-11-06
+# Pre-market board, 06:49 ET on 2026-11-06
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,21 +6,21 @@ The board's rules with each stock's latest pre-market trade standing in for toda
 
 | ticker | pre-market label | board at close | close | pre-market | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 260.21 | 261.25 | +0.4% | 254.38 | 266.56 | 236.66 | pre-market |  |
+| AMZN | BUY | BUY | 260.21 | 262.09 | +0.7% | 254.42 | 266.56 | 236.58 | pre-market |  |
 | IBM | REDUCE (changed) | WATCH | 247.11 | 243.45 | -1.5% |  |  |  | pre-market | now below 200-day average (246.19); rule now on: MACD bearish; rule now off: RSI rollover |
 | FSLR | AVOID | AVOID | 195.76 | 197.03 | +0.6% |  |  |  | pre-market |  |
-| AMD | SELL | SELL | 404.40 | 437.50 | +8.2% |  |  |  | pre-market | now above 200-day average (415.00) |
-| MRVL | SELL | SELL | 133.55 | 146.60 | +9.8% |  |  |  | pre-market |  |
-| NVDA | SELL | SELL | 181.60 | 190.77 | +5.0% |  |  |  | pre-market |  |
-| ALAB | SELL | SELL | 179.47 | 197.41 | +10.0% |  |  |  | pre-market |  |
+| AMD | SELL | SELL | 404.40 | 438.15 | +8.3% |  |  |  | pre-market | now above 200-day average (415.00) |
+| MRVL | SELL | SELL | 133.55 | 146.71 | +9.9% |  |  |  | pre-market |  |
+| NVDA | SELL | SELL | 181.60 | 190.57 | +4.9% |  |  |  | pre-market |  |
+| ALAB | SELL | SELL | 179.47 | 196.50 | +9.5% |  |  |  | pre-market |  |
 | ETN | SELL | SELL | 327.02 | 343.00 | +4.9% |  |  |  | pre-market |  |
-| GEV | SELL | SELL | 770.51 | 802.03 | +4.1% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 281.74 | 282.92 | +0.4% |  |  |  | pre-market |  |
-| TSLA | SELL | SELL | 343.69 | 352.20 | +2.5% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 123.62 | 129.86 | +5.0% |  |  |  | pre-market |  |
-| CEG | SELL | SELL | 239.65 | 241.97 | +1.0% |  |  |  | pre-market |  |
-| VST | SELL | SELL | 112.89 | 116.66 | +3.3% |  |  |  | pre-market |  |
-| SKHY | SELL* | SELL* | 123.90 | 131.10 | +5.8% |  |  |  | pre-market |  |
+| GEV | SELL | SELL | 770.51 | 801.10 | +4.0% |  |  |  | pre-market |  |
+| GOOG | SELL | SELL | 281.74 | 282.65 | +0.3% |  |  |  | pre-market |  |
+| TSLA | SELL | SELL | 343.69 | 352.50 | +2.6% |  |  |  | pre-market |  |
+| SPCX | SELL* | SELL* | 123.62 | 129.70 | +4.9% |  |  |  | pre-market |  |
+| CEG | SELL | SELL | 239.65 | 244.42 | +2.0% |  |  |  | pre-market |  |
+| VST | SELL | SELL | 112.89 | 116.19 | +2.9% |  |  |  | pre-market |  |
+| SKHY | SELL* | SELL* | 123.90 | 131.00 | +5.7% |  |  |  | pre-market |  |
 
 ## Does deciding before the open help?
 
