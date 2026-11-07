@@ -54,6 +54,24 @@ def backtest_counts(tables: dict) -> dict:
             "beyond_chance": bool(total and p_more < 0.05)}
 
 
+def rule_results(tables: dict) -> pd.DataFrame:
+    """One row per rule and stock: Sharpe difference vs buy & hold with its 95% CI, and how the
+    rule changed the worst drawdown (positive = shallower than holding)."""
+    rows = []
+    for t, tab in tables.items():
+        if "Buy & Hold" not in tab.index or "_ci_low" not in tab:
+            continue
+        bh = tab.loc["Buy & Hold"]
+        for rule, r in tab.drop(index="Buy & Hold").iterrows():
+            rows.append({"ticker": t, "rule": rule, "diff": float(r["Sharpe vs B&H"]),
+                         "ci_low": float(r["_ci_low"]), "ci_high": float(r["_ci_high"]),
+                         "dd_change": float(r["Max drawdown"] - bh["Max drawdown"]),
+                         "time_in_market": float(r["Time in market"])})
+    out = pd.DataFrame(rows, columns=["ticker", "rule", "diff", "ci_low", "ci_high", "dd_change", "time_in_market"])
+    out["verdict"] = np.select([out["ci_low"] > 0, out["ci_high"] < 0], ["better", "worse"], "not distinguishable")
+    return out
+
+
 def forecast_tests(fc: dict) -> dict:
     """Every model-vs-baseline test across stocks, with false-discovery-rate control.
 

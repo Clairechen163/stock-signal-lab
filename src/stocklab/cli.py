@@ -112,7 +112,7 @@ def cmd_backtest(args, md=None, outdir=None):
         plots.equity_curves(curves, path)
         if md is not None:
             md.append("![Strategy equity curves](backtest_equity.png)\n")
-    return {"curves": curves, "tables": tables}
+    return {"curves": curves, "tables": tables, "skipped": sorted(skipped)}
 
 
 def cmd_sell_check(args, md=None, outdir=None):
@@ -771,9 +771,17 @@ def cmd_update(args):
         with open(timing_json, "w", encoding="utf-8") as f:
             json.dump(payload, f, indent=2)
     if write_readme:
+        bt = res.get("backtest") or {}
+        results = findings.rule_results(bt.get("tables") or {})
+        chart = None
+        if len(results):
+            plots.rule_heatmap(results, os.path.join(args.out, "rules_vs_buyhold.png"))
+            chart = f"{rel}/rules_vs_buyhold.png"
+        rules_md = readme.render_rules(results, findings.backtest_counts(bt.get("tables") or {}), chart,
+                                       f"{rel}/REPORT.md", bt.get("skipped"), args.cost_bps)
         block = readme.render(res["board"]["table"], res["board"]["evaluation"], key_findings(res, stab),
                               res["board"]["as_of"], args.source, rel, f"{rel}/REPORT.md", log_info,
-                              board_stability=stab.get("board"))
+                              board_stability=stab.get("board"), rules_section=rules_md)
         readme.write(args.readme, block)
         print(f"Live section of {args.readme} updated.")
 

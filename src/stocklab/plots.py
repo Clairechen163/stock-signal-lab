@@ -173,6 +173,46 @@ def board_equity(eq: pd.DataFrame, path: str):
     plt.close(fig)
 
 
+def rule_heatmap(results: pd.DataFrame, path: str):
+    """Sharpe difference vs buy & hold for every rule and stock; significant cells are outlined."""
+    rules = list(dict.fromkeys(results["rule"]))
+    tickers = list(dict.fromkeys(results["ticker"]))
+    grid = results.pivot(index="rule", columns="ticker", values="diff").reindex(index=rules, columns=tickers)
+    verdict = results.pivot(index="rule", columns="ticker", values="verdict").reindex(index=rules, columns=tickers)
+    lim = max(0.5, min(1.5, float(np.nanmax(np.abs(grid.to_numpy())))))
+    fig, ax = plt.subplots(figsize=(1.6 + 0.62 * len(tickers), 1.4 + 0.42 * len(rules)))
+    im = ax.imshow(grid.to_numpy(dtype=float), cmap=DIVERGING, vmin=-lim, vmax=lim, aspect="auto")
+    ax.set_xticks(range(len(tickers)), tickers)
+    ax.set_yticks(range(len(rules)), rules)
+    ax.tick_params(axis="x", labeltop=True, labelbottom=False, length=0)
+    ax.tick_params(axis="y", length=0)
+    ax.grid(False)
+    for spine in ax.spines.values():
+        spine.set_visible(False)
+    ax.set_xticks(np.arange(-0.5, len(tickers), 1), minor=True)
+    ax.set_yticks(np.arange(-0.5, len(rules), 1), minor=True)
+    ax.grid(which="minor", color=SURFACE, linewidth=2)
+    ax.tick_params(which="minor", length=0)
+    for i, rule in enumerate(rules):
+        for j, t in enumerate(tickers):
+            v = grid.iloc[i, j]
+            if pd.isna(v):
+                continue
+            sig = verdict.iloc[i, j] != "not distinguishable"
+            ax.text(j, i, "0.00" if abs(v) < 0.005 else f"{v:+.2f}", ha="center", va="center", fontsize=8, color=INK,
+                    fontweight="bold" if sig else "normal")
+            if sig:
+                ax.add_patch(plt.Rectangle((j - 0.47, i - 0.47), 0.94, 0.94, fill=False, edgecolor=INK, linewidth=1.6))
+    cb = fig.colorbar(im, ax=ax, shrink=0.85, pad=0.02)
+    cb.set_label("Sharpe ratio minus buy & hold", color=INK2)
+    cb.outline.set_visible(False)
+    ax.set_title("Each rule vs holding the stock (blue: rule better; orange: worse; outlined: 95% CI excludes zero)",
+                 fontsize=10, loc="left", pad=24)
+    fig.tight_layout()
+    fig.savefig(path, dpi=130)
+    plt.close(fig)
+
+
 def board_history(action: pd.DataFrame, path: str, weeks: int = 52):
     """Weekly label for each stock over the last year, one row per stock."""
     weekly = action.iloc[::-5][::-1].iloc[-weeks:]  # every 5th trading day, ending today

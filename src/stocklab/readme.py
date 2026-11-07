@@ -72,8 +72,79 @@ def board_table(table: pd.DataFrame) -> str:
     return "\n".join(lines)
 
 
+RULE_WORDS = {"50/200 SMA cross": "the 50/200-day average cross", "Close > 50-day SMA": "holding only above the 50-day average",
+              "MACD > signal": "MACD above its signal line", "RSI 30/70": "RSI 30/70",
+              "Trailing stop 20%": "a 20% trailing stop", "Volume breakout": "a volume breakout"}
+
+
+def _count_word(n: int) -> str:
+    words = ["zero", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten"]
+    return words[n] if 0 <= n < len(words) else str(n)
+
+
+def _rule_item(r) -> str:
+    return f"{r.rule} on {r.ticker} ({r.diff:+.2f}, CI [{r.ci_low:+.2f}, {r.ci_high:+.2f}])"
+
+
+def render_rules(results: pd.DataFrame, counts: dict, chart: str | None, report_path: str, skipped: list | None = None,
+                 cost_bps: float = 5) -> str:
+    """The rule backtests on the current watchlist: which rules beat holding, and what they did to drawdowns."""
+    if results is None or results.empty:
+        return ""
+    stocks = list(dict.fromkeys(results["ticker"]))
+    rules = list(dict.fromkeys(results["rule"]))
+    out = ["### Do simple buy/sell rules beat buy & hold?"]
+    left_out = f" ({', '.join(skipped)} not yet: too little history)" if skipped else ""
+    out.append(
+        f"{_count_word(len(rules)).capitalize()} common timing rules ({', '.join(RULE_WORDS.get(x, x) for x in rules)}) "
+        f"are backtested on each of the {len(stocks)} watchlist stocks{left_out}, trading at the next close with "
+        f"{cost_bps:g} bp costs, and compared with simply holding the stock, using a 95% block-bootstrap confidence "
+        "interval for the difference in Sharpe ratio."
+    )
+    better = results[results["verdict"] == "better"].sort_values("diff", ascending=False)
+    worse = results[results["verdict"] == "worse"].sort_values("diff")
+    chance = (f"about {counts['expected']:.1f} of each would be expected by chance, so "
+              + ("**more rules beat holding than chance explains**." if counts.get("beyond_chance")
+                 else "this is **no more than chance alone would produce**: no rule has shown an edge."))
+    text = (f"Of {len(results)} rule-by-stock tests, **{len(better)} beat buy & hold** and **{len(worse)} did worse**; "
+            f"{chance}")
+
+    def named(df, word):
+        if df.empty:
+            return ""
+        items = [_rule_item(r) for r in df.head(6).itertuples()]
+        more = f", and {len(df) - 6} more" if len(df) > 6 else ""
+        return f" {word}: " + "; ".join(items) + more + "."
+
+    out.append(text + named(better, "Better") + named(worse, "Worse"))
+
+    by_rule = results.groupby("rule", sort=False).agg(
+        better=("verdict", lambda s: int((s == "better").sum())),
+        worse=("verdict", lambda s: int((s == "worse").sum())),
+        sharpe=("diff", "median"), dd=("dd_change", "median"), time_in=("time_in_market", "median"))
+    best_dd = by_rule["dd"].idxmax()
+    r = by_rule.loc[best_dd]
+    cost = (f"at a median Sharpe cost of {abs(r['sharpe']):.2f}" if r["sharpe"] < 0
+            else f"with a median Sharpe change of {r['sharpe']:+.2f}")
+    if r["dd"] > 0:
+        out.append(f"Where the rules do help is in drawdowns: **{RULE_WORDS.get(best_dd, best_dd)}** "
+                   f"made the worst fall shallower by a median {r['dd'] * 100:.0f} percentage points across stocks, {cost}, "
+                   f"while in the market {r['time_in']:.0%} of the time.")
+    lines = ["| Rule | Beat holding | Did worse | Median Sharpe vs holding | Median change in worst drawdown | Time in market |",
+             "|---|---:|---:|---:|---:|---:|"]
+    for rule, x in by_rule.iterrows():
+        dd = (f"{abs(x['dd']) * 100:.0f} points " + ("shallower" if x["dd"] > 0 else "deeper")) if abs(x["dd"]) >= 0.005 else "about the same"
+        lines.append(f"| {rule} | {int(x['better'])} of {len(stocks)} | {int(x['worse'])} of {len(stocks)} | {x['sharpe']:+.2f} | "
+                     f"{dd} | {x['time_in']:.0%} |")
+    out.append("\n".join(lines))
+    if chart:
+        out.append(f"![Each rule vs holding the stock]({chart})")
+    out.append(f"Per-stock tables with returns, drawdowns and p-values: [`{report_path}`]({report_path}).")
+    return "\n\n".join(out)
+
+
 def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: str, report_path: str,
-           log_info: str | None = None, board_stability: str | None = None) -> str:
+           log_info: str | None = None, board_stability: str | None = None, rules_section: str = "") -> str:
     """The full live section: board, legend, evidence and key numbers."""
     out = [f"## Today's board: data as of the {as_of} close"]
     out.append(
@@ -132,6 +203,9 @@ def render(table, evaluation, findings: dict, as_of: str, source: str, img_dir: 
             "These tests use stocks chosen today, which flatters every long-only strategy (survivorship bias), "
             "so they show whether the labels add anything relative to holding the same stocks, not what to expect in future."
         )
+
+    if rules_section:
+        out.append(rules_section)
 
     if findings:
         out.append("### Key numbers from the latest full report")

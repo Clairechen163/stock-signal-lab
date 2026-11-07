@@ -35,6 +35,14 @@ the same resampled blocks are applied to the strategy and to buy & hold, preserv
 their correlation, and the bootstrap distribution of the Sharpe-ratio difference gives
 a 95% interval and p-value.
 
+**On the README.** Every daily run backtests each watchlist stock with at least a year of
+trading after its 200-day average exists, and the README summarises the results by rule:
+how many stocks each rule beat or trailed (95% interval excluding zero), the median
+Sharpe difference, the median change in the worst drawdown and the median time in the
+market, with a rule-by-stock heatmap. A binomial tail against the 2.5% one-sided miss
+rate says whether the number of wins exceeds chance (approximate, since tests on one
+stock are correlated).
+
 ## 4. Sell-signal event study (`sell-study`)
 
 For each rule we take its **onset** days (the rule switches from off to on, with a 10-day
