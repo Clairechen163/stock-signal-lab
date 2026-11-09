@@ -1,4 +1,4 @@
-# Pre-market board, 05:30 ET on 2026-11-09
+# Pre-market board, 05:32 ET on 2026-11-09
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -8,19 +8,19 @@ The board's rules with each stock's latest trade standing in for today's close; 
 |---|---|---|---|---|---|---|---|---|---|---|
 | AMZN | BUY | BUY | 259.30 | 261.67 | +0.9% | 254.39 | 266.56 | 236.98 | pre-market |  |
 | FSLR | AVOID | AVOID | 201.14 | 198.38 | -1.4% |  |  |  | pre-market |  |
-| AMD | REDUCE | REDUCE | 449.04 | 461.25 | +2.7% |  |  |  | pre-market |  |
-| NVDA | REDUCE | REDUCE | 186.64 | 178.66 | -4.3% |  |  |  | pre-market |  |
+| AMD | REDUCE | REDUCE | 449.04 | 460.80 | +2.6% |  |  |  | pre-market |  |
+| NVDA | REDUCE | REDUCE | 186.64 | 178.23 | -4.5% |  |  |  | pre-market |  |
 | IBM | WATCH (changed) | REDUCE | 245.00 | 247.00 | +0.8% | 246.47 | 258.80 | 232.28 | pre-market | now above 200-day average (245.97) |
-| ALAB | REDUCE | REDUCE | 190.71 | 195.61 | +2.6% |  |  |  | pre-market |  |
-| MRVL | SELL | SELL | 141.20 | 140.07 | -0.8% |  |  |  | pre-market |  |
+| ALAB | REDUCE | REDUCE | 190.71 | 194.97 | +2.2% |  |  |  | pre-market |  |
+| MRVL | SELL | SELL | 141.20 | 139.88 | -0.9% |  |  |  | pre-market |  |
 | ETN | SELL | SELL | 341.72 | 343.00 | +0.4% |  |  |  | pre-market |  |
 | GEV | SELL | SELL | 774.11 | 780.01 | +0.8% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 283.93 | 286.66 | +1.0% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 134.27 | 135.88 | +1.2% |  |  |  | pre-market |  |
-| TSLA | SELL | SELL | 358.22 | 359.93 | +0.5% |  |  |  | pre-market |  |
+| GOOG | SELL | SELL | 283.93 | 286.73 | +1.0% |  |  |  | pre-market |  |
+| SPCX | SELL* | SELL* | 134.27 | 135.61 | +1.0% |  |  |  | pre-market |  |
+| TSLA | SELL | SELL | 358.22 | 359.65 | +0.4% |  |  |  | pre-market |  |
 | CEG | SELL | SELL | 249.95 | 251.20 | +0.5% |  |  |  | pre-market |  |
 | VST | SELL | SELL | 124.80 | 125.50 | +0.6% |  |  |  | pre-market |  |
-| SKHY | SELL* | SELL* | 127.34 | 124.46 | -2.3% |  |  |  | pre-market |  |
+| SKHY | SELL* | SELL* | 127.34 | 124.40 | -2.3% |  |  |  | pre-market |  |
 
 ## Does deciding before the open help?
 
