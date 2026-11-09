@@ -1,4 +1,4 @@
-# Pre-market board, 08:06 ET on 2026-11-09
+# After-hours board, 17:44 ET on 2026-11-09
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,21 +6,21 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 259.30 | 267.36 | +3.1% | 254.67 | 267.89 | 236.45 | pre-market | now above breakout level (266.56) |
-| FSLR | AVOID | AVOID | 201.14 | 199.90 | -0.6% |  |  |  | pre-market |  |
-| AMD | REDUCE | REDUCE | 449.04 | 469.00 | +4.4% |  |  |  | pre-market |  |
-| NVDA | REDUCE | REDUCE | 186.64 | 177.47 | -4.9% |  |  |  | pre-market |  |
-| IBM | WATCH (changed) | REDUCE | 245.00 | 247.00 | +0.8% | 246.47 | 258.80 | 232.28 | pre-market | now above 200-day average (245.97) |
-| ALAB | REDUCE | REDUCE | 190.71 | 198.40 | +4.0% |  |  |  | pre-market |  |
-| MRVL | SELL | SELL | 141.20 | 143.00 | +1.3% |  |  |  | pre-market |  |
-| ETN | SELL | SELL | 341.72 | 348.00 | +1.8% |  |  |  | pre-market |  |
-| GEV | SELL | SELL | 774.11 | 798.00 | +3.1% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 283.93 | 292.11 | +2.9% |  |  |  | pre-market |  |
-| SPCX | SELL* | SELL* | 134.27 | 137.91 | +2.7% |  |  |  | pre-market |  |
-| TSLA | SELL | SELL | 358.22 | 361.18 | +0.8% |  |  |  | pre-market |  |
-| CEG | SELL | SELL | 249.95 | 254.80 | +1.9% |  |  |  | pre-market |  |
-| VST | SELL | SELL | 124.80 | 127.02 | +1.8% |  |  |  | pre-market |  |
-| SKHY | SELL* | SELL* | 127.34 | 126.50 | -0.7% |  |  |  | pre-market |  |
+| AMZN | BUY | BUY | 266.93 | 268.06 | +0.4% | 254.65 | 267.46 | 235.30 | after-hours | now above breakout level (267.46) |
+| IBM | WATCH | WATCH | 246.11 | 246.69 | +0.2% | 236.96 | 258.80 | 222.52 | after-hours |  |
+| AMD | REDUCE | REDUCE | 508.58 | 509.74 | +0.2% |  |  |  | after-hours |  |
+| ALAB | REDUCE | REDUCE | 216.87 | 218.14 | +0.6% |  |  |  | after-hours |  |
+| SPCX | REDUCE* | REDUCE* | 142.07 | 142.20 | +0.1% |  |  |  | after-hours |  |
+| CEG | REDUCE | REDUCE | 276.09 | 275.00 | -0.4% |  |  |  | after-hours |  |
+| TSLA | REDUCE | REDUCE | 378.05 | 378.63 | +0.2% |  |  |  | after-hours |  |
+| FSLR | REDUCE | REDUCE | 191.61 | 191.50 | -0.1% |  |  |  | after-hours |  |
+| MRVL | SELL | SELL | 154.60 | 156.48 | +1.2% |  |  |  | after-hours |  |
+| NVDA | SELL | SELL | 178.67 | 178.84 | +0.1% |  |  |  | after-hours |  |
+| GEV | SELL | SELL | 829.34 | 830.00 | +0.1% |  |  |  | after-hours |  |
+| ETN | SELL | SELL | 359.30 | 360.09 | +0.2% |  |  |  | after-hours |  |
+| GOOG | SELL | SELL | 286.01 | 288.20 | +0.8% |  |  |  | after-hours |  |
+| VST | SELL | SELL | 133.92 | 133.18 | -0.6% |  |  |  | after-hours |  |
+| SKHY | SELL* | SELL* | 134.38 | 134.81 | +0.3% |  |  |  | after-hours |  |
 
 ## Does deciding before the open help?
 
@@ -28,12 +28,12 @@ From 2022-02-03 to 2026-11-05 (239 weekly decisions, both traded at the open), l
 
 ## Do opening gaps carry into the day?
 
-Across 15,248 stock-days (15 watchlist stocks, 2021-11-09 to 2026-11-06), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.09%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 4 of the last 4 runs.*
+Across 15,243 stock-days (15 watchlist stocks, 2021-11-11 to 2026-11-09), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.09%, +0.04%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 4 of the last 4 runs.*
 
 | opening gap | days | avg gap | avg open-to-close | closed above open |
 |---|---|---|---|---|
-| gap down 3%+ | 564 | -5.2% | +0.29% | 49% |
-| down 1-3% | 2243 | -1.7% | +0.11% | 53% |
-| within 1% | 9160 | +0.0% | +0.01% | 50% |
-| up 1-3% | 2611 | +1.7% | +0.08% | 51% |
-| gap up 3%+ | 670 | +5.3% | -0.23% | 46% |
+| gap down 3%+ | 563 | -5.2% | +0.30% | 49% |
+| down 1-3% | 2241 | -1.7% | +0.11% | 53% |
+| within 1% | 9151 | +0.0% | +0.01% | 50% |
+| up 1-3% | 2614 | +1.7% | +0.09% | 52% |
+| gap up 3%+ | 674 | +5.3% | -0.18% | 46% |
