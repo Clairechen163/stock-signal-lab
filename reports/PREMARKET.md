@@ -1,4 +1,4 @@
-# Pre-market board, 06:49 ET on 2026-11-10
+# Intraday board, 15:02 ET on 2026-11-10
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,24 +6,24 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | BUY | BUY | 266.93 | 268.27 | +0.5% | 255.13 | 268.81 | 236.97 | pre-market | now above breakout level (267.46) |
-| IBM | REDUCE (changed) | WATCH | 246.11 | 245.50 | -0.2% |  |  |  | pre-market | now below 200-day average (245.77) |
-| DELL | REDUCE | REDUCE | 346.31 | 345.15 | -0.3% |  |  |  | pre-market |  |
-| AMD | WATCH (changed) | REDUCE | 508.58 | 504.80 | -0.7% | 468.58 | 579.60 | 396.13 | pre-market | rule now off: below chandelier stop |
-| ALAB | REDUCE | REDUCE | 216.87 | 215.00 | -0.9% |  |  |  | pre-market |  |
-| SPCX | SELL* (changed) | REDUCE* | 142.07 | 141.02 | -0.7% |  |  |  | pre-market | now below chandelier stop (142.01) |
-| CEG | REDUCE | REDUCE | 276.09 | 274.92 | -0.4% |  |  |  | pre-market |  |
-| TSLA | REDUCE | REDUCE | 378.05 | 375.78 | -0.6% |  |  |  | pre-market |  |
-| BE | REDUCE | REDUCE | 193.88 | 191.40 | -1.3% |  |  |  | pre-market |  |
-| FSLR | REDUCE | REDUCE | 191.61 | 190.61 | -0.5% |  |  |  | pre-market |  |
-| MRVL | SELL | SELL | 154.60 | 152.16 | -1.6% |  |  |  | pre-market |  |
-| TSM | REDUCE (changed) | SELL | 388.62 | 389.96 | +0.3% |  |  |  | pre-market | now above 80% of the 52-week high (388.64) |
-| NVDA | SELL | SELL | 178.67 | 179.07 | +0.2% |  |  |  | pre-market |  |
-| ETN | SELL | SELL | 359.30 | 359.80 | +0.1% |  |  |  | pre-market |  |
-| GEV | SELL | SELL | 829.34 | 811.41 | -2.2% |  |  |  | pre-market |  |
-| GOOG | SELL | SELL | 286.01 | 288.15 | +0.7% |  |  |  | pre-market |  |
-| SKHY | SELL* | SELL* | 134.38 | 132.45 | -1.4% |  |  |  | pre-market |  |
-| VST | SELL | SELL | 133.92 | 133.00 | -0.7% |  |  |  | pre-market |  |
+| AMZN | BUY | BUY | 266.93 | 271.52 | +1.7% | 255.30 | 272.06 | 236.67 | regular session | now above breakout level (267.46) |
+| IBM | REDUCE (changed) | WATCH | 246.11 | 244.10 | -0.8% |  |  |  | regular session | now below 200-day average (245.77) |
+| DELL | SELL (changed) | REDUCE | 346.31 | 330.50 | -4.6% |  |  |  | regular session | now below 200-day average (337.81) |
+| AMD | WATCH (changed) | REDUCE | 508.58 | 515.41 | +1.3% | 478.97 | 579.60 | 406.09 | regular session | now above chandelier stop (511.22) |
+| ALAB | REDUCE | REDUCE | 216.87 | 213.41 | -1.6% |  |  |  | regular session |  |
+| SPCX | SELL* (changed) | REDUCE* | 142.07 | 141.08 | -0.7% |  |  |  | regular session | now below chandelier stop (142.01) |
+| CEG | REDUCE | REDUCE | 276.09 | 266.16 | -3.6% |  |  |  | regular session | now below 50-day average (270.01) |
+| TSLA | REDUCE | REDUCE | 378.05 | 377.59 | -0.1% |  |  |  | regular session |  |
+| BE | REDUCE | REDUCE | 193.88 | 184.35 | -4.9% |  |  |  | regular session |  |
+| FSLR | SELL (changed) | REDUCE | 191.61 | 180.04 | -6.0% |  |  |  | regular session | now below 50-day average (186.74); now below chandelier stop (182.76) |
+| MRVL | SELL | SELL | 154.60 | 152.49 | -1.4% |  |  |  | regular session |  |
+| TSM | REDUCE (changed) | SELL | 388.62 | 394.04 | +1.4% |  |  |  | regular session | now above 80% of the 52-week high (388.64) |
+| NVDA | SELL | SELL | 178.67 | 166.45 | -6.8% |  |  |  | regular session |  |
+| ETN | SELL | SELL | 359.30 | 352.60 | -1.9% |  |  |  | regular session |  |
+| GEV | SELL | SELL | 829.34 | 782.43 | -5.7% |  |  |  | regular session |  |
+| GOOG | SELL | SELL | 286.01 | 284.76 | -0.4% |  |  |  | regular session |  |
+| SKHY | SELL* | SELL* | 134.38 | 129.03 | -4.0% |  |  |  | regular session |  |
+| VST | SELL | SELL | 133.92 | 130.32 | -2.7% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 
