@@ -10,8 +10,8 @@ honest about how well they work: when to buy, when to sell, how to spread risk, 
 whether tomorrow is predictable at all.**
 
 > **TL;DR.** After every US trading day, an automated job downloads fresh prices for
-> ALAB, AMD, NVDA, MRVL, GOOG, AMZN, IBM, FSLR, SKHY, ETN, GEV, CEG, VST, TSLA and SPCX, labels each one
-> BUY, HOLD, WATCH, AVOID, REDUCE or SELL with fixed, published rules, and re-tests
+> ALAB, AMD, NVDA, TSM, MRVL, GOOG, AMZN, IBM, DELL, FSLR, SKHY, ETN, GEV, CEG, VST, BE, TSLA and SPCX,
+> labels each one BUY, HOLD, WATCH, AVOID, REDUCE or SELL with fixed, published rules, and re-tests
 > whether trading those labels has beaten simply holding the same stocks. The rules
 > come from an October 2026 study in which **only 1 of 33 popular sell-signal tests
 > survived false-discovery-rate control, no trading rule beat buy & hold, and next-day
