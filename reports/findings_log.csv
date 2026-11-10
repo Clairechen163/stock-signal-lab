@@ -3,3 +3,4 @@ as_of,watchlist,event_tests,event_significant,backtest_tests,backtest_better,bac
 2026-11-04,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX;AMZN,33,death_cross (21d);rsi_rollover (63d),54,1,2,False,36,0,0.53,not distinguishable,not distinguishable,none
 2026-11-05,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX;AMZN;IBM;GEV;CEG;VST,33,below_sma50 (5d);below_sma200 (5d);below_sma200 (21d);death_cross (5d);death_cross (21d);rsi_rollover (63d),78,1,2,False,52,0,0.527,not distinguishable,not distinguishable,none
 2026-11-06,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX;AMZN;IBM;GEV;CEG;VST,33,below_sma50 (5d);below_sma200 (5d);below_sma200 (21d);death_cross (5d);death_cross (21d),78,1,2,False,52,0,0.527,not distinguishable,not distinguishable,none
+2026-11-09,ALAB;AMD;NVDA;MRVL;GOOG;FSLR;SKHY;ETN;TSLA;SPCX;AMZN;IBM;GEV;CEG;VST,33,,78,1,4,False,52,0,0.529,not distinguishable,not distinguishable,none
