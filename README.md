@@ -40,21 +40,24 @@ applies the same machinery every day to a watchlist.
 
 | Ticker | Action | Close | 1 day | 1 month | Why | Buy zone (pullback / breakout) | Stop |
 |---|---|---:|---:|---:|---|---|---:|
-| AMZN | **BUY** | 266.93 | +2.9% | +1.7% | buy rank 3/15; +9% vs 200-day average; distribution days | 254.65 / 267.46 | 235.29 |
+| AMZN | **BUY** | 266.93 | +2.9% | +1.7% | buy rank 5/18; +9% vs 200-day average; distribution days | 254.65 / 267.46 | 235.29 |
 | IBM | **WATCH** | 246.11 | +0.5% | +8.4% | +0% vs 200-day average; death cross, MACD bearish, 20%+ off high | 236.96 / 258.80 | 222.52 |
+| DELL | **REDUCE** | 346.31 | +5.4% | -40.8% | +3% vs 200-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | AMD | **REDUCE** | 508.58 | +13.3% | -16.4% | +22% vs 200-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | ALAB | **REDUCE** | 216.87 | +13.7% | -36.6% | -15% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop | — | — |
 | SPCX | **REDUCE**\* | 142.07 | +5.8% | -12.6% | -5% vs 50-day average; below 50-day, MACD bearish, distribution days, 20%+ off high (provisional: 104 days of history) | — | — |
 | CEG | **REDUCE** | 276.09 | +10.5% | -7.4% | -1% vs 200-day average; below 200-day, death cross, distribution days, 20%+ off high | — | — |
 | TSLA | **REDUCE** | 378.05 | +5.5% | -1.2% | -1% vs 200-day average; below 200-day, death cross, MACD bearish, distribution days, 20%+ off high | — | — |
+| BE | **REDUCE** | 193.88 | +11.9% | -30.9% | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop | — | — |
 | FSLR | **REDUCE** | 191.61 | -4.7% | +7.8% | -11% vs 200-day average; below 200-day, death cross, distribution days, 20%+ off high | — | — |
 | MRVL | **SELL** | 154.60 | +9.5% | -43.8% | -17% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
+| TSM | **SELL** | 388.62 | +3.5% | -14.3% | -3% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | NVDA | **SELL** | 178.67 | -4.3% | -22.1% | -13% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, high-volume breakdown, 20%+ off high, below chandelier stop | — | — |
-| GEV | **SELL** | 829.34 | +7.1% | -17.4% | -13% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | ETN | **SELL** | 359.30 | +5.1% | -16.4% | -9% vs 200-day average; below 50-day, below 200-day, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
+| GEV | **SELL** | 829.34 | +7.1% | -17.4% | -13% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | GOOG | **SELL** | 286.01 | +0.7% | -17.8% | -15% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
-| VST | **SELL** | 133.92 | +7.3% | -17.1% | -12% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 | SKHY | **SELL**\* | 134.38 | +5.5% | -20.5% | -19% vs 50-day average; below 50-day, MACD bearish, distribution days, 20%+ off high, below chandelier stop (provisional: 86 days of history) | — | — |
+| VST | **SELL** | 133.92 | +7.3% | -17.1% | -12% vs 200-day average; below 50-day, below 200-day, death cross, MACD bearish, distribution days, 20%+ off high, volatility spike, below chandelier stop | — | — |
 
 \* Provisional: listed less than 200 trading days ago, so the trend test uses the 50-day average and rules that need a longer history are not scored yet.
 
@@ -64,9 +67,9 @@ What each label means: **BUY**: keep or add if you own it, buy near the pullback
 
 ### Does the board work?
 
-Trading the labels since 2022-02-04 (buy on BUY; exit on SELL, REDUCE or AVOID; weekly, next-day execution, 5 bp costs) returned **+39.2% a year** with a worst drawdown of -33.8%, versus +39.7% and -37.1% for holding every watchlist stock in equal weight. The Sharpe ratio difference is +0.02 (95% block-bootstrap CI [-0.45, +0.52]): **not distinguishable from simply holding the watchlist**. *Stability: same verdict in 5 of the last 5 runs.*
+Trading the labels since 2022-02-04 (buy on BUY; exit on SELL, REDUCE or AVOID; weekly, next-day execution, 5 bp costs) returned **+36.0% a year** with a worst drawdown of -38.0%, versus +45.1% and -36.8% for holding every watchlist stock in equal weight. The Sharpe ratio difference is -0.18 (95% block-bootstrap CI [-0.68, +0.29]): **not distinguishable from simply holding the watchlist**. *Stability: same verdict in 5 of the last 5 runs.*
 
-Label by label: BUY labels were followed by +0.3% versus the watchlist average over 21 days (p = 0.73, 226 observations); SELL labels were followed by -0.4% versus the watchlist average over 21 days (p = 0.83, 74 observations).
+Label by label: BUY labels were followed by +0.6% versus the watchlist average over 21 days (p = 0.49, 264 observations); SELL labels were followed by -0.0% versus the watchlist average over 21 days (p = 0.99, 92 observations).
 
 ![Board strategy vs holding](reports/board_equity.png)
 
@@ -74,20 +77,20 @@ These tests use stocks chosen today, which flatters every long-only strategy (su
 
 ### Do simple buy/sell rules beat buy & hold?
 
-Six common timing rules (the 50/200-day average cross, holding only above the 50-day average, MACD above its signal line, RSI 30/70, a 20% trailing stop, a volume breakout) are backtested on each of the 13 watchlist stocks (SKHY, SPCX not yet: too little history), trading at the next close with 5 bp costs, and compared with simply holding the stock, using a 95% block-bootstrap confidence interval for the difference in Sharpe ratio.
+Six common timing rules (the 50/200-day average cross, holding only above the 50-day average, MACD above its signal line, RSI 30/70, a 20% trailing stop, a volume breakout) are backtested on each of the 16 watchlist stocks (SKHY, SPCX not yet: too little history), trading at the next close with 5 bp costs, and compared with simply holding the stock, using a 95% block-bootstrap confidence interval for the difference in Sharpe ratio.
 
-Of 78 rule-by-stock tests, **1 beat buy & hold** and **4 did worse**; about 2.0 of each would be expected by chance, so this is **no more than chance alone would produce**: no rule has shown an edge. Better: MACD > signal on TSLA (+0.73, CI [+0.07, +1.43]). Worse: 50/200 SMA cross on ALAB (-0.96, CI [-1.87, -0.25]); MACD > signal on FSLR (-0.73, CI [-1.41, -0.09]); Close > 50-day SMA on VST (-0.61, CI [-1.28, -0.01]); Trailing stop 20% on GOOG (-0.45, CI [-0.88, -0.09]).
+Of 96 rule-by-stock tests, **1 beat buy & hold** and **4 did worse**; about 2.4 of each would be expected by chance, so this is **no more than chance alone would produce**: no rule has shown an edge. Better: MACD > signal on TSLA (+0.73, CI [+0.07, +1.43]). Worse: 50/200 SMA cross on ALAB (-0.96, CI [-1.87, -0.25]); MACD > signal on FSLR (-0.73, CI [-1.41, -0.09]); Close > 50-day SMA on VST (-0.61, CI [-1.28, -0.01]); Trailing stop 20% on GOOG (-0.45, CI [-0.88, -0.09]).
 
-Where the rules do help is in drawdowns: **RSI 30/70** made the worst fall shallower by a median 16 percentage points across stocks, at a median Sharpe cost of 0.20, while in the market 27% of the time.
+Where the rules do help is in drawdowns: **RSI 30/70** made the worst fall shallower by a median 15 percentage points across stocks, at a median Sharpe cost of 0.24, while in the market 28% of the time.
 
 | Rule | Beat holding | Did worse | Median Sharpe vs holding | Median change in worst drawdown | Time in market |
 |---|---:|---:|---:|---:|---:|
-| 50/200 SMA cross | 0 of 13 | 1 of 13 | -0.18 | about the same | 73% |
-| Close > 50-day SMA | 0 of 13 | 1 of 13 | -0.22 | 6 points shallower | 59% |
-| MACD > signal | 1 of 13 | 1 of 13 | -0.42 | 7 points shallower | 50% |
-| RSI 30/70 | 0 of 13 | 0 of 13 | -0.20 | 16 points shallower | 27% |
-| Trailing stop 20% | 0 of 13 | 1 of 13 | -0.22 | about the same | 87% |
-| Volume breakout | 0 of 13 | 0 of 13 | -0.16 | 14 points shallower | 38% |
+| 50/200 SMA cross | 0 of 16 | 1 of 16 | -0.19 | about the same | 73% |
+| Close > 50-day SMA | 0 of 16 | 1 of 16 | -0.21 | 8 points shallower | 61% |
+| MACD > signal | 1 of 16 | 1 of 16 | -0.36 | 6 points shallower | 50% |
+| RSI 30/70 | 0 of 16 | 0 of 16 | -0.24 | 15 points shallower | 28% |
+| Trailing stop 20% | 0 of 16 | 1 of 16 | -0.22 | 2 points shallower | 85% |
+| Volume breakout | 0 of 16 | 0 of 16 | -0.17 | 13 points shallower | 39% |
 
 ![Each rule vs holding the stock](reports/rules_vs_buyhold.png)
 
@@ -97,12 +100,12 @@ Per-stock tables with returns, drawdowns and p-values: [`reports/REPORT.md`](rep
 
 *Each line ends with how many of the last runs (one per trading day, up to 10) reached the same verdict: a result that flips from day to day is sitting on its threshold and is best read as noise.*
 
-- Sell-signal event study: **0 of 33** rule-by-horizon tests show significantly weaker returns after the signal once the false discovery rate is controlled (q < 0.10). *Stability: at least one rule was significant in 3 of the last 5 runs.*
-- Single-stock rule backtests: of 78 rule-by-stock tests on 13 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 4 a significantly lower one. About 2.0 of each would be expected by chance with 78 tests: no more than chance alone would produce, so no rule has shown an edge. *Stability: same verdict in 5 of the last 5 runs.*
-- Next-day forecasts: **0 of 52** model-vs-baseline tests (4 models x 13 stocks) beat their naive baseline once the false discovery rate is controlled (q < 0.10), with a median out-of-sample AUC of 0.53 (0.50 is a coin flip): no reliable edge (smallest uncorrected p-value 0.040). *Stability: a test survived correction in 0 of the last 5 runs.*
-- Risk concentration: in an equal-weight portfolio of 19 assets (13 watchlist stocks plus 6 diversifiers), the watchlist stocks make up 68% of the money and **97% of the risk**; the largest risk contributors are ALAB, MRVL, AMD. Not yet included for lack of history: SKHY, SPCX.
-- Pre-market vs close: from 2022-02-07 to 2026-11-06 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +34.6% a year (worst drawdown -37.4%) against +35.3% (-37.8%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.00 (95% block-bootstrap CI [-0.15, +0.14]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 5 of the last 5 runs.*
-- Opening gaps: across 15,243 stock-days (15 watchlist stocks, 2021-11-11 to 2026-11-09), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.09%, +0.04%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 5 of the last 5 runs.*
+- Sell-signal event study: **2 of 33** rule-by-horizon tests show significantly weaker returns after the signal once the false discovery rate is controlled (q < 0.10): below_sma50 (5d), below_sma200 (21d). *Stability: significant in the last 5 runs: below_sma50 (5d) in 3, below_sma200 (21d) in 3.*
+- Single-stock rule backtests: of 96 rule-by-stock tests on 16 stocks, **1** had a significantly higher Sharpe ratio than buy & hold and 4 a significantly lower one. About 2.4 of each would be expected by chance with 96 tests: no more than chance alone would produce, so no rule has shown an edge. *Stability: same verdict in 5 of the last 5 runs.*
+- Next-day forecasts: **0 of 64** model-vs-baseline tests (4 models x 16 stocks) beat their naive baseline once the false discovery rate is controlled (q < 0.10), with a median out-of-sample AUC of 0.53 (0.50 is a coin flip): no reliable edge (smallest uncorrected p-value 0.040). *Stability: a test survived correction in 0 of the last 5 runs.*
+- Risk concentration: in an equal-weight portfolio of 22 assets (16 watchlist stocks plus 6 diversifiers), the watchlist stocks make up 73% of the money and **98% of the risk**; the largest risk contributors are BE, ALAB, MRVL. Not yet included for lack of history: SKHY, SPCX.
+- Pre-market vs close: from 2022-02-07 to 2026-11-06 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +33.1% a year (worst drawdown -41.1%) against +32.2% (-42.1%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.03 (95% block-bootstrap CI [-0.12, +0.18]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 5 of the last 5 runs.*
+- Opening gaps: across 19,001 stock-days (18 watchlist stocks, 2021-11-11 to 2026-11-09), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 5 of the last 5 runs.*
 
 Live track record: 5 trading days of labels logged since 2026-11-03 in [`reports/board_log.csv`](reports/board_log.csv), so the board can later be judged on signals it published before the prices moved.
 
