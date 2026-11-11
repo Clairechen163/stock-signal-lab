@@ -1,6 +1,6 @@
 {
-  "sentence": "From 2022-02-07 to 2026-11-06 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +33.1% a year (worst drawdown -41.1%) against +32.2% (-42.1%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.03 (95% block-bootstrap CI [-0.12, +0.18]): deciding before the open has been **not distinguishable from deciding on the previous close**.",
-  "end": "2026-11-06",
-  "stability": "same verdict in 5 of the last 5 runs",
-  "gap_stability": "same verdict in 5 of the last 5 runs"
+  "sentence": "From 2022-02-08 to 2026-11-09 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +41.3% a year (worst drawdown -37.0%) against +36.8% (-40.5%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.10 (95% block-bootstrap CI [-0.15, +0.34]): deciding before the open has been **not distinguishable from deciding on the previous close**.",
+  "end": "2026-11-09",
+  "stability": "same verdict in 6 of the last 6 runs",
+  "gap_stability": "same verdict in 6 of the last 6 runs"
 }
