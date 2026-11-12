@@ -1,4 +1,4 @@
-# Intraday board, 15:29 ET on 2026-11-12
+# After-hours board, 16:26 ET on 2026-11-12
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,24 +6,24 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMD | BUY | BUY | 552.90 | 582.81 | +5.4% | 552.94 | 583.98 | 474.27 | regular session | now above breakout level (579.60) |
-| AMZN | BUY | BUY | 266.17 | 268.06 | +0.7% | 256.53 | 271.41 | 238.71 | regular session |  |
-| TSM | WATCH | WATCH | 413.35 | 405.56 | -1.9% | 389.25 | 440.39 | 356.62 | regular session |  |
-| IBM | WATCH | WATCH | 248.22 | 245.16 | -1.2% | 236.25 | 257.02 | 223.07 | regular session |  |
-| TSLA | WATCH | WATCH | 390.84 | 398.61 | +2.0% | 383.64 | 408.27 | 351.69 | regular session | now above 80% of the 52-week high (391.90) |
-| DELL | REDUCE | REDUCE | 373.68 | 369.17 | -1.2% |  |  |  | regular session |  |
-| ALAB | REDUCE | REDUCE | 230.91 | 225.98 | -2.1% |  |  |  | regular session |  |
-| NVDA | REDUCE | REDUCE | 173.73 | 164.18 | -5.5% |  |  |  | regular session |  |
-| CEG | WATCH (changed) | REDUCE | 274.73 | 281.15 | +2.3% | 269.58 | 281.71 | 243.23 | regular session | now above 200-day average (277.94) |
-| SKHY | AVOID* (changed) | REDUCE* | 142.25 | 137.14 | -3.6% |  |  |  | regular session | rule now off: MACD bearish |
-| BE | AVOID (changed) | REDUCE | 209.47 | 202.52 | -3.3% |  |  |  | regular session | rule now off: MACD bearish |
-| MRVL | SELL | SELL | 168.80 | 164.85 | -2.3% |  |  |  | regular session |  |
-| SPCX | REDUCE* (changed) | SELL* | 139.75 | 140.62 | +0.6% |  |  |  | regular session | rule now off: MACD bearish |
-| ETN | REDUCE (changed) | SELL | 360.62 | 359.54 | -0.3% |  |  |  | regular session | rule now off: MACD bearish |
-| GEV | SELL | SELL | 808.24 | 818.90 | +1.3% |  |  |  | regular session |  |
-| GOOG | SELL | SELL | 290.63 | 295.88 | +1.8% |  |  |  | regular session |  |
-| VST | SELL | SELL | 133.45 | 134.26 | +0.6% |  |  |  | regular session |  |
-| FSLR | SELL | SELL | 178.11 | 172.46 | -3.2% |  |  |  | regular session |  |
+| AMD | BUY | BUY | 585.30 | 585.13 | -0.0% | 552.99 | 586.47 | 472.72 | after-hours |  |
+| AMZN | BUY | BUY | 267.44 | 267.25 | -0.1% | 256.50 | 271.41 | 237.89 | after-hours |  |
+| TSM | WATCH | WATCH | 405.49 | 406.13 | +0.2% | 388.35 | 440.39 | 354.06 | after-hours |  |
+| IBM | WATCH | WATCH | 244.67 | 244.67 | +0.0% | 236.24 | 257.02 | 222.87 | after-hours |  |
+| TSLA | WATCH | WATCH | 397.45 | 397.85 | +0.1% | 383.59 | 408.27 | 350.45 | after-hours |  |
+| CEG | WATCH | WATCH | 282.40 | 282.40 | +0.0% | 269.60 | 282.96 | 242.07 | after-hours |  |
+| BE | AVOID | AVOID | 201.93 | 203.00 | +0.5% |  |  |  | after-hours |  |
+| SKHY | AVOID* | AVOID* | 137.71 | 138.25 | +0.4% |  |  |  | after-hours |  |
+| DELL | REDUCE | REDUCE | 371.17 | 372.20 | +0.3% |  |  |  | after-hours |  |
+| SPCX | REDUCE* | REDUCE* | 139.94 | 139.94 | -0.0% |  |  |  | after-hours |  |
+| ALAB | REDUCE | REDUCE | 227.79 | 229.14 | +0.6% |  |  |  | after-hours |  |
+| MRVL | SELL | SELL | 164.45 | 165.23 | +0.5% |  |  |  | after-hours |  |
+| ETN | SELL | SELL | 359.04 | 359.04 | -0.0% |  |  |  | after-hours |  |
+| GOOG | SELL | SELL | 295.35 | 296.00 | +0.2% |  |  |  | after-hours |  |
+| GEV | SELL | SELL | 818.49 | 818.49 | +0.0% |  |  |  | after-hours |  |
+| NVDA | SELL | SELL | 166.19 | 166.99 | +0.5% |  |  |  | after-hours |  |
+| VST | SELL | SELL | 134.51 | 134.51 | +0.0% |  |  |  | after-hours |  |
+| FSLR | SELL | SELL | 172.30 | 172.99 | +0.4% |  |  |  | after-hours |  |
 
 ## Does deciding before the open help?
 
@@ -31,12 +31,12 @@ From 2022-02-09 to 2026-11-10 (239 weekly decisions, both traded at the open), l
 
 ## Do opening gaps carry into the day?
 
-Across 19,011 stock-days (18 watchlist stocks, 2021-11-15 to 2026-11-11), each 1% of opening gap went with a -0.02% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 7 of the last 7 runs.*
+Across 19,016 stock-days (18 watchlist stocks, 2021-11-16 to 2026-11-12), each 1% of opening gap went with a -0.03% move from the open to the close (95% block-bootstrap CI [-0.08%, +0.03%]): no reliable relationship, so the size of a gap has not told you which way the session goes. *Stability: same verdict in 7 of the last 7 runs.*
 
 | opening gap | days | avg gap | avg open-to-close | closed above open |
 |---|---|---|---|---|
-| gap down 3%+ | 770 | -5.2% | +0.30% | 50% |
-| down 1-3% | 2905 | -1.7% | +0.09% | 52% |
-| within 1% | 11035 | +0.0% | +0.02% | 50% |
-| up 1-3% | 3370 | +1.7% | +0.09% | 52% |
+| gap down 3%+ | 776 | -5.2% | +0.36% | 50% |
+| down 1-3% | 2911 | -1.7% | +0.09% | 52% |
+| within 1% | 11027 | +0.0% | +0.02% | 50% |
+| up 1-3% | 3371 | +1.7% | +0.09% | 52% |
 | gap up 3%+ | 931 | +5.4% | -0.13% | 47% |
