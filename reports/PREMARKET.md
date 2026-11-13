@@ -1,4 +1,4 @@
-# Intraday board, 15:04 ET on 2026-11-13
+# Intraday board, 15:52 ET on 2026-11-13
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,24 +6,24 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMD | WATCH (changed) | BUY | 585.30 | 532.83 | -9.0% | 518.96 | 586.47 | 436.92 | regular session | now below 50-day average (552.99) |
-| AMZN | BUY | BUY | 267.44 | 265.45 | -0.7% | 257.27 | 271.41 | 239.70 | regular session |  |
-| TSM | AVOID (changed) | WATCH | 405.49 | 398.58 | -1.7% |  |  |  | regular session | now below 200-day average (401.36) |
-| IBM | WATCH | WATCH | 244.67 | 247.40 | +1.1% | 236.53 | 257.02 | 223.72 | regular session |  |
-| TSLA | WATCH | WATCH | 397.45 | 391.90 | -1.4% | 385.44 | 408.27 | 353.89 | regular session | now below 80% of the 52-week high (391.90) |
-| CEG | WATCH | WATCH | 282.40 | 278.22 | -1.5% | 269.47 | 282.96 | 243.30 | regular session |  |
-| BE | AVOID | AVOID | 201.93 | 190.89 | -5.5% |  |  |  | regular session | now below chandelier stop (193.52) |
-| SKHY | REDUCE* (changed) | AVOID* | 137.71 | 131.82 | -4.3% |  |  |  | regular session | now below chandelier stop (135.40) |
-| DELL | SELL (changed) | REDUCE | 371.17 | 342.14 | -7.8% |  |  |  | regular session | rule now on: below 200-day |
-| SPCX | REDUCE* | REDUCE* | 139.94 | 140.34 | +0.3% |  |  |  | regular session |  |
-| ALAB | REDUCE | REDUCE | 227.79 | 222.55 | -2.3% |  |  |  | regular session |  |
-| MRVL | SELL | SELL | 164.45 | 156.65 | -4.7% |  |  |  | regular session |  |
-| ETN | REDUCE (changed) | SELL | 359.04 | 352.02 | -2.0% |  |  |  | regular session | rule now off: MACD bearish, below chandelier stop |
-| GOOG | SELL | SELL | 295.35 | 292.00 | -1.1% |  |  |  | regular session |  |
-| GEV | REDUCE (changed) | SELL | 818.49 | 797.54 | -2.6% |  |  |  | regular session | rule now off: below chandelier stop |
-| NVDA | SELL | SELL | 166.19 | 162.78 | -2.1% |  |  |  | regular session |  |
-| VST | SELL | SELL | 134.51 | 131.72 | -2.1% |  |  |  | regular session |  |
-| FSLR | SELL | SELL | 172.30 | 170.37 | -1.1% |  |  |  | regular session |  |
+| AMD | WATCH (changed) | BUY | 585.30 | 535.32 | -8.5% | 519.08 | 586.47 | 437.40 | regular session | now below 50-day average (552.99) |
+| AMZN | BUY | BUY | 267.44 | 267.12 | -0.1% | 257.36 | 271.41 | 240.03 | regular session |  |
+| TSM | AVOID (changed) | WATCH | 405.49 | 400.70 | -1.2% |  |  |  | regular session | now below 200-day average (401.36) |
+| IBM | WATCH | WATCH | 244.67 | 247.39 | +1.1% | 236.53 | 257.02 | 223.72 | regular session |  |
+| TSLA | WATCH | WATCH | 397.45 | 392.60 | -1.2% | 385.48 | 408.27 | 354.02 | regular session |  |
+| CEG | WATCH | WATCH | 282.40 | 280.87 | -0.5% | 269.52 | 282.96 | 243.74 | regular session |  |
+| BE | AVOID | AVOID | 201.93 | 192.82 | -4.5% |  |  |  | regular session | now below chandelier stop (193.52) |
+| SKHY | REDUCE* (changed) | AVOID* | 137.71 | 132.37 | -3.9% |  |  |  | regular session | now below chandelier stop (135.40) |
+| DELL | REDUCE | REDUCE | 371.17 | 345.83 | -6.8% |  |  |  | regular session |  |
+| SPCX | REDUCE* | REDUCE* | 139.94 | 140.12 | +0.1% |  |  |  | regular session |  |
+| ALAB | REDUCE | REDUCE | 227.79 | 223.55 | -1.9% |  |  |  | regular session |  |
+| MRVL | SELL | SELL | 164.45 | 157.70 | -4.1% |  |  |  | regular session |  |
+| ETN | REDUCE (changed) | SELL | 359.04 | 352.59 | -1.8% |  |  |  | regular session | rule now off: MACD bearish, below chandelier stop |
+| GOOG | SELL | SELL | 295.35 | 292.81 | -0.9% |  |  |  | regular session |  |
+| GEV | REDUCE (changed) | SELL | 818.49 | 802.48 | -2.0% |  |  |  | regular session | rule now off: below chandelier stop |
+| NVDA | SELL | SELL | 166.19 | 162.79 | -2.0% |  |  |  | regular session |  |
+| VST | SELL | SELL | 134.51 | 132.70 | -1.3% |  |  |  | regular session |  |
+| FSLR | SELL | SELL | 172.30 | 172.40 | +0.1% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 
