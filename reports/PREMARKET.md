@@ -1,4 +1,4 @@
-# After-hours board, 16:51 ET on 2026-11-18
+# Intraday board, 15:59 ET on 2026-11-19
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,28 +6,28 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMD | BUY | BUY | 530.14 | 524.57 | -1.1% | 514.64 | 586.47 | 433.98 | after-hours |  |
-| AMZN | BUY | BUY | 267.74 | 267.50 | -0.1% | 257.13 | 271.41 | 239.09 | after-hours |  |
-| TSLA | WATCH | WATCH | 383.72 | 382.25 | -0.4% | 375.81 | 408.27 | 344.54 | after-hours |  |
-| SPCX | REDUCE* | REDUCE* | 143.50 | 142.92 | -0.4% |  |  |  | after-hours |  |
-| ALAB | REDUCE | REDUCE | 216.75 | 215.26 | -0.7% |  |  |  | after-hours |  |
-| CEG | REDUCE | REDUCE | 262.74 | 262.62 | -0.0% |  |  |  | after-hours |  |
-| BE | REDUCE | REDUCE | 170.98 | 169.91 | -0.6% |  |  |  | after-hours |  |
-| DELL | SELL | SELL | 313.11 | 312.10 | -0.3% |  |  |  | after-hours |  |
-| MRVL | SELL | SELL | 145.54 | 144.10 | -1.0% |  |  |  | after-hours |  |
-| TSM | SELL | SELL | 362.62 | 361.75 | -0.2% |  |  |  | after-hours |  |
-| IBM | SELL | SELL | 228.53 | 228.53 | +0.0% |  |  |  | after-hours |  |
-| ETN | SELL | SELL | 338.34 | 339.36 | +0.3% |  |  |  | after-hours |  |
-| GOOG | SELL | SELL | 279.20 | 279.10 | -0.0% |  |  |  | after-hours |  |
-| GEV | SELL | SELL | 772.22 | 773.10 | +0.1% |  |  |  | after-hours |  |
-| NVDA | SELL | SELL | 150.96 | 150.09 | -0.6% |  |  |  | after-hours |  |
-| VST | SELL | SELL | 125.58 | 125.01 | -0.5% |  |  |  | after-hours |  |
-| SKHY | SELL* | SELL* | 122.47 | 121.65 | -0.7% |  |  |  | after-hours |  |
-| FSLR | SELL | SELL | 150.98 | 150.98 | +0.0% |  |  |  | after-hours |  |
+| AMD | WATCH (changed) | BUY | 530.14 | 488.64 | -7.8% | 448.23 | 586.47 | 367.40 | regular session | now below 80% of the 52-week high (519.54) |
+| AMZN | BUY | BUY | 267.74 | 257.42 | -3.9% | 255.23 | 271.41 | 237.01 | regular session |  |
+| TSLA | REDUCE (changed) | WATCH | 383.72 | 374.29 | -2.5% |  |  |  | regular session | now below 50-day average (375.81); now below 200-day average (382.08) |
+| SPCX | REDUCE* | REDUCE* | 143.50 | 138.07 | -3.8% |  |  |  | regular session |  |
+| ALAB | REDUCE | REDUCE | 216.75 | 211.54 | -2.4% |  |  |  | regular session |  |
+| CEG | REDUCE | REDUCE | 262.74 | 251.83 | -4.2% |  |  |  | regular session |  |
+| BE | REDUCE | REDUCE | 170.98 | 167.66 | -1.9% |  |  |  | regular session |  |
+| DELL | SELL | SELL | 313.11 | 312.33 | -0.2% |  |  |  | regular session |  |
+| MRVL | SELL | SELL | 145.54 | 138.46 | -4.9% |  |  |  | regular session |  |
+| TSM | SELL | SELL | 362.62 | 352.92 | -2.7% |  |  |  | regular session |  |
+| IBM | SELL | SELL | 228.53 | 223.91 | -2.0% |  |  |  | regular session |  |
+| ETN | SELL | SELL | 338.34 | 329.99 | -2.5% |  |  |  | regular session |  |
+| GOOG | SELL | SELL | 279.20 | 270.93 | -3.0% |  |  |  | regular session |  |
+| GEV | SELL | SELL | 772.22 | 755.16 | -2.2% |  |  |  | regular session |  |
+| NVDA | SELL | SELL | 150.96 | 145.80 | -3.4% |  |  |  | regular session |  |
+| VST | SELL | SELL | 125.58 | 123.79 | -1.4% |  |  |  | regular session |  |
+| SKHY | SELL* | SELL* | 122.47 | 119.29 | -2.6% |  |  |  | regular session |  |
+| FSLR | SELL | SELL | 150.98 | 151.87 | +0.6% |  |  |  | regular session |  |
 
 ## Does deciding before the open help?
 
-From 2022-02-15 to 2026-11-16 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +38.7% a year (worst drawdown -37.0%) against +36.6% (-40.5%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.06 (95% block-bootstrap CI [-0.22, +0.29]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 10 of the last 10 runs.*
+From 2022-02-16 to 2026-11-17 (239 weekly decisions, both traded at the open), labels set with the pre-market price returned +43.5% a year (worst drawdown -33.1%) against +40.4% (-39.4%) for labels set at the previous close; the two agreed on 89% of stock-weeks. Sharpe ratio difference +0.05 (95% block-bootstrap CI [-0.12, +0.26]): deciding before the open has been **not distinguishable from deciding on the previous close**. *Stability: same verdict in 10 of the last 10 runs.*
 
 ## Do opening gaps carry into the day?
 
