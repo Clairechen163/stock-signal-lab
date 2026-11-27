@@ -1,5 +1,5 @@
 # stocklab report
-Generated 2026-11-26 | data source: `yahoo` | history: 5 years | watchlist: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, SKHY, ETN, TSLA, SPCX, AMZN, IBM, GEV, CEG, VST, DELL, TSM, BE
+Generated 2026-11-27 | data source: `yahoo` | history: 5 years | watchlist: ALAB, AMD, NVDA, MRVL, GOOG, FSLR, SKHY, ETN, TSLA, SPCX, AMZN, IBM, GEV, CEG, VST, DELL, TSM, BE
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -643,7 +643,7 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 414.8 | 0.0 |  |  |
 | Ridge regression | 418.7 | -0.0186 | 0.49 | 0.838 |
-| Gradient boosting | 424.3 | -0.0463 | 0.506 | 0.986 |
+| Gradient boosting | 424.3 | -0.0461 | 0.508 | 0.986 |
 
 Forecast for the next session:
 
@@ -651,7 +651,7 @@ Forecast for the next session:
   P(up) | Logistic regression      68.6%
   P(up) | Gradient boosting        79.1%
   P(up) | historical base rate     51.5%
-  expected return (ridge)          +2.91%
+  expected return (ridge)          +2.90%
   80% range low                    -7.64%
   80% range high                   +14.66%
   daily volatility                 +8.44%
@@ -675,12 +675,12 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 309.6 | 0.0 |  |  |
 | Ridge regression | 309.9 | -0.0022 | 0.508 | 0.528 |
-| Gradient boosting | 313.1 | -0.023 | 0.53 | 0.704 |
+| Gradient boosting | 313.2 | -0.0236 | 0.532 | 0.709 |
 
 Forecast for the next session:
 
 ```
-  P(up) | Logistic regression      27.5%
+  P(up) | Logistic regression      27.6%
   P(up) | Gradient boosting        22.4%
   P(up) | historical base rate     53.4%
   expected return (ridge)          -1.07%
@@ -701,27 +701,27 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.53 | 0.53 | 0.517 | 0.47 | 0.249 | 0.73 | 0.73 |
 | Logistic regression | 0.532 | 0.53 | 0.483 | 0.55 | 0.251 | 0.747 | 0.73 |
-| Gradient boosting | 0.537 | 0.53 | 0.383 | 0.554 | 0.258 | 0.844 | 0.73 |
+| Gradient boosting | 0.526 | 0.53 | 0.585 | 0.549 | 0.259 | 0.341 | 0.73 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 490.6 | 0.0 |  |  |
 | Ridge regression | 494.7 | -0.0167 | 0.534 | 0.821 |
-| Gradient boosting | 501.8 | -0.0459 | 0.501 | 0.98 |
+| Gradient boosting | 502.1 | -0.0474 | 0.499 | 0.982 |
 
 Forecast for the next session:
 
 ```
   P(up) | Logistic regression      51.3%
-  P(up) | Gradient boosting        55.4%
+  P(up) | Gradient boosting        56.5%
   P(up) | historical base rate     52.3%
-  expected return (ridge)          -0.15%
+  expected return (ridge)          -0.16%
   80% range low                    -10.80%
   80% range high                   +11.76%
   daily volatility                 +8.79%
 ```
 
-Best out-of-sample AUC **0.554**; smallest p-value against a naive baseline 0.383, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.550**; smallest p-value against a naive baseline 0.483, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![MRVL feature effects](forecast_MRVL.png)
 
@@ -733,13 +733,13 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.517 | 0.517 | 0.517 | 0.497 | 0.25 | 0.928 | 0.928 |
 | Logistic regression | 0.537 | 0.517 | 0.185 | 0.532 | 0.253 | 0.135 | 0.928 |
-| Gradient boosting | 0.521 | 0.517 | 0.449 | 0.539 | 0.26 | 0.222 | 0.928 |
+| Gradient boosting | 0.526 | 0.517 | 0.351 | 0.538 | 0.261 | 0.317 | 0.928 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 202.8 | 0.0 |  |  |
 | Ridge regression | 204.8 | -0.0201 | 0.519 | 0.946 |
-| Gradient boosting | 208.5 | -0.0566 | 0.515 | 0.993 |
+| Gradient boosting | 208.6 | -0.0575 | 0.521 | 0.993 |
 
 Forecast for the next session:
 
@@ -753,7 +753,7 @@ Forecast for the next session:
   daily volatility                 +3.60%
 ```
 
-Best out-of-sample AUC **0.539**; smallest p-value against a naive baseline 0.185, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.538**; smallest p-value against a naive baseline 0.185, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![GOOG feature effects](forecast_GOOG.png)
 
@@ -771,7 +771,7 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 362.9 | 0.0 |  |  |
 | Ridge regression | 363.8 | -0.0049 | 0.492 | 0.649 |
-| Gradient boosting | 373.2 | -0.0573 | 0.494 | 0.996 |
+| Gradient boosting | 373.1 | -0.0566 | 0.494 | 0.995 |
 
 Forecast for the next session:
 
@@ -797,13 +797,13 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.521 | 0.521 | 0.517 | 0.473 | 0.25 | 0.272 | 0.273 |
 | Logistic regression | 0.519 | 0.521 | 0.551 | 0.528 | 0.253 | 0.247 | 0.273 |
-| Gradient boosting | 0.528 | 0.521 | 0.383 | 0.532 | 0.26 | 0.115 | 0.273 |
+| Gradient boosting | 0.521 | 0.521 | 0.517 | 0.533 | 0.26 | 0.035 | 0.273 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 251.6 | 0.0 |  |  |
 | Ridge regression | 252.6 | -0.008 | 0.528 | 0.665 |
-| Gradient boosting | 259.6 | -0.0648 | 0.508 | 0.989 |
+| Gradient boosting | 259.7 | -0.0657 | 0.506 | 0.989 |
 
 Forecast for the next session:
 
@@ -817,7 +817,7 @@ Forecast for the next session:
   daily volatility                 +4.71%
 ```
 
-Best out-of-sample AUC **0.532**; smallest p-value against a naive baseline 0.383, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.533**; smallest p-value against a naive baseline 0.517, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![ETN feature effects](forecast_ETN.png)
 
@@ -845,7 +845,7 @@ Forecast for the next session:
   P(up) | historical base rate     50.6%
   expected return (ridge)          +0.19%
   80% range low                    -5.40%
-  80% range high                   +6.10%
+  80% range high                   +6.11%
   daily volatility                 +4.48%
 ```
 
@@ -893,13 +893,13 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.544 | 0.544 | 0.518 | 0.462 | 0.249 | 0.406 | 0.407 |
 | Logistic regression | 0.544 | 0.544 | 0.518 | 0.475 | 0.254 | 0.666 | 0.407 |
-| Gradient boosting | 0.515 | 0.544 | 0.921 | 0.492 | 0.267 | 0.475 | 0.407 |
+| Gradient boosting | 0.515 | 0.544 | 0.921 | 0.491 | 0.267 | 0.463 | 0.407 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 254.9 | 0.0 |  |  |
 | Ridge regression | 256.9 | -0.0159 | 0.541 | 0.87 |
-| Gradient boosting | 258.7 | -0.0304 | 0.51 | 0.925 |
+| Gradient boosting | 258.8 | -0.0307 | 0.51 | 0.927 |
 
 Forecast for the next session:
 
@@ -913,7 +913,7 @@ Forecast for the next session:
   daily volatility                 +2.08%
 ```
 
-Best out-of-sample AUC **0.492**; smallest p-value against a naive baseline 0.518, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.491**; smallest p-value against a naive baseline 0.518, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![IBM feature effects](forecast_IBM.png)
 
@@ -931,7 +931,7 @@ Walk-forward test on 218 unseen days (2026-01-14 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 343.2 | 0.0 |  |  |
 | Ridge regression | 350.3 | -0.0419 | 0.541 | 0.818 |
-| Gradient boosting | 360.2 | -0.1017 | 0.518 | 0.958 |
+| Gradient boosting | 360.5 | -0.1036 | 0.518 | 0.961 |
 
 Forecast for the next session:
 
@@ -995,7 +995,7 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 393.0 | 0.0 |  |  |
 | Ridge regression | 394.0 | -0.005 | 0.503 | 0.599 |
-| Gradient boosting | 403.7 | -0.0552 | 0.508 | 0.985 |
+| Gradient boosting | 403.7 | -0.0551 | 0.508 | 0.985 |
 
 Forecast for the next session:
 
@@ -1021,13 +1021,13 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.515 | 0.515 | 0.517 | 0.462 | 0.25 | 0.987 | 0.988 |
 | Logistic regression | 0.501 | 0.515 | 0.766 | 0.495 | 0.257 | -0.111 | 0.988 |
-| Gradient boosting | 0.486 | 0.515 | 0.92 | 0.498 | 0.267 | -0.184 | 0.988 |
+| Gradient boosting | 0.485 | 0.515 | 0.932 | 0.495 | 0.268 | -0.213 | 0.988 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 422.7 | 0.0 |  |  |
 | Ridge regression | 429.6 | -0.0329 | 0.479 | 0.991 |
-| Gradient boosting | 439.3 | -0.0804 | 0.499 | 1.0 |
+| Gradient boosting | 439.4 | -0.0808 | 0.492 | 1.0 |
 
 Forecast for the next session:
 
@@ -1037,11 +1037,11 @@ Forecast for the next session:
   P(up) | historical base rate     51.5%
   expected return (ridge)          +0.19%
   80% range low                    -9.90%
-  80% range high                   +11.41%
+  80% range high                   +11.42%
   daily volatility                 +8.28%
 ```
 
-Best out-of-sample AUC **0.498**; smallest p-value against a naive baseline 0.766, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
+Best out-of-sample AUC **0.495**; smallest p-value against a naive baseline 0.766, before correcting for the four models tested here and the other stocks (the corrected count is in the summary).
 
 ![DELL feature effects](forecast_DELL.png)
 
@@ -1053,13 +1053,13 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|---|---|---|
 | Majority class (baseline) | 0.515 | 0.528 | 0.739 | 0.462 | 0.25 | 0.732 | 0.985 |
 | Logistic regression | 0.523 | 0.528 | 0.618 | 0.529 | 0.251 | 0.817 | 0.985 |
-| Gradient boosting | 0.51 | 0.528 | 0.815 | 0.503 | 0.263 | 0.84 | 0.985 |
+| Gradient boosting | 0.51 | 0.528 | 0.815 | 0.503 | 0.263 | 0.807 | 0.985 |
 
 | model | RMSE (bps) | R2 out-of-sample vs zero | direction hit rate | DM p (beats zero) |
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 274.0 | 0.0 |  |  |
 | Ridge regression | 272.7 | 0.0096 | 0.532 | 0.341 |
-| Gradient boosting | 279.8 | -0.0427 | 0.53 | 0.933 |
+| Gradient boosting | 279.8 | -0.0428 | 0.528 | 0.934 |
 
 Forecast for the next session:
 
@@ -1091,7 +1091,7 @@ Walk-forward test on 551 unseen days (2024-09-16 to 2026-11-24).
 |---|---|---|---|---|
 | Zero / random walk (baseline) | 661.0 | 0.0 |  |  |
 | Ridge regression | 681.2 | -0.062 | 0.457 | 1.0 |
-| Gradient boosting | 676.1 | -0.0462 | 0.486 | 0.992 |
+| Gradient boosting | 675.8 | -0.0454 | 0.486 | 0.992 |
 
 Forecast for the next session:
 
@@ -1125,7 +1125,7 @@ Best out-of-sample AUC **0.462**; smallest p-value against a naive baseline 0.90
 | COST | 10 | +0.15 | True | 1086.81 | +12.5% | +12.6% | +18.8% | -0.4% | 43.4 | 1045.86 | 1093.89 | 1008.81 | -3.5% | 9 | 9413.0 | 333.0 |  |
 | AMT | 11 | +0.06 | True | 184.59 | +6.5% | +0.9% | +30.9% | -5.3% | 26.4 | 179.64 | 195.25 | 169.44 | -5.7% | 55 | 9880.0 | 561.0 |  |
 | IBM | 12 | -0.29 | True | 243.47 | -16.0% | -6.6% | +30.6% | -25.0% | 18.4 | 242.22 | 257.02 | 227.03 | -6.3% | 41 | 9931.0 | 623.0 |  |
-| DELL | 13 | +0.80 | False | 297.06 | +298.7% | -6.0% | +100.3% | -49.4% | 9.7 | 259.02 | 476.46 | 182.93 | -29.4% | 13 | 3367.0 | 989.0 | below 200-day SMA |
+| DELL | 13 | +0.87 | False | 297.06 | +298.7% | -6.0% | +100.3% | -49.4% | 9.7 | 259.02 | 476.46 | 182.93 | -29.4% | 13 | 3367.0 | 989.0 | below 200-day SMA |
 | AMD | 14 | +0.66 | False | 406.03 | +160.5% | -21.6% | +90.0% | -37.5% | 23.0 | 359.52 | 586.47 | 266.49 | -25.9% | 10 | 3595.0 | 930.0 | below 200-day SMA |
 | MRVL | 15 | +0.43 | False | 130.93 | +191.2% | -36.0% | +98.1% | -58.6% | 17.8 | 114.28 | 218.78 | 80.99 | -29.1% | 30 | 3428.0 | 999.0 | below 200-day SMA; down >50% from high |
 
