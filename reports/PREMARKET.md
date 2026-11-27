@@ -1,4 +1,4 @@
-# After-hours board, 16:39 ET on 2026-11-27
+# After-hours board, 16:59 ET on 2026-11-27
 
 > Educational research code, not investment advice. Past results do not predict future returns.
 
@@ -6,24 +6,24 @@ The board's rules with each stock's latest trade standing in for today's close; 
 
 | ticker | label now | board at close | close | latest | change | pullback entry | breakout | stop | session | what the move changes |
 |---|---|---|---|---|---|---|---|---|---|---|
-| AMZN | WATCH | WATCH | 254.12 | 254.87 | +0.3% | 243.65 | 271.41 | 222.70 | after-hours |  |
-| TSLA | WATCH | WATCH | 400.00 | 398.73 | -0.3% | 381.98 | 404.63 | 342.61 | after-hours |  |
-| IBM | WATCH | WATCH | 248.08 | 248.83 | +0.3% | 241.80 | 256.55 | 226.91 | after-hours |  |
-| AMD | REDUCE | REDUCE | 424.54 | 422.74 | -0.4% |  |  |  | after-hours |  |
-| DELL | REDUCE | REDUCE | 316.96 | 314.45 | -0.8% |  |  |  | after-hours |  |
-| MRVL | REDUCE | REDUCE | 140.54 | 140.05 | -0.4% |  |  |  | after-hours |  |
-| SPCX | REDUCE* | REDUCE* | 133.59 | 132.60 | -0.7% |  |  |  | after-hours |  |
-| BE | REDUCE | REDUCE | 163.02 | 162.47 | -0.3% |  |  |  | after-hours |  |
-| ALAB | REDUCE | REDUCE | 206.84 | 204.92 | -0.9% |  |  |  | after-hours |  |
+| AMZN | WATCH | WATCH | 254.12 | 255.05 | +0.4% | 243.65 | 271.41 | 222.70 | after-hours |  |
+| TSLA | WATCH | WATCH | 400.00 | 398.85 | -0.3% | 381.98 | 404.63 | 342.61 | after-hours |  |
+| IBM | WATCH | WATCH | 248.08 | 248.08 | -0.0% | 241.80 | 256.55 | 226.91 | after-hours |  |
+| AMD | REDUCE | REDUCE | 424.54 | 422.90 | -0.4% |  |  |  | after-hours |  |
+| DELL | REDUCE | REDUCE | 316.96 | 314.35 | -0.8% |  |  |  | after-hours |  |
+| MRVL | REDUCE | REDUCE | 140.54 | 139.92 | -0.4% |  |  |  | after-hours |  |
+| SPCX | REDUCE* | REDUCE* | 133.59 | 132.63 | -0.7% |  |  |  | after-hours |  |
+| BE | REDUCE | REDUCE | 163.02 | 162.50 | -0.3% |  |  |  | after-hours |  |
+| ALAB | REDUCE | REDUCE | 206.84 | 205.00 | -0.9% |  |  |  | after-hours |  |
 | TSM | SELL | SELL | 353.34 | 353.00 | -0.1% |  |  |  | after-hours |  |
 | ETN | SELL | SELL | 325.92 | 325.37 | -0.2% |  |  |  | regular session (no trades yet today) |  |
-| GEV | SELL | SELL | 735.31 | 733.78 | -0.2% |  |  |  | after-hours |  |
-| GOOG | SELL | SELL | 272.44 | 273.53 | +0.4% |  |  |  | after-hours |  |
-| CEG | SELL | SELL | 238.10 | 238.70 | +0.3% |  |  |  | regular session (no trades yet today) |  |
-| NVDA | SELL | SELL | 150.49 | 149.81 | -0.5% |  |  |  | after-hours |  |
+| GEV | SELL | SELL | 735.31 | 736.50 | +0.2% |  |  |  | after-hours |  |
+| GOOG | SELL | SELL | 272.44 | 273.51 | +0.4% |  |  |  | after-hours |  |
+| CEG | SELL | SELL | 238.10 | 238.10 | -0.0% |  |  |  | after-hours |  |
+| NVDA | SELL | SELL | 150.49 | 149.80 | -0.5% |  |  |  | after-hours |  |
 | VST | SELL | SELL | 122.65 | 122.31 | -0.3% |  |  |  | after-hours |  |
-| SKHY | SELL* | SELL* | 119.50 | 118.69 | -0.7% |  |  |  | after-hours |  |
-| FSLR | SELL | SELL | 149.77 | 149.78 | +0.0% |  |  |  | after-hours |  |
+| SKHY | SELL* | SELL* | 119.50 | 118.49 | -0.8% |  |  |  | after-hours |  |
+| FSLR | SELL | SELL | 149.77 | 150.31 | +0.4% |  |  |  | after-hours |  |
 
 ## Does deciding before the open help?
 
